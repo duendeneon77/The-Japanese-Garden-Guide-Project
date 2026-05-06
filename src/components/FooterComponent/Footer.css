@@ -1,0 +1,13 @@
+.footer-div{
+    background-color: rgb(0, 0, 0);
+    color:rgba(255, 255, 255, 0.671);
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.footer-div p{
+    padding-top: 0.7rem;
+    font-size: 0.9rem;
+    background-color: transparent;
+}

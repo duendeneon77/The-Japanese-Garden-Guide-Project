@@ -1,0 +1,18 @@
+.contentHome-div{
+    padding-left: 4%;
+    padding-right: 4%;
+    background-color: black;
+    color: rgba(255, 255, 255, 0.785);
+    border-top:1px solid rgba(230, 230, 230, 0.534);
+    padding-top:1rem ;
+    font-family: "Zen Old Mincho", serif;
+    font-weight: 100;
+    
+}
+.contentHome-div h1{
+    font-weight: 100;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: transparent;
+    
+}
