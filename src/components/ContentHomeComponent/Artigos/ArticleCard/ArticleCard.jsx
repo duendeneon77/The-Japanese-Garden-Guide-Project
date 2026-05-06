@@ -1,65 +1,64 @@
 import { useState, useEffect } from "react";
 import './ArticleCard.css'
 
-function ArticleCard({ artigo }) {
-    const [texto, setTexto] = useState("");
+const base = import.meta.env.BASE_URL;
 
-    useEffect(() => {
+function ArticleCard({ artigo }) {
+  const [texto, setTexto] = useState("");
+
+  useEffect(() => {
     const load = async () => {
-      
-        const articlesMap = import.meta.glob(
+      const articlesMap = import.meta.glob(
         "../articles/*.txt",
         {
-        query: "?raw",
-        import: "default",
+          query: "?raw",
+          import: "default",
         }
-        );
+      );
 
-        const file =
+      const file =
         articlesMap[`../articles/${artigo.arquivo}`];
 
-        if (file) {
-            const content = await file();
-            setTexto(content);
-        } else {
-            console.warn(
-                "Arquivo não encontrado:",
-                artigo.arquivo
-            );
-        }
+      if (file) {
+        const content = await file();
+        setTexto(content);
+      } else {
+        console.warn(
+          "Arquivo não encontrado:",
+          artigo.arquivo
+        );
+      }
     };
 
     load();
-    }, [artigo.arquivo]);
+  }, [artigo.arquivo]);
 
-    function resumo(texto, limite = 25) {
+  function resumo(texto, limite = 25) {
     if (!texto) return "";
 
-        const palavras = texto.split(" ");
+    const palavras = texto.split(" ");
 
     if (palavras.length <= limite) return texto;
 
-        return (
-            palavras.slice(0, limite).join(" ") + "..."
-    );
-    }
+    return palavras.slice(0, limite).join(" ") + "...";
+  }
 
-    return (
+  return (
     <div className="card">
-        <img
-        src={artigo.imagem}
+      <img
+        src={`${base}${artigo.imagem}`}
         alt={artigo.titulo}
-        />
+      />
 
-        <h2>{artigo.titulo}</h2>
+      <h2>{artigo.titulo}</h2>
 
-        <p>{resumo(texto, 25)}</p>
+      <p>{resumo(texto, 25)}</p>
 
-        <a href={`/artigo/${artigo.id}`}>
+      <a href={`${base}artigo/${artigo.id}`}>
         Ler mais
-        </a>
+      </a>
     </div>
-    );
+  );
 }
 
 export default ArticleCard;

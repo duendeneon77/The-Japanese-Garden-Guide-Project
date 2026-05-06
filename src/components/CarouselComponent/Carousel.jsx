@@ -1,35 +1,36 @@
 import { useState, useEffect } from "react";
 import "./Carousel.css";
+const base = import.meta.env.BASE_URL;
 
 export default function Carousel() {
   const items = [
     {
-      image: "/navbarmobile/carousel2.jpg",
+      image: `${base}navbarmobile/carousel2.jpg`,
       title: "Espécies",
       text: "Conheça as espécies mais utilizadas nos jardins japoneses"
     },
     {
-      image: "/navbarmobile/carousel1.jpg",
+      image: `${base}navbarmobile/carousel1.jpg`,
       title: "Tipos de Jardim Japonês",
       text: "Conheça os tipos de jardim japonês, clique e saiba mais"
     },
     {
-      image: "/navbarmobile/carousel5.jpg",
+      image: `${base}navbarmobile/carousel5.jpg`,
       title: "Filosofia",
       text: "Clique e saiba mais sobre a filosofia por trás do jardim japonês"
     },
     {
-      image: "/navbarmobile/carousel6.jpg",
+      image: `${base}navbarmobile/carousel6.jpg`,
       title: "Adaptações para climas quentes",
       text: "Clique e saiba como substituir espécies para que mantenha o colorido e as formas do jardim japonês"
     },
     {
-      image: "/navbarmobile/carousel3.jpg",
+      image: `${base}navbarmobile/carousel3.jpg`,
       title: "Itens usados para compor o Jardim Japonês",
       text: "No jardim japonês, as plantas são só parte da composição, clique e conheça a variedade de items que são usados nas composições."
     },
     {
-      image: "/navbarmobile/carousel4.jpg",
+      image: `${base}navbarmobile/carousel4.jpg`,
       title: "Composições",
       text: "No jardim japonês, devemos saber compor, clique e saiba como compor."
     },
