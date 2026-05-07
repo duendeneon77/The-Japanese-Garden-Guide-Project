@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     min-width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
     background-color: black;
     padding: 0 2% 0.3rem 2%;
     
@@ -11,10 +11,10 @@ button{
 
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: 4.7rem;
+    flex-basis: 10rem;
 
     min-width: 4.7rem;
-    max-width: 6rem;
+    max-width: 10rem;
 
     padding: 0.2rem 0 0.2rem 0;
     background-color: rgba(255, 255, 255, 0.228);
@@ -23,26 +23,25 @@ button{
     font-family: "Zen Old Mincho", serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
 }
 
 #topbar-div button{
 
     flex-grow: 1;
-    flex-shrink: 0;
-    flex-basis: 6rem;
+    flex-shrink: 1;
+    flex-basis: 4.9rem;
 
     width: 100%;
-    max-width: 6rem;
+    max-width: 10rem;
     min-width: 4.9rem;
 
     padding: 0.2rem 0;
 
-
     font-family: "Zen Old Mincho", serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
 #topbar-div button:hover{
@@ -72,6 +71,14 @@ a{
 .menu-container{
     position: relative;
     overflow: visible;
+}
+.menu-container{
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 4.9rem;
+
+    min-width: 4.9rem;
+    max-width: 10rem;
 }
 
 .menu{
