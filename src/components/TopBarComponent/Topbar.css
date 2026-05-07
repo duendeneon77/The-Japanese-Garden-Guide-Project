@@ -11,9 +11,9 @@ button{
 
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: 3.7rem;
+    flex-basis: 4.7rem;
 
-    min-width: 6rem;
+    min-width: 4.7rem;
     max-width: 6rem;
 
     padding: 0.2rem 0 0.2rem 0;

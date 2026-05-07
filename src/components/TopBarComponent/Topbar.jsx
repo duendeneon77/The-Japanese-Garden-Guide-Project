@@ -36,7 +36,6 @@ function Topbar(){
             <a href="#/history"><button className='btndrop'>História</button></a>
             <a href="#/species"><button className='btndrop'>Espécies</button></a>
             <a href="#/substitutes"><button className='btndrop'>Substitutas</button></a>
-            <a href="#/project"><button className='btndrop'>O projeto</button></a>
         </div>
     ) : null}
 
@@ -55,9 +54,20 @@ function Topbar(){
             )
             :null}
         </div>
+        <div className='menu-container' onMouseLeave={() => setButtonMenu(null)}>
+            <button onClick={()=>togleMenu('sobre')}
+            >Sobre</button>
+            {buttonMenu === 'sobre' ? (
+                    <div className="menu sobre">
+                        
+                  <a href="#/project"><button className='btndrop'>Projeto</button></a>
+                        
+                        
+                    </div>
+            )
+            :null}
+        </div>
 
-
-        
         <button>Login</button>
     </div>
     )
