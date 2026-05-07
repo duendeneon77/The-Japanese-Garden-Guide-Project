@@ -26,6 +26,28 @@ button{
     font-size: 0.9rem;
 }
 
+#topbar-div button{
+
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 6rem;
+
+    width: 100%;
+    max-width: 6rem;
+    min-width: 4.9rem;
+
+    padding: 0.2rem 0;
+
+    background-color: rgba(255, 255, 255, 0.228);
+    color: rgba(255, 255, 255, 0.877);
+    border: 1px solid rgba(255, 255, 255, 0.394);
+
+    font-family: "Zen Old Mincho", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 0.9rem;
+}
+
 #topbar-div button:hover{
     background-color: rgba(255, 255, 255, 0.402);
     font-weight: 500;
