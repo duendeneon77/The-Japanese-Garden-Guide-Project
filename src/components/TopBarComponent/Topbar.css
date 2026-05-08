@@ -91,4 +91,9 @@ a{
 
     background: black;
     color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 100%;
 }
