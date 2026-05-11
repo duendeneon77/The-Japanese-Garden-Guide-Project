@@ -1,0 +1,49 @@
+[{
+    "id": "sakura",
+    "titulo": "Cerejeira / Sakura",
+    "tipo": "Caducifolia",
+    "cor": "rosa, branca",
+    "crescimento": "moderado a rápido",
+    "tamanho": "grande",
+    "imagem": "/speciesImages/sakura.png",
+    "arquivo": "species.txt",
+    "galeria": []
+  },
+{
+    "id": "blackpine",
+    "titulo": "Pinheiro Negro / Kuromatsu",
+    "tipo": "Conifera",
+    "cor": "Verde Escuro",
+    "crescimento": "lento",
+    "nomeCientifico": "",
+    "tamanho": "grande",
+    "imagem": "/speciesImages/kuromatsu.png",
+    "arquivo": "species.txt",
+    "galeria": []
+  },
+  {
+    "id": "momiji",
+    "titulo": "Acer Japonês / Momiji",
+    "tipo": "Caducifolia",
+    "cor": "laranja vermelho amarelo rosa vinho",
+    "crescimento": "moderado a rápido",
+    "nomeCientifico": "Acer palmatum",
+    "tamanho": "grande",
+    "imagem": "/speciesImages/momiji.png",
+    "arquivo": "species.txt",
+     "galeria": []
+  },
+  {
+    "id": "azalea",
+    "titulo": "Azaléia / Satsuki",
+    "tipo": "Caducifolia, perene",
+    "cor": "rosa, branca",
+    "crescimento": "moderado a rápido",
+    "tamanho": "grande",
+    "imagem": "/speciesImages/azalea.png",
+    "arquivo": "species.txt",
+     "galeria": []
+  }
+
+
+]

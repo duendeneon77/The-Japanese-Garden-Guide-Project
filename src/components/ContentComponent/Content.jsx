@@ -2,14 +2,14 @@ import './Content.css'
 import { Link, useLocation } from 'react-router-dom'
 
 function ContentComponent({children}){
+    const location = useLocation()
     
     
     return(
-        <div className="contentHome-div">
+        <div className="contentHome-div" >
             {
-            location.pathname !== '/'
-            ? <Link to="/" className='goBackLink'><p id="goBack">← Inicio</p></Link>
-            : null
+            location.pathname !== '/' && (
+            <Link to="/" className='goBackLink'><p id="goBack">← Inicio</p></Link>)
             }
 
             {children}

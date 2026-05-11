@@ -15,9 +15,10 @@
 }
 .contentHome-div h1{
     font-weight: 100;
-    font-size: 1.2rem;
+    font-size: 2rem;
     text-align: center;
     background-color: transparent;
+    margin-bottom: 3rem;
     
 }
 .contentHome-div #goBack{
