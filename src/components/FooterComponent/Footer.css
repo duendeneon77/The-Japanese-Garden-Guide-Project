@@ -13,3 +13,14 @@
     font-size: 0.9rem;
     background-color: transparent;
 }
+
+@media (min-width: 768px) {
+    .footer-div{
+        padding: 1rem;
+    }
+
+    .footer-div p{
+    padding-top: 1rem;
+    font-size: 1.1rem;
+}
+}

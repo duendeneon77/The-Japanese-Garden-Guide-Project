@@ -9,7 +9,7 @@ function ContentComponent({children}){
         <div className="contentHome-div" >
             {
             location.pathname !== '/' && (
-            <Link to="/" className='goBackLink'><p id="goBack">← Inicio</p></Link>)
+            <Link to="/" className='goBackLink'>←Início</Link>)
             }
 
             {children}

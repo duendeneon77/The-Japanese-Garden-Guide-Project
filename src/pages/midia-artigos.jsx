@@ -2,7 +2,7 @@ import Header from '../components/HeaderComponent/Header'
 import Footer from '../components/FooterComponent/Footer'
 import ContentComponent from '../components/ContentComponent/Content'
 import './pages.css'
-import articles from '../components/ContentComponent/Artigos/artigos.json'
+import articles from '../components/ContentComponent/Artigos/articles/artigos.json'
 import ArticleCard from '../components/ContentComponent/Artigos/ArticleCard/ArticleCard'
 function MidiaArquivos() {
 

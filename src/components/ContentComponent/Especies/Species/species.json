@@ -5,8 +5,9 @@
     "cor": "rosa, branca",
     "crescimento": "moderado a rápido",
     "tamanho": "grande",
+    "nomeCientifico": "Prunus",
     "imagem": "/speciesImages/sakura.png",
-    "arquivo": "species.txt",
+    "arquivo": "texto aqui",
     "galeria": []
   },
 {
@@ -15,33 +16,34 @@
     "tipo": "Conifera",
     "cor": "Verde Escuro",
     "crescimento": "lento",
-    "nomeCientifico": "",
+    "nomeCientifico": "Pinus thunbergii",
     "tamanho": "grande",
     "imagem": "/speciesImages/kuromatsu.png",
-    "arquivo": "species.txt",
+    "arquivo": "texto aqui",
     "galeria": []
   },
   {
     "id": "momiji",
     "titulo": "Acer Japonês / Momiji",
     "tipo": "Caducifolia",
-    "cor": "laranja vermelho amarelo rosa vinho",
+    "cor": "cores quentes",
     "crescimento": "moderado a rápido",
     "nomeCientifico": "Acer palmatum",
     "tamanho": "grande",
     "imagem": "/speciesImages/momiji.png",
-    "arquivo": "species.txt",
+    "arquivo": "texto aqui",
      "galeria": []
   },
   {
     "id": "azalea",
     "titulo": "Azaléia / Satsuki",
     "tipo": "Caducifolia, perene",
-    "cor": "rosa, branca",
-    "crescimento": "moderado a rápido",
+    "cor": "brancas/quentes",
+    "crescimento": "lento/moderado",
+    "nomeCientifico": "Rhododendron simsii",
     "tamanho": "grande",
     "imagem": "/speciesImages/azalea.png",
-    "arquivo": "species.txt",
+    "arquivo": "texto aqui",
      "galeria": []
   }
 

@@ -15,6 +15,8 @@
     width: 100%;
     height: 100%;
     border:1px solid rgba(230, 230, 230, 0.534);
+    
+    opacity: 0.90;
 }
 .card h2{
     padding: 1rem;
@@ -43,4 +45,55 @@
 }
 .card a:hover{
     color: rgba(240, 248, 255, 0.922);
+}
+
+@media (min-width: 768px) {
+    .card{
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+    "image title"
+    "image paragraph"
+    "image link";
+    border: 1px solid;
+}
+.card img{
+    grid-area: image;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+.card h2{
+    grid-area: title;
+    font-size: 1.4rem;
+    background-color: rgba(255, 255, 255, 0.766);
+    color:  rgba(0, 0, 0, 0.831);
+    border: none;
+}
+.card p{
+    grid-area: paragraph;
+    background-color: rgba(255, 255, 255, 0.766);
+    color:  rgba(0, 0, 0, 0.831);
+    border: none;
+}
+.card a{
+    grid-area: link;
+    background-color: rgba(255, 255, 255, 0.766);
+    color:  rgba(0, 0, 0, 0.831);
+    font-size: 1rem;
+    border: none;
+}
+.card a:hover{
+    color:  rgba(0, 0, 0, 0.694);
+    
+}
+
+.card:hover p,
+.card:hover a,
+.card:hover h2 {
+    background-color: rgba(255, 255, 255, 0.833);
+    color: rgba(0, 0, 0, 0.963);
+}
 }

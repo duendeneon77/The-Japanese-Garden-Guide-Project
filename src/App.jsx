@@ -9,6 +9,7 @@ import Projeto from './pages/indice-projeto'
 import Substitutas from './pages/indice-substitutas'
 import MidiaArtigos from './pages/midia-artigos'
 import MidiaVideos from './pages/midia-videos'
+import Specie from './pages/specie'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/substitutes" element={<Substitutas />} />
         <Route path="/artigos" element={<MidiaArtigos />} />
         <Route path="/videos" element={<MidiaVideos />} />
+        <Route path="/specie/:id" element={<Specie/>}/>
 
         
 

@@ -1,4 +1,5 @@
 import "./SpeciesCard.css";
+import {Link} from 'react-router-dom'
 
 const base = import.meta.env.BASE_URL;
 
@@ -12,9 +13,9 @@ function SpeciesCard({ species }) {
 
             <h2>{species.titulo}</h2>
 
-            <a href={`${base}Species/${species.id}`}>
+            <Link to={`/specie/${species.id}`}>
                 Ler mais
-            </a>
+            </Link>
         </div>
     );
 }

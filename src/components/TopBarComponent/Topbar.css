@@ -3,7 +3,7 @@
     align-items: center;
     min-width: 100%;
     justify-content: space-between;
-    background-color: black;
+    background-color:transparent;
     padding: 0 2% 0.3rem 2%;
     
 }
@@ -98,4 +98,26 @@ a{
     flex-direction: column;
 
     min-width: 100%;
+}
+
+@media (min-width: 768px) {
+    .btndrop{
+    padding-top:0.5rem!important;
+    padding-bottom:0.5rem!important;
+}
+
+
+}
+@media (min-width: 1024px) {
+    #topbar-div button{
+    font-size: 1rem!important;
+}
+
+    #topbar-div{
+    
+        justify-content: space-around;
+        padding-left: 7%;
+        padding-right: 7%;
+    }
+
 }

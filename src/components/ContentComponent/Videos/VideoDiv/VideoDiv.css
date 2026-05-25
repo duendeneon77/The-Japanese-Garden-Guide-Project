@@ -21,3 +21,20 @@ h2{
     padding: 1rem;
     padding: 1rem;
 }
+
+@media (min-width: 768px) {
+
+    .videoDiv{
+        max-width: 70%;
+        margin: 0 auto 2rem auto;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .videoDiv iframe{
+        width: 70%;
+        height: 20rem;
+    }
+
+}
