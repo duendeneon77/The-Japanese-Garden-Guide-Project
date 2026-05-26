@@ -98,7 +98,7 @@
 
 
 
- @media (min-width: 768px) {
+@media (min-width: 768px) {
 
   .carousel{
     width: 80%;
@@ -180,24 +180,10 @@
 }
 
 }
-@media (min-width: 1440px) {
-  .carousel {
-  margin: 5rem auto;
-  margin-bottom: 3rem;
+
+@media (min-width: 1024px){
+    .carousel {
+  width: 45%;
 }
 
-
-  .carousel-title{
-    font-size: 3rem;
-  }
-   .carousel-fade{
-    height: 500px;
-  }
-
-  .carousel-text{
-    font-size: 2rem;
-    line-height: 1.5;
-  }
-
 }
-

@@ -8,7 +8,10 @@
     "nomeCientifico": "Prunus",
     "imagem": "/speciesImages/sakura.png",
     "arquivo": "texto aqui",
-    "galeria": []
+    "galeria": [{"id": "im1","url": "/speciesImages/sakura/saku1.png"},{"id": "im2","url": "/speciesImages/sakura/saku2.png"},{"id": "im3",
+    "url": "/speciesImages/sakura/saku3.png"},{"id": "im4","url": "/speciesImages/sakura/saku4.png"},{"id": "im5","url": "/speciesImages/sakura/saku5.png"},{"id": "im6",
+    "url": "/speciesImages/sakura/saku6.png"},{"id": "im7","url": "/speciesImages/sakura/saku7.png"},{"id": "im8","url": "/speciesImages/sakura/saku8.png"},{"id": "im9",
+    "url": "/speciesImages/sakura/saku9.png"},{"id": "im10","url": "/speciesImages/sakura/saku10.png"}]
   },
 {
     "id": "blackpine",
@@ -20,7 +23,10 @@
     "tamanho": "grande",
     "imagem": "/speciesImages/kuromatsu.png",
     "arquivo": "texto aqui",
-    "galeria": []
+    "galeria": [{"id": "im1","url": "/speciesImages/kuromatsu/kuro1.png"},{"id": "im2","url": "/speciesImages/kuromatsu/kuro2.png"},{"id": "im3",
+    "url": "/speciesImages/kuromatsu/kuro3.png"},{"id": "im4","url": "/speciesImages/kuromatsu/kuro4.png"},{"id": "im5","url": "/speciesImages/kuromatsu/kuro5.png"},{"id": "im6",
+    "url": "/speciesImages/kuromatsu/kuro6.png"},{"id": "im7","url": "/speciesImages/kuromatsu/kuro7.png"},{"id": "im8","url": "/speciesImages/kuromatsu/kuro8.png"},{"id": "im9",
+    "url": "/speciesImages/kuromatsu/kuro9.png"},{"id": "im10","url": "/speciesImages/kuromatsu/kuro10.png"}]
   },
   {
     "id": "momiji",
@@ -32,7 +38,12 @@
     "tamanho": "grande",
     "imagem": "/speciesImages/momiji.png",
     "arquivo": "texto aqui",
-     "galeria": []
+    
+    "galeria": [{"id": "im1","url": "/speciesImages/momiji/momi1.png"},{"id": "im2","url": "/speciesImages/momiji/momi2.png"},{"id": "im3",
+    "url": "/speciesImages/momiji/momi3.png"},{"id": "im4","url": "/speciesImages/momiji/momi4.png"},{"id": "im5","url": "/speciesImages/momiji/momi5.png"},{"id": "im6",
+    "url": "/speciesImages/momiji/momi6.png"},{"id": "im7","url": "/speciesImages/momiji/momi7.png"},{"id": "im8","url": "/speciesImages/momiji/momi8.png"},{"id": "im9",
+    "url": "/speciesImages/momiji/momi9.png"},{"id": "im10","url": "/speciesImages/momiji/momi10.png"},{"id": "im11","url": "/speciesImages/momiji/momi11.png"},{"id": "im12",
+    "url": "/speciesImages/momiji/momi12.png"}]
   },
   {
     "id": "azalea",
@@ -44,8 +55,9 @@
     "tamanho": "grande",
     "imagem": "/speciesImages/azalea.png",
     "arquivo": "texto aqui",
-     "galeria": []
+    "galeria": [{"id": "im1","url": "/speciesImages/azaleas/aza1.png"},{"id": "im2","url": "/speciesImages/azaleas/aza2.png"},{"id": "im3",
+    "url": "/speciesImages/azaleas/aza3.png"},{"id": "im4","url": "/speciesImages/azaleas/aza4.png"},{"id": "im5","url": "/speciesImages/azaleas/aza5.png"},{"id": "im6",
+    "url": "/speciesImages/azaleas/aza6.png"},{"id": "im7","url": "/speciesImages/azaleas/aza7.png"},{"id": "im8","url": "/speciesImages/azaleas/aza8.png"},{"id": "im9","url": "/speciesImages/azaleas/aza9.png"}]
   }
-
 
 ]

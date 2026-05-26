@@ -57,6 +57,11 @@
     "image paragraph"
     "image link";
     border: 1px solid;
+    min-height: 14.3rem;
+    max-height: 16rem;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 .card img{
     grid-area: image;
@@ -67,7 +72,7 @@
 }
 .card h2{
     grid-area: title;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     background-color: rgba(255, 255, 255, 0.766);
     color:  rgba(0, 0, 0, 0.831);
     border: none;
@@ -77,6 +82,7 @@
     background-color: rgba(255, 255, 255, 0.766);
     color:  rgba(0, 0, 0, 0.831);
     border: none;
+    font-size: 1rem;
 }
 .card a{
     grid-area: link;
@@ -84,6 +90,9 @@
     color:  rgba(0, 0, 0, 0.831);
     font-size: 1rem;
     border: none;
+    padding: 0.3rem;
+    padding-right: 1rem;
+    
 }
 .card a:hover{
     color:  rgba(0, 0, 0, 0.694);
