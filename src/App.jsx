@@ -12,6 +12,12 @@ import MidiaVideos from './pages/midia-videos'
 import Specie from './pages/specie'
 import Login from './pages/Login'
 
+//userPages
+
+import AddSpecie from './pages/userPages/add-specie'
+import AddArticle from './pages/userPages/add-article'
+import AddVideo from './pages/userPages/add-video'
+
 
 function App() {
 
@@ -30,6 +36,10 @@ function App() {
         <Route path="/videos" element={<MidiaVideos />} />
         <Route path="/specie/:id" element={<Specie/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/addspecie" element={<AddSpecie/>}/>
+        <Route path="/addarticle" element={<AddArticle/>}/>
+        <Route path="/addvideo" element={<AddVideo/>}/>
+
 
         
 

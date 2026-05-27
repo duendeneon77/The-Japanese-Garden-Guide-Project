@@ -11,8 +11,26 @@
     text-align: center;
     font-family: "Zen Old Mincho", serif;
 }
-
 .userForms input{
+    font-family: "Zen Old Mincho", serif;
+}
+#specieFormTitle, #addArticleTitle{
+    font-size: 1.5rem;
+    font-weight: 100;
+    
+    font-family: "Zen Old Mincho", serif;
+}
+.userForms h3,
+.userForms textarea{
+    background-color: transparent;
+    font-family: "Zen Old Mincho", serif;
+    font-size: 1rem;
+    padding: 1rem;
+}
+
+/* INPUTS DE TEXTO */
+.userForms input[type="text"],
+.userForms input[type="password"]{
     background-color: transparent;
     border: 1px solid rgba(0, 0, 0, 0.711);
     outline: none;
@@ -20,9 +38,45 @@
     text-align: center;
     min-width: 90%;
     padding: 0.4rem;
-
 }
 
+/* RADIO E CHECKBOX */
+.userForms input[type="radio"],
+.userForms input[type="checkbox"]{
+    width: auto;
+    min-width: auto;
+    margin: 0.3rem;
+    cursor: pointer;
+    background-color: transparent;
+    accent-color: #5c5d5d;
+}
+
+.divRadio label{background-color: transparent;}
+.divRadio{
+    background-color: transparent;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    gap: 1rem;
+    font-family: "Zen Old Mincho", serif;
+}
+.toDivide{
+    background-color: transparent;
+    margin: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.619);
+    min-width: 90%;
+    
+}
+#more{
+    padding: 0;
+    max-height: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+/* BUTTON */
 .userForms button{
     display: flex;
     align-items: center;
@@ -34,16 +88,22 @@
     margin-bottom: 2rem;
     font-size: 1rem;
     color: rgba(0, 0, 0, 0.711);
+    cursor: pointer;
+    font-family: "Zen Old Mincho", serif;
 }
 
 .userForms button:hover{
     background-color: rgba(255, 255, 255, 0.502);
 }
+#specieText{
+    min-height: 20rem;
+    min-width: 95%;
+}
 
+/* RESPONSIVO */
 @media (min-width: 768px) {
     .userForms{
-    max-width: 60%;
+        max-width: 60%;
+    }
 }
 
-
-}
