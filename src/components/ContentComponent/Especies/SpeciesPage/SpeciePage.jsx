@@ -1,4 +1,4 @@
-import species from "../Species/species.json"
+import species from "../../../../../public/species/species.json"
 import { useParams } from "react-router-dom"
 import './SpeciesPage.css'
 import { useState, useEffect } from "react";

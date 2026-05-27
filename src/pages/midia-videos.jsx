@@ -1,7 +1,7 @@
 import Header from '../components/HeaderComponent/Header'
 import Footer from '../components/FooterComponent/Footer'
 import ContentComponent from '../components/ContentComponent/Content'
-import videos from '../components/ContentComponent/Videos/Videos/videos.json'
+import videos from '../../public/videos/videos.json'
 import './pages.css'
 import VideoDiv from '../components/ContentComponent/Videos/VideoDiv/VideoDiv'
 

@@ -68,7 +68,7 @@ function Topbar(){
             :null}
         </div>
 
-        <div className='menu-container'><button>Login</button></div>
+        <div className='menu-container'><button onClick={() => window.location.hash = "#/login"}>Login</button></div>
     </div>
     )
 }

@@ -3,7 +3,7 @@ import Carousel from '../components/CarouselComponent/Carousel'
 import ContentComponent from '../components/ContentComponent/Content'
 import Footer from '../components/FooterComponent/Footer'
 import ArticleCard from "../components/ContentComponent/Artigos/ArticleCard/ArticleCard"
-import artigos from '../components/ContentComponent/Artigos/articles/artigos.json'
+import artigos from '../../public/articles/artigos.json'
 import './pages.css'
 function Home() {
 

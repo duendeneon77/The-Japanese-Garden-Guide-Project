@@ -10,6 +10,7 @@ import Substitutas from './pages/indice-substitutas'
 import MidiaArtigos from './pages/midia-artigos'
 import MidiaVideos from './pages/midia-videos'
 import Specie from './pages/specie'
+import Login from './pages/Login'
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/artigos" element={<MidiaArtigos />} />
         <Route path="/videos" element={<MidiaVideos />} />
         <Route path="/specie/:id" element={<Specie/>}/>
+        <Route path="/login" element={<Login/>}/>
 
         
 

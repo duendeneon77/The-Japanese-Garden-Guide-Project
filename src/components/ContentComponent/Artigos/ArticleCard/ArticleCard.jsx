@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import './ArticleCard.css'
+import "./ArticleCard.css";
 
 const base = import.meta.env.BASE_URL;
 
@@ -7,36 +7,37 @@ function ArticleCard({ artigo }) {
   const [texto, setTexto] = useState("");
 
   useEffect(() => {
-    const load = async () => {
-      const articlesMap = import.meta.glob(
-        "../articles/*.txt",
-        {
-          query: "?raw",
-          import: "default",
-        }
-      );
-
-      const file =
-        articlesMap[`../articles/${artigo.arquivo}`];
-
-      if (file) {
-        const content = await file();
-        setTexto(content);
-      } else {
-        console.warn(
-          "Arquivo não encontrado:",
-          artigo.arquivo
+    const loadArticle = async () => {
+      try {
+        const response = await fetch(
+          `${base}articles/${artigo.arquivo}`
         );
+
+        if (!response.ok) {
+          throw new Error(
+            `Não foi possível carregar: ${artigo.arquivo}`
+          );
+        }
+
+        const content = await response.text();
+        setTexto(content);
+      } catch (error) {
+        console.warn(
+          "Erro ao carregar o artigo:",
+          artigo.arquivo,
+          error
+        );
+        setTexto("");
       }
     };
 
-    load();
+    loadArticle();
   }, [artigo.arquivo]);
 
   function resumo(texto, limite = 25) {
     if (!texto) return "";
 
-    const palavras = texto.split(" ");
+    const palavras = texto.trim().split(/\s+/);
 
     if (palavras.length <= limite) return texto;
 

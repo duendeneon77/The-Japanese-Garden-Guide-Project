@@ -1,0 +1,49 @@
+.userForms{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.776);
+    color:rgba(0, 0, 0, 0.75);
+    flex-direction: column;
+    max-width: 95%;
+    margin: auto;
+    margin-bottom: 4rem;
+    text-align: center;
+    font-family: "Zen Old Mincho", serif;
+}
+
+.userForms input{
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.711);
+    outline: none;
+    font-size: 1rem;
+    text-align: center;
+    min-width: 90%;
+    padding: 0.4rem;
+
+}
+
+.userForms button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-height: 3rem;
+    width: 6rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.711);
+}
+
+.userForms button:hover{
+    background-color: rgba(255, 255, 255, 0.502);
+}
+
+@media (min-width: 768px) {
+    .userForms{
+    max-width: 60%;
+}
+
+
+}

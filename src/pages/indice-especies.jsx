@@ -4,7 +4,7 @@ import Footer from '../components/FooterComponent/Footer'
 import ContentComponent from '../components/ContentComponent/Content'
 import SpeciesCard from  '../components/ContentComponent/Especies/SpeciesCard/SpeciesCard';
 import './pages.css'
-import species from "../components/ContentComponent/Especies/Species/species.json"
+import species from "../../public/species/species.json"
 function Especies() {
 
   return (

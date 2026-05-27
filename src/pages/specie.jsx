@@ -1,7 +1,7 @@
 import ContentComponent from "../components/ContentComponent/Content"
 import Footer from "../components/FooterComponent/Footer"
 import Header from "../components/HeaderComponent/Header"
-import species from "../components/ContentComponent/Especies/Species/species.json"
+import species from "../../public/species/species.json"
 import { useParams } from "react-router-dom"
 import SpeciesPage from "../components/ContentComponent/Especies/SpeciesPage/SpeciePage"
 const base = import.meta.env.BASE_URL;
