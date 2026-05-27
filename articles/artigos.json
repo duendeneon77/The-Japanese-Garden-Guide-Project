@@ -1,0 +1,38 @@
+[
+{
+    "id": "os jardins famosos",
+    "titulo": "Os jardins famosos",
+    "imagem": "/navbarmobile/carousel1.jpg",
+    "arquivo": "article1.txt"
+  },
+  {
+    "id": "jardim japonês para iniciantes",
+    "titulo": "Jardim japonês para iniciantes",
+    "imagem": "/navbarmobile/carousel2.jpg",
+    "arquivo": "article1.txt"
+  },
+  {
+    "id": "ideias",
+    "titulo": "Ideias",
+    "imagem": "/navbarmobile/carousel3.jpg",
+    "arquivo": "article1.txt"
+  },
+  {
+    "id": "como pensar em substituições",
+    "titulo": "Como pensar em substituições",
+    "imagem": "/navbarmobile/carousel4.jpg",
+    "arquivo": "article1.txt"
+  },
+  {
+    "id": "Manejo correto",
+    "titulo": "Manejo correto",
+    "imagem": "/navbarmobile/carousel5.jpg",
+    "arquivo": "article1.txt"
+  },
+  {
+    "id": "Bonsai e macrobonsai",
+    "titulo": "bonsai e macrobonsai",
+    "imagem": "/navbarmobile/carousel6.jpg",
+    "arquivo": "article1.txt"
+  }
+]

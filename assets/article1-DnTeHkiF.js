@@ -1,9 +1,0 @@
-var e=`Os jardins japoneses são espaços pensados para transmitir equilíbrio, silêncio e contemplação. Cada elemento é cuidadosamente posicionado para criar uma sensação de harmonia entre o homem e a natureza. Pedras, água e vegetação não são apenas decorativos, mas carregam significados profundos dentro da cultura japonesa.\r
-\r
-A composição desses jardins muitas vezes segue princípios estéticos como a simplicidade e a assimetria. Ao contrário dos jardins ocidentais, que valorizam a simetria e o controle, os jardins japoneses abraçam a imperfeição como parte da beleza natural. Esse conceito está diretamente ligado à filosofia do wabi-sabi.\r
-\r
-Caminhos sinuosos convidam o visitante a desacelerar e observar os detalhes ao redor. Pequenas pontes, lanternas de pedra e lagos com carpas criam cenários que mudam conforme a perspectiva. Cada passo revela uma nova cena, quase como uma pintura viva.\r
-\r
-A presença da água, seja real ou simbolizada por areia cuidadosamente rastelada, representa o fluxo da vida. Já as pedras simbolizam permanência e estabilidade. Juntos, esses elementos constroem uma narrativa silenciosa que pode ser interpretada de diferentes maneiras por cada observador.\r
-\r
-Mais do que espaços físicos, os jardins japoneses são convites à introspecção. Eles estimulam uma pausa no ritmo acelerado do cotidiano e oferecem um momento de conexão com o presente. Ao caminhar por esses ambientes, é possível experimentar uma forma simples e profunda de tranquilidade.`;export{e as default};
