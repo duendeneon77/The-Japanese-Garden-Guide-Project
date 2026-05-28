@@ -12,11 +12,15 @@ import MidiaVideos from './pages/midia-videos'
 import Specie from './pages/specie'
 import Login from './pages/Login'
 
-//userPages
 
+//userPages
+import UserMenu from './pages/userPages/user-menu'
 import AddSpecie from './pages/userPages/add-specie'
 import AddArticle from './pages/userPages/add-article'
 import AddVideo from './pages/userPages/add-video'
+import EditDeleteVideo from './pages/userPages/edit-delete-video'
+import EditOrDeleteSpecie from './pages/userPages/edit-or-delete-especie'
+import EditOrDeleteArticle from './pages/userPages/edit-or-delete-article'
 
 
 function App() {
@@ -36,9 +40,14 @@ function App() {
         <Route path="/videos" element={<MidiaVideos />} />
         <Route path="/specie/:id" element={<Specie/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/usersection" element={<UserMenu/>}/>
         <Route path="/addspecie" element={<AddSpecie/>}/>
         <Route path="/addarticle" element={<AddArticle/>}/>
         <Route path="/addvideo" element={<AddVideo/>}/>
+        <Route path="/editdeletevideo" element={<EditDeleteVideo/>}/>
+        <Route path="/editdeletespecie" element={<EditOrDeleteSpecie/>}/>
+        <Route path="/editdeletearticle" element={<EditOrDeleteArticle/>}/>
+
 
 
         
