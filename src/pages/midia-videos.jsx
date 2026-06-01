@@ -4,6 +4,7 @@ import ContentComponent from '../components/ContentComponent/Content'
 import videos from '../../public/videos/videos.json'
 import './pages.css'
 import VideoDiv from '../components/ContentComponent/Videos/VideoDiv/VideoDiv'
+import BackHomeButton from '../components/BackHomeButton/BackHomeButton'
 
 function MidiaVideos() {
 
@@ -27,7 +28,9 @@ function MidiaVideos() {
 
         ))}
 
+         <BackHomeButton/>
       </ContentComponent>
+      
 
       <Footer/>
 

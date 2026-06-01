@@ -4,7 +4,8 @@ import ContentComponent from '../components/ContentComponent/Content'
 import './pages.css'
 import articles from '../../public/articles/artigos.json'
 import ArticleCard from '../components/ContentComponent/Artigos/ArticleCard/ArticleCard'
-function MidiaArquivos() {
+import BackHomeButton from '../components/BackHomeButton/BackHomeButton'
+function MidiaArtigos() {
 
   return (
     <div id='mainDiv'>
@@ -22,10 +23,12 @@ function MidiaArquivos() {
             )
           })
         }
+         <div style={{ marginTop: "3rem", marginBottom: "3rem", backgroundColor: "transparent"}}>
+  <BackHomeButton /></div>
       </ContentComponent>
       <Footer/>
     </div>
   )
 }
 
-export default MidiaArquivos
+export default MidiaArtigos

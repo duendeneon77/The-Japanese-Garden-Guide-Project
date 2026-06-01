@@ -7,6 +7,7 @@ import Footer from "../../components/FooterComponent/Footer";
 import speciesData from "../../../public/species/species.json";
 
 import "../form.css";
+import BackUserPageButton from "../../components/BackUserPageButton/BackUserPageButton";
 
 function EditSpecie() {
 
@@ -644,6 +645,8 @@ function EditSpecie() {
           }
 
         </div>
+
+        <BackUserPageButton/>
 
       </ContentComponent>
 

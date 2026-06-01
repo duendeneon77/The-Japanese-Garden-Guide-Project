@@ -5,6 +5,7 @@ import Footer from "../../components/FooterComponent/Footer"
 import { useNavigate } from "react-router-dom"
 
 import '../form.css'
+import BackUserPageButton from "../../components/BackUserPageButton/BackUserPageButton"
 
 function AddVideo() {
 
@@ -80,6 +81,8 @@ function AddVideo() {
           </div>
 
         </form>
+
+        <BackUserPageButton/>
 
       </ContentComponent>
 

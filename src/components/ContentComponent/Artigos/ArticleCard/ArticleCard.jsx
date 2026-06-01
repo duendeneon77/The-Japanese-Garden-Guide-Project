@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./ArticleCard.css";
 
 const base = import.meta.env.BASE_URL;
 
 function ArticleCard({ artigo }) {
   const [texto, setTexto] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadArticle = async () => {
@@ -45,7 +47,12 @@ function ArticleCard({ artigo }) {
   }
 
   return (
-    <div className="card">
+    <div
+      className="card"
+      onClick={() =>
+        navigate(`/article/${encodeURIComponent(artigo.id)}`)
+      }
+    >
       <img
         src={`${base}${artigo.imagem}`}
         alt={artigo.titulo}
@@ -55,9 +62,12 @@ function ArticleCard({ artigo }) {
 
       <p>{resumo(texto, 25)}</p>
 
-      <a href={`${base}artigo/${artigo.id}`}>
+      <Link
+        to={`/article/${encodeURIComponent(artigo.id)}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         Ler mais
-      </a>
+      </Link>
     </div>
   );
 }

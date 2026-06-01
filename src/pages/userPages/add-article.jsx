@@ -1,6 +1,7 @@
 import Header from "../../components/HeaderComponent/Header"
 import ContentComponent from "../../components/ContentComponent/Content"
 import Footer from "../../components/FooterComponent/Footer"
+import BackUserButton from "../../components/BackUserPageButton/BackUserPageButton"
 
 import { useNavigate } from "react-router-dom"
 
@@ -81,7 +82,10 @@ function AddArticle() {
 
         </form>
 
+        <BackUserButton/>
+
       </ContentComponent>
+
 
       <Footer />
 

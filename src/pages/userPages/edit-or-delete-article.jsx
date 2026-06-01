@@ -7,6 +7,7 @@ import Footer from "../../components/FooterComponent/Footer";
 import articlesData from "../../../public/articles/artigos.json";
 
 import "../form.css";
+import BackUserPageButton from "../../components/BackUserPageButton/BackUserPageButton";
 
 function EditOrDeleteArticle() {
   const base = import.meta.env.BASE_URL;
@@ -262,6 +263,8 @@ function EditOrDeleteArticle() {
             </>
           )}
         </div>
+
+        <BackUserPageButton/>
       </ContentComponent>
 
       <Footer />

@@ -4,6 +4,7 @@ import Header from '../components/HeaderComponent/Header'
 import Footer from '../components/FooterComponent/Footer'
 import ContentComponent from '../components/ContentComponent/Content'
 import './pages.css'
+import BackHomeButton from '../components/BackHomeButton/BackHomeButton'
 function Projeto() {
 
   return (
@@ -74,6 +75,7 @@ function Projeto() {
     <p style={{alignSelf: 'flex-end', backgroundColor:'transparent',marginTop:'2rem'}}>Arthur Henrique</p>
 
   </div>
+  <BackHomeButton/>
 </ContentComponent>
       <Footer/>
     </div>

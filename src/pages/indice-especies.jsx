@@ -5,6 +5,7 @@ import ContentComponent from '../components/ContentComponent/Content'
 import SpeciesCard from  '../components/ContentComponent/Especies/SpeciesCard/SpeciesCard';
 import './pages.css'
 import species from "../../public/species/species.json"
+import BackHomeButton from '../components/BackHomeButton/BackHomeButton';
 function Especies() {
 
   return (
@@ -24,7 +25,11 @@ function Especies() {
           )
         })}
 
+      <div style={{ marginTop: "3rem", marginBottom: "3rem", backgroundColor: "transparent"}}>
+  <BackHomeButton />
+</div>
       </ContentComponent>
+      
       
       <Footer/>
     </div>

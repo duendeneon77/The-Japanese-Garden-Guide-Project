@@ -5,6 +5,7 @@ import Footer from "../../components/FooterComponent/Footer"
 import { useNavigate } from "react-router-dom"
 
 import '../form.css'
+import BackUserPageButton from "../../components/BackUserPageButton/BackUserPageButton"
 
 function AddSpecie() {
 
@@ -258,6 +259,7 @@ function AddSpecie() {
           </div>
 
         </form>
+        <BackUserPageButton/>
 
       </ContentComponent>
 

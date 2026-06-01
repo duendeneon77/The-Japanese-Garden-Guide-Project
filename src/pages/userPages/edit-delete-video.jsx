@@ -7,6 +7,7 @@ import Footer from "../../components/FooterComponent/Footer";
 import videosData from "../../../public/videos/videos.json";
 
 import "../form.css";
+import BackUserPageButton from "../../components/BackUserPageButton/BackUserPageButton";
 
 function EditDeleteVideo() {
 
@@ -323,6 +324,8 @@ function EditDeleteVideo() {
           }
 
         </div>
+
+        <BackUserPageButton/>
 
       </ContentComponent>
 
