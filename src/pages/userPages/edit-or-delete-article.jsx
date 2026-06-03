@@ -24,29 +24,60 @@ function EditOrDeleteArticle() {
     id: "",
     titulo: "",
     imagem: "",
-    arquivo: "",
+    texto: ""
   });
 
-  const filteredArticles = articles.filter((article) => {
-    return article.titulo.toLowerCase().includes(search.toLowerCase());
-  });
+  const filteredArticles = articles.filter(article =>
+    article.titulo.toLowerCase().includes(search.toLowerCase())
+  );
 
-  async function handleSelect(article) {
-    let articleText = "";
+  function articleToText(conteudo) {
+    return conteudo
+      .map(item => {
+        if (item.tipo === "paragrafo") {
+          return item.texto;
+        }
 
-    try {
-      const response = await fetch(`${base}articles/${article.arquivo}`);
+        if (item.tipo === "imagem") {
+          return `[img]${item.src}[/img]`;
+        }
 
-      articleText = await response.text();
-    } catch (error) {
-      articleText = "Erro ao carregar artigo.";
-    }
+        return "";
+      })
+      .join("\n\n");
+  }
 
+  function textToContent(texto) {
+    return texto
+      .split(/\n\s*\n/)
+      .filter(item => item.trim() !== "")
+      .map(item => {
+        const imageMatch = item.match(
+          /^\[img\](.*?)\[\/img\]$/s
+        );
+
+        if (imageMatch) {
+          return {
+            tipo: "imagem",
+            src: imageMatch[1].trim()
+          };
+        }
+
+        return {
+          tipo: "paragrafo",
+          texto: item.trim()
+        };
+      });
+  }
+
+  function handleSelect(article) {
     setSelectedArticle(article);
 
     setEditForm({
-      ...article,
-      arquivo: articleText,
+      id: article.id,
+      titulo: article.titulo,
+      imagem: article.imagem,
+      texto: articleToText(article.conteudo)
     });
 
     setSearch("");
@@ -55,34 +86,35 @@ function EditOrDeleteArticle() {
   function handleChange(e) {
     setEditForm({
       ...editForm,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   }
 
   function handleSave() {
-    const updatedArticles = articles.map((article) => {
-      if (article.id === selectedArticle.id) {
-        return {
-          ...article,
-          titulo: editForm.titulo,
-          imagem: editForm.imagem,
-        };
-      }
+    const updatedArticle = {
+      id: editForm.id,
+      titulo: editForm.titulo,
+      imagem: editForm.imagem,
+      conteudo: textToContent(editForm.texto)
+    };
 
-      return article;
-    });
+    const updatedArticles = articles.map(article =>
+      article.id === selectedArticle.id
+        ? updatedArticle
+        : article
+    );
 
     setArticles(updatedArticles);
 
-    console.log("Texto atualizado:");
-    console.log(editForm.arquivo);
+    console.log("JSON atualizado:");
+    console.log(updatedArticle);
 
     handleCancel();
   }
 
   function handleDeleteArticle() {
     const updatedArticles = articles.filter(
-      (article) => article.id !== selectedArticle.id,
+      article => article.id !== selectedArticle.id
     );
 
     setArticles(updatedArticles);
@@ -103,7 +135,7 @@ function EditOrDeleteArticle() {
       id: "",
       titulo: "",
       imagem: "",
-      arquivo: "",
+      texto: ""
     });
   }
 
@@ -115,26 +147,31 @@ function EditOrDeleteArticle() {
         <div className="userForms">
           {!selectedArticle && (
             <>
-              <h3 id="addArticleTitle">Buscar artigo</h3>
+              <h3 id="addArticleTitle">
+                Buscar artigo
+              </h3>
 
               <p>Procure pelo nome do artigo</p>
 
               <input
                 type="text"
-                id="searchVideo"
                 placeholder="Digite aqui..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) =>
+                  setSearch(e.target.value)
+                }
               />
 
               {search && (
                 <div className="searchResults">
                   {filteredArticles.length > 0 ? (
-                    filteredArticles.map((article, index) => (
+                    filteredArticles.map(article => (
                       <div
-                        key={index}
+                        key={article.id}
                         className="searchItem"
-                        onClick={() => handleSelect(article)}
+                        onClick={() =>
+                          handleSelect(article)
+                        }
                       >
                         {article.titulo}
                       </div>
@@ -147,11 +184,11 @@ function EditOrDeleteArticle() {
             </>
           )}
 
-          {/* EDIÇÃO */}
-
           {selectedArticle && (
             <>
-              <h3 id="addArticleTitle">Editar artigo</h3>
+              <h3 id="addArticleTitle">
+                Editar artigo
+              </h3>
 
               <p>Título do artigo</p>
 
@@ -165,11 +202,13 @@ function EditOrDeleteArticle() {
               <p>Imagem principal</p>
 
               <img
-                src={`${base}${editForm.imagem.replace("/", "")}`}
-                alt=""
+                src={`${base}${editForm.imagem.replace(/^\//, "")}`}
+                alt={editForm.titulo}
                 style={{
-                  width: "8rem",
+                  width: "12rem",
+                  maxWidth: "100%",
                   marginBottom: "1rem",
+                  borderRadius: "0.5rem"
                 }}
               />
 
@@ -180,34 +219,58 @@ function EditOrDeleteArticle() {
                 onChange={handleChange}
               />
 
-              <p>Texto do artigo</p>
+              <p>
+                Conteúdo do artigo
+              </p>
+
+              <p
+                style={{
+                  fontSize: "0.9rem",
+                  opacity: "0.8",
+                  marginBottom: "1rem"
+                }}
+              >
+                Use dois ENTERs para criar um novo
+                parágrafo.
+                <br />
+                Para inserir imagens:
+                <br />
+                [img]URL_DA_IMAGEM[/img]
+              </p>
 
               <textarea
                 id="specieText"
-                name="arquivo"
-                value={editForm.arquivo}
+                name="texto"
+                value={editForm.texto}
                 onChange={handleChange}
-              ></textarea>
+              />
 
               <div className="editArticleButtonDiv">
                 <div className="editArticleButtonSubdiv">
-                  <button type="button" onClick={handleSave}>
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                  >
                     Salvar
                   </button>
 
                   <button
                     type="button"
-                    onClick={() => setShowDeleteModal(true)}
+                    onClick={() =>
+                      setShowDeleteModal(true)
+                    }
                   >
                     Deletar
                   </button>
                 </div>
-                <button type="button" onClick={handleCancel}>
+
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                >
                   Cancelar
                 </button>
               </div>
-
-              {/* MODAL */}
 
               {showDeleteModal && (
                 <div
@@ -217,42 +280,56 @@ function EditOrDeleteArticle() {
                     left: 0,
                     width: "100%",
                     height: "100%",
-                    backgroundColor: "rgba(0,0,0,0.5)",
+                    backgroundColor:
+                      "rgba(0,0,0,0.5)",
                     display: "flex",
-                    alignItems: "center",
                     justifyContent: "center",
-                    zIndex: 999,
+                    alignItems: "center",
+                    zIndex: 999
                   }}
                 >
                   <div
                     style={{
-                      backgroundColor: "rgb(223, 223, 223)",
+                      backgroundColor:
+                        "rgb(223,223,223)",
                       padding: "2rem",
                       borderRadius: "1rem",
+                      color: "black",
                       display: "flex",
                       flexDirection: "column",
-                      alignItems: "center",
                       gap: "1rem",
-                      maxWidth: "90%",
-                      color: "black",
+                      alignItems: "center"
                     }}
                   >
-                    <p>Tem certeza que deseja deletar o artigo?</p>
+                    <p>
+                      Tem certeza que deseja
+                      deletar o artigo?
+                    </p>
 
                     <div
                       style={{
                         display: "flex",
                         gap: "1rem",
-                        backgroundColor: "transparent",
+                        backgroundColor:
+                          "transparent"
                       }}
                     >
-                      <button type="button" onClick={handleDeleteArticle}>
+                      <button
+                        type="button"
+                        onClick={
+                          handleDeleteArticle
+                        }
+                      >
                         Sim
                       </button>
 
                       <button
                         type="button"
-                        onClick={() => setShowDeleteModal(false)}
+                        onClick={() =>
+                          setShowDeleteModal(
+                            false
+                          )
+                        }
                       >
                         Cancelar
                       </button>
@@ -264,7 +341,7 @@ function EditOrDeleteArticle() {
           )}
         </div>
 
-        <BackUserPageButton/>
+        <BackUserPageButton />
       </ContentComponent>
 
       <Footer />

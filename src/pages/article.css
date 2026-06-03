@@ -30,10 +30,11 @@
     padding: 1rem;
 }
 
-.articleText p{
+.articleText p {
     text-align: justify;
     text-indent: 2em;
-    margin: 0;
+    margin: 0 0 0.9rem 0;
+    padding:0; 
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }

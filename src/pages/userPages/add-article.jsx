@@ -1,74 +1,137 @@
-import Header from "../../components/HeaderComponent/Header"
-import ContentComponent from "../../components/ContentComponent/Content"
-import Footer from "../../components/FooterComponent/Footer"
-import BackUserButton from "../../components/BackUserPageButton/BackUserPageButton"
+import Header from "../../components/HeaderComponent/Header";
+import ContentComponent from "../../components/ContentComponent/Content";
+import Footer from "../../components/FooterComponent/Footer";
+import BackUserButton from "../../components/BackUserPageButton/BackUserPageButton";
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-import '../form.css'
+import "../form.css";
 
 function AddArticle() {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const [titulo, setTitulo] = useState("");
+  const [imagem, setImagem] = useState("");
+  const [texto, setTexto] = useState("");
 
   function handleCancel() {
+    navigate("/usersection");
+  }
 
-    navigate("/usersection")
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const conteudo = texto
+      .split(/\n\s*\n/)
+      .filter((bloco) => bloco.trim() !== "")
+      .map((bloco) => {
+        const imagemMatch = bloco.match(
+          /^<img>(.*?)<\/img>$/
+        );
+
+        if (imagemMatch) {
+          return {
+            tipo: "imagem",
+            src: imagemMatch[1].trim(),
+          };
+        }
+
+        return {
+          tipo: "paragrafo",
+          texto: bloco.trim(),
+        };
+      });
+
+    const novoArtigo = {
+      id: titulo
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "-"),
+      titulo,
+      imagem,
+      conteudo,
+    };
+
+    console.log("ARTIGO CRIADO:");
+    console.log(
+      JSON.stringify(novoArtigo, null, 2)
+    );
+
+    alert("Artigo gerado! Verifique o console.");
   }
 
   return (
-
-    <div id='mainDiv'>
-
+    <div id="mainDiv">
       <Header />
 
       <ContentComponent>
-
         <form
-          className='userForms'
-          onSubmit={(e) => e.preventDefault()}
+          className="userForms"
+          onSubmit={handleSubmit}
         >
-
           <h3 id="addArticleTitle">
             Postagem de Novo Artigo
           </h3>
 
-          <p>
-            Digite abaixo o nome do artigo
-          </p>
+          <p>Digite o nome do artigo</p>
 
           <input
             type="text"
-            id='inputArticleName'
-            placeholder='digite o nome do artigo aqui'
+            value={titulo}
+            onChange={(e) =>
+              setTitulo(e.target.value)
+            }
+            placeholder="nome do artigo"
           />
 
-          <p>
-            Abaixo, coloque o link da imagem principal do Artigo
-          </p>
+          <p>Imagem principal do artigo</p>
 
           <input
             type="text"
-            id='inputMainImage'
-            placeholder='cole aqui o link da imagem'
+            value={imagem}
+            onChange={(e) =>
+              setImagem(e.target.value)
+            }
+            placeholder="/navbarmobile/imagem.jpg"
           />
 
           <p>
-            Escreva seu artigo abaixo:
+            Escreva o artigo abaixo.
+            <br />
+            Use ENTER duas vezes para criar
+            um novo parágrafo.
+            <br />
+            Para inserir imagens no texto:
           </p>
+
+          <pre
+            style={{
+              background: "rgba(0,0,0,0.1)",
+              padding: "1rem",
+              maxWidth: "90%",
+              overflowX: "auto",
+            }}
+          >
+{`<img>/caminho/imagem.jpg</img>`}
+          </pre>
 
           <textarea
             id="specieText"
-            placeholder="Escreva seu artigo aqui"
-          ></textarea>
+            value={texto}
+            onChange={(e) =>
+              setTexto(e.target.value)
+            }
+            placeholder="Escreva o artigo aqui"
+          />
 
           <div className="editArticleButtonDiv">
-
             <button
               type="submit"
               id="post"
             >
-              Postar
+              Gerar artigo
             </button>
 
             <button
@@ -77,20 +140,15 @@ function AddArticle() {
             >
               Cancelar
             </button>
-
           </div>
-
         </form>
 
-        <BackUserButton/>
-
+        <BackUserButton />
       </ContentComponent>
 
-
       <Footer />
-
     </div>
-  )
+  );
 }
 
-export default AddArticle
+export default AddArticle;

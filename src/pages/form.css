@@ -204,6 +204,11 @@
     max-width: 1rem;
 }
 
+#editSpecieTextArea{
+    background-color: transparent;
+    width: 90%;
+}
+
 
 @media (min-width: 768px) {
     .userForms{

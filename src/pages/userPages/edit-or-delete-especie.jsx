@@ -20,17 +20,17 @@ function EditSpecie() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [editForm, setEditForm] = useState({
-    id: "",
-    titulo: "",
-    tipo: "",
-    cor: "",
-    crescimento: "",
-    tamanho: "",
-    nomeCientifico: "",
-    imagem: "",
-    arquivo: "",
-    galeria: [],
-  });
+  id: "",
+  titulo: "",
+  tipo: "",
+  cor: "",
+  crescimento: "",
+  tamanho: "",
+  nomeCientifico: "",
+  imagem: "",
+  arquivo: [],
+  galeria: [],
+});
 
   const filteredSpecies = species.filter((specie) => {
     const vulgar = specie.titulo.toLowerCase();
@@ -54,6 +54,20 @@ function EditSpecie() {
       [e.target.name]: e.target.value,
     });
   }
+  function handleArticleChange(e) {
+  const paragraphs = e.target.value
+    .split("\n")
+    .filter((paragraph) => paragraph.trim() !== "")
+    .map((paragraph) => ({
+      tipo: "paragrafo",
+      texto: paragraph,
+    }));
+
+  setEditForm({
+    ...editForm,
+    arquivo: paragraphs,
+  });
+}
 
   function handleGalleryChange(index, value) {
     const updatedGallery = [...editForm.galeria];
@@ -113,24 +127,24 @@ function EditSpecie() {
   }
 
   function handleCancel() {
-    setSelectedSpecie(null);
-    setSearch("");
-    setNewGalleryImage("");
-    setShowDeleteModal(false);
+  setSelectedSpecie(null);
+  setSearch("");
+  setNewGalleryImage("");
+  setShowDeleteModal(false);
 
-    setEditForm({
-      id: "",
-      titulo: "",
-      tipo: "",
-      cor: "",
-      crescimento: "",
-      tamanho: "",
-      nomeCientifico: "",
-      imagem: "",
-      arquivo: "",
-      galeria: [],
-    });
-  }
+  setEditForm({
+    id: "",
+    titulo: "",
+    tipo: "",
+    cor: "",
+    crescimento: "",
+    tamanho: "",
+    nomeCientifico: "",
+    imagem: "",
+    arquivo: [],
+    galeria: [],
+  });
+}
 
   return (
     <div id="mainDiv">
@@ -201,6 +215,19 @@ function EditSpecie() {
                 name="imagem"
                 value={editForm.imagem}
                 onChange={handleChange}
+              />
+
+              <p>Texto da espécie</p>
+
+              <textarea
+                rows={20}
+                value={(editForm.arquivo || [])
+                  .filter((item) => item.tipo === "paragrafo")
+                  .map((item) => item.texto)
+                  .join("\n")}
+                onChange={handleArticleChange}
+                placeholder="Cada Enter cria um novo parágrafo"
+                id="editSpecieTextArea"
               />
 
               <div className="toDivide">

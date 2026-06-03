@@ -1,9 +1,9 @@
 import species from "../../../../../public/species/species.json"
 import { useParams } from "react-router-dom"
-import './SpeciesPage.css'
-import { useState, useEffect } from "react";
+import "./SpeciesPage.css"
+import { useState, useEffect } from "react"
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL
 
 function SpeciesPage() {
 
@@ -25,6 +25,7 @@ function SpeciesPage() {
 
     function nextImage(e) {
         e.stopPropagation()
+
         setSelectedIndex(prev =>
             prev === specie.galeria.length - 1 ? 0 : prev + 1
         )
@@ -32,14 +33,15 @@ function SpeciesPage() {
 
     function prevImage(e) {
         e.stopPropagation()
+
         setSelectedIndex(prev =>
             prev === 0 ? specie.galeria.length - 1 : prev - 1
         )
     }
 
-    // 👇 TECLADO (NOVO)
     useEffect(() => {
-        if (selectedIndex === null) return;
+
+        if (selectedIndex === null) return
 
         function handleKeyDown(e) {
 
@@ -85,14 +87,58 @@ function SpeciesPage() {
 
             <table>
                 <tbody>
-                    <tr><td>Tipo:</td><td>{specie.tipo}</td></tr>
-                    <tr><td>Cor:</td><td>{specie.cor}</td></tr>
-                    <tr><td>Crescimento:</td><td>{specie.crescimento}</td></tr>
-                    <tr><td>Tamanho:</td><td>{specie.tamanho}</td></tr>
+
+                    <tr>
+                        <td>Tipo:</td>
+                        <td>{specie.tipo}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Cor:</td>
+                        <td>{specie.cor}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Crescimento:</td>
+                        <td>{specie.crescimento}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Tamanho:</td>
+                        <td>{specie.tamanho}</td>
+                    </tr>
+
                 </tbody>
             </table>
 
-            <p className="specieText">{specie.arquivo}</p>
+            <div className="specieText">
+
+                {specie.arquivo?.map((item, index) => {
+
+                    if (item.tipo === "paragrafo") {
+                        return (
+                            <p key={index} className="specieParagraph">
+                                {item.texto}
+                            </p>
+                        )
+                    }
+
+                    if (item.tipo === "imagem") {
+                        return (
+                            <img
+                                key={index}
+                                className="articleImage"
+                                src={`${base}${item.src.replace(/^\//, "")}`}
+                                alt=""
+                            />
+                        )
+                    }
+
+                    return null
+
+                })}
+
+            </div>
 
             <div className="totalGalery">
 
@@ -101,6 +147,7 @@ function SpeciesPage() {
                 </p>
 
                 <div className="galery">
+
                     {specie.galeria.map((img, index) => (
                         <img
                             key={img.id}
@@ -110,14 +157,25 @@ function SpeciesPage() {
                             onClick={() => setSelectedIndex(index)}
                         />
                     ))}
+
                 </div>
 
                 {selectedIndex !== null && (
-                    <div className="modal" onClick={closeModal}>
 
-                        <div className="modalContent" onClick={(e) => e.stopPropagation()}>
+                    <div
+                        className="modal"
+                        onClick={closeModal}
+                    >
 
-                            <button className="closeBtn" onClick={closeModal}>
+                        <div
+                            className="modalContent"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+
+                            <button
+                                className="closeBtn"
+                                onClick={closeModal}
+                            >
                                 ✕
                             </button>
 
@@ -128,21 +186,29 @@ function SpeciesPage() {
                             />
 
                             <div className="modalControls">
-                                <button onClick={prevImage}> ← </button>
-                                <button onClick={nextImage}> → </button>
+
+                                <button onClick={prevImage}>
+                                    ←
+                                </button>
+
+                                <button onClick={nextImage}>
+                                    →
+                                </button>
+
                             </div>
 
                         </div>
 
                     </div>
+
                 )}
 
-                
                 <p className="pGalery">
-                    Caso use teclas, use 'shift' para fechar
+                    Caso use teclas, use ESC para fechar
                 </p>
 
             </div>
+
         </div>
     )
 }
