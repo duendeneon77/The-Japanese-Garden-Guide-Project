@@ -1,38 +1,248 @@
 [
-{
-    "id": "os jardins famosos",
+  {
+    "id": "os-jardins-famosos",
     "titulo": "Os jardins famosos",
     "imagem": "/navbarmobile/carousel1.jpg",
-    "arquivo": "article1.txt"
+    "conteudo": [
+      {
+        "tipo": "paragrafo",
+        "texto": "Os jardins japoneses são uma das formas mais refinadas de expressão estética e filosófica da cultura do Japão. Mais do que simples paisagismo, eles funcionam como “paisagens construídas”, pensadas para provocar contemplação, silêncio mental e percepção do tempo de forma mais lenta. Cada tipo de jardim nasce de uma intenção diferente — alguns convidam a caminhar e descobrir cenários, outros são feitos para meditação profunda, e outros simulam a natureza de forma idealizada."
+      },
+      {
+        "tipo": "paragrafo",
+        "texto": "O **jardim de caminhada (kaiyū-shiki-teien)** é um dos estilos mais completos e populares. Ele é projetado para ser vivido em movimento: o visitante percorre trilhas que contornam lagos, pontes, pequenas ilhas e colinas artificiais, sempre descobrindo novas composições visuais a cada mudança de ângulo. A ideia é que não exista uma “visão final” do jardim, mas uma sequência de momentos. Um dos exemplos mais emblemáticos desse estilo é o **Kenroku-en**, considerado um dos três grandes jardins do país, famoso pelo equilíbrio entre espaço, água, vegetação e elementos arquitetônicos. Outro exemplo marcante é o **Kōraku-en**, que combina amplas áreas verdes com colinas artificiais e vistas planejadas do castelo de Okayama, criando uma sensação de paisagem aberta e contínua. Também entra nesse grupo o **Ritsurin Garden**, um dos jardins mais complexos e detalhados do Japão, onde cada caminho revela composições cuidadosamente equilibradas entre lagos, pinheiros moldados e pequenas casas de chá."
+      },
+      {
+        "tipo": "paragrafo",
+        "texto": "Já o **jardim seco (karesansui)**, frequentemente chamado de jardim zen, segue uma lógica completamente diferente. Ele não depende de água real: utiliza pedras, areia branca e cascalho rastelado para representar rios, montanhas e oceanos de forma simbólica. O rastelo cria padrões que mudam com o vento e com a manutenção humana, reforçando a ideia de impermanência. Esse tipo de jardim não foi feito para caminhar, mas para observar e meditar. O exemplo mais famoso do mundo é o jardim de pedras do **Ryōan-ji**, composto por quinze pedras dispostas de forma que nunca podem ser vistas todas ao mesmo tempo de qualquer ângulo, sugerindo reflexão e incompletude. Outro exemplo importante é o jardim do **Ginkaku-ji**, que combina áreas de areia cuidadosamente moldada com jardins de musgo, criando uma atmosfera de silêncio e simplicidade refinada."
+      },
+      {
+        "tipo": "paragrafo",
+        "texto": "O **jardim de chá (roji)** tem uma função mais ritualística. Ele não é um jardim de exibição, mas de transição: seu papel é preparar o visitante para a cerimônia do chá. Por isso, ele é simples, com caminhos de pedras irregulares, musgo, lanternas discretas e vegetação controlada. Cada elemento é pensado para desacelerar os passos e limpar a mente antes da experiência do chá. Embora muitos jardins de chá estejam integrados a templos e casas tradicionais em Kyoto, eles raramente são famosos isoladamente, justamente porque sua função é ser um espaço de passagem e não de contemplação central."
+      },
+      {
+        "tipo": "paragrafo",
+        "texto": "O **jardim de contemplação (hiraniwa)** é geralmente plano e visto de um ponto fixo, como a varanda de um templo ou residência tradicional. Aqui, a experiência não depende de caminhar, mas de observar uma composição estática que parece mudar com a luz, as estações e o clima. Um dos exemplos mais icônicos desse estilo é o jardim do **Ginkaku-ji**, especialmente sua área de areia branca chamada “Mar de Prata”, que cria um efeito visual de ondas e luz refletida. Esse tipo de jardim enfatiza a ideia de que a natureza pode ser “enquadrada” como uma pintura viva."
+      },
+      {
+        "tipo": "paragrafo",
+        "texto": "Já o **jardim naturalista (shizen-fū)** busca imitar a natureza de forma mais livre, ainda que cuidadosamente planejada. Ao contrário dos jardins altamente geométricos, aqui há uma tentativa de parecer espontâneo: árvores não são tão rigidamente podadas, e os elementos se misturam de forma mais orgânica. Um exemplo importante dessa filosofia é o **Kairaku-en**, conhecido especialmente pelas floradas sazonais de ameixeiras, onde a paisagem muda drasticamente ao longo do ano, reforçando o conceito japonês de impermanência e ciclo natural."
+      },
+      {
+        "tipo": "paragrafo",
+        "texto": "Esses estilos, embora diferentes, compartilham uma base filosófica comum influenciada pelo budismo zen, pelo xintoísmo e pela estética do “wabi-sabi”, que valoriza imperfeição, simplicidade e transitoriedade. Essa tradição, porém, não ficou restrita ao Japão."
+      },
+      {
+        "tipo": "paragrafo",
+        "texto": "Fora do país, os jardins japoneses foram adaptados em diferentes contextos culturais. Um dos mais respeitados fora do Japão é o **Portland Japanese Garden**, considerado um dos mais autênticos do mundo ocidental. Ele reúne vários estilos tradicionais japoneses em um único espaço, incluindo jardim de caminhada, jardim seco e áreas de contemplação, mantendo forte fidelidade aos princípios estéticos originais. No Brasil, um exemplo conhecido é o **Parque Maeda**, que incorpora elementos como lago, ponte vermelha e áreas de paisagismo inspirado no Japão, adaptando essa estética ao clima tropical e ao uso recreativo local."
+      },
+      {
+        "tipo": "paragrafo",
+        "texto": "No conjunto, os jardins japoneses representam uma forma única de pensar o espaço: não como algo para ser preenchido, mas como algo para ser sentido. Eles não são apenas cenários, mas experiências construídas para desacelerar o olhar e reorganizar a percepção do mundo."
+      }
+    ]
   },
   {
-    "id": "jardim japonês para iniciantes",
-    "titulo": "Jardim japonês para iniciantes",
-    "imagem": "/navbarmobile/carousel2.jpg",
-    "arquivo": "article1.txt"
-  },
+  "id": "criando-um-jardim-japones-para-pequenos-espaços",
+  "titulo": "Criando um jardim japonês para pequenos espaços",
+  "imagem": "/navbarmobile/carousel2.jpg",
+  "conteudo": [
+    {
+      "tipo": "paragrafo",
+      "texto": "A criação de um jardim japonês não depende do tamanho do espaço disponível, mas da forma como esse espaço é organizado. Na estética japonesa, a ideia de “grande” ou “pequeno” não está ligada à metragem, mas à sensação de profundidade, equilíbrio e silêncio visual. Por isso, mesmo varandas, quintais pequenos ou até cantos internos podem se transformar em jardins altamente sofisticados e contemplativos."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Um dos princípios centrais desse tipo de jardim é o uso consciente do vazio. Diferente de jardins ocidentais que muitas vezes buscam preencher todo o espaço com plantas e cores, o jardim japonês valoriza o espaço vazio como parte ativa da composição."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Do ponto de vista psicológico, jardins japoneses ajudam na redução do estresse e na sensação de equilíbrio mental. A organização simples dos elementos cria um ambiente que facilita a calma e a concentração."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Em termos estéticos, jardins pequenos podem ser extremamente elegantes justamente porque cada elemento precisa ser intencional. A ausência de excesso gera sofisticação."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Para um iniciante, o primeiro passo é escolher um espaço simples e definir uma base neutra como areia, cascalho ou terra limpa."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Em áreas de sol direto, plantas como junípero, bambu e gramíneas ornamentais funcionam bem. Em sombra ou meia-sombra, musgos, samambaias e azaleias são opções ideais."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Evitar excesso de espécies é fundamental. Jardins japoneses trabalham com repetição e harmonia, não com variedade excessiva."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Pedras podem ser usadas como elementos simbólicos, representando montanhas ou caminhos, enquanto lanternas simples podem servir como pontos focais."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "No fim, um jardim japonês não é uma reprodução literal de um modelo, mas uma interpretação da natureza. Ele transforma pequenos espaços em ambientes de contemplação e silêncio."
+    }
+  ]
+},
   {
-    "id": "Bonsai e macrobonsai",
-    "titulo": "bonsai e macrobonsai",
-    "imagem": "/navbarmobile/carousel6.jpg",
-    "arquivo": "article1.txt"
-  },
+  "id": "bonsai-e-macrobonsai",
+  "titulo": "Bonsai e macrobonsai",
+  "imagem": "/navbarmobile/carousel6.jpg",
+  "conteudo": [
+    {
+      "tipo": "paragrafo",
+      "texto": "O cultivo de árvores no Japão vai muito além da jardinagem. Ele é uma forma de pensamento estético e filosófico que busca capturar não apenas a forma da natureza, mas também sua essência, seu tempo e sua impermanência. Dentro desse universo, três práticas se destacam: o bonsai, o macrobonsai e o niwaki. Embora frequentemente confundidas, elas representam escalas e intenções diferentes de uma mesma ideia central: a intervenção humana como diálogo com a natureza, e não como dominação."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "O bonsai é talvez a forma mais conhecida dessa arte. Ele consiste no cultivo de árvores em miniatura, cuidadosamente moldadas ao longo de anos — às vezes décadas — para simular a aparência de uma árvore madura em escala reduzida. O objetivo não é apenas estética, mas ilusão de tempo: um bonsai deve transmitir a sensação de idade, resistência e continuidade, mesmo estando contido em um vaso. Cada poda de raiz e galho é uma decisão irreversível, o que torna o processo extremamente lento e intencional. No bonsai, o tempo não é acelerado — ele é comprimido."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Já o macrobonsai surge como uma interpretação mais recente e menos rígida dessa prática. Em vez de trabalhar com vasos pequenos, ele aplica os mesmos princípios do bonsai — estrutura, estética de envelhecimento, equilíbrio visual — em árvores de maior porte, cultivadas no solo ou em jardins abertos. O macrobonsai não busca miniaturizar a natureza, mas sim “compor” árvores reais como se fossem esculturas vivas em escala ampliada. Ele preserva a ideia de controle estético, mas permite que a árvore mantenha sua liberdade de crescimento e vigor natural. Se o bonsai é introspecção e contenção, o macrobonsai é expansão controlada."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Entre esses dois extremos, surge o niwaki. Diferente do bonsai, o niwaki não busca miniaturização nem simulação de idade em escala reduzida. Ele é a arte de podar e estruturar árvores diretamente no jardim, moldando sua forma para dialogar com o espaço ao redor. O niwaki não cria uma árvore “em miniatura”, mas sim uma árvore que parece ter sido esculpida pela natureza idealizada. Seus galhos são abertos, distribuídos em camadas, e frequentemente revelam vazios intencionais, criando a sensação de paisagem dentro da própria árvore."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "A poda no niwaki é profundamente simbólica. Ela não serve apenas para controle de crescimento, mas para revelar estrutura, luz e espaço negativo. Enquanto no ocidente a poda costuma ser funcional — remover excesso — no niwaki ela é composicional. Cada corte reorganiza a leitura visual da árvore no jardim, criando ritmos que mudam com as estações. O vazio entre os galhos é tão importante quanto a vegetação em si, refletindo a estética do “ma” — o espaço entre as coisas, tão valorizado na cultura japonesa."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Quando observamos bonsai, macrobonsai e niwaki juntos, percebemos que eles não são técnicas isoladas, mas níveis diferentes de uma mesma filosofia. O bonsai concentra a natureza em escala íntima, quase meditativa. O macrobonsai expande essa lógica para o espaço aberto, mantendo a intenção estética sobre a forma. O niwaki, por sua vez, dissolve a fronteira entre arte e paisagem, transformando o próprio jardim em composição viva."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Em todos os casos, não se trata de controlar a natureza por completo, mas de estabelecer um diálogo contínuo com ela. O crescimento da árvore nunca é totalmente previsível, e é justamente essa imprevisibilidade que torna o processo vivo. A intervenção humana não elimina o acaso — ela o organiza. E nesse equilíbrio delicado entre intenção e espontaneidade, essas práticas revelam uma das ideias centrais da estética japonesa: a beleza não está na perfeição, mas na harmonia entre o que é cultivado e o que permanece selvagem."
+    }
+  ]
+},
   {
-    "id": "como pensar em substituições",
-    "titulo": "Como pensar em substituições",
-    "imagem": "/navbarmobile/carousel4.jpg",
-    "arquivo": "article1.txt"
-  },
+  "id": "como-organizar-cores-no-jardim-japones",
+  "titulo": "Como organizar cores no jardim japonês",
+  "imagem": "/navbarmobile/carousel4.jpg",
+  "conteudo": [
+    {
+      "tipo": "paragrafo",
+      "texto": "A organização das cores nos jardins japoneses não é aleatória nem decorativa. Ela é uma forma sofisticada de composição estética que se aproxima mais da pintura do que da jardinagem tradicional. Em vez de buscar explosões constantes de cor, os jardins japoneses trabalham com transições sutis, contrastes controlados e, principalmente, com o tempo como elemento central da paleta visual."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "A base dessa construção está na ideia de que o jardim não é um objeto fixo, mas uma paisagem em transformação contínua. As cores não pertencem ao espaço — pertencem às estações. Assim, o jardim é projetado para “respirar” ao longo do ano, mudando sua identidade cromática conforme o clima, a luz e o ciclo natural das plantas."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Na primavera, a paleta é marcada pela leveza e pela efemeridade. Tons suaves de rosa, branco e verde claro dominam a cena, especialmente com flores como cerejeiras e ameixeiras. O jardim não tenta prolongar a primavera — ele a celebra enquanto ela existe."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "No verão, o jardim assume verdes mais densos e sombras fortes, criando sensação de profundidade e abrigo. As árvores formam massas visuais que organizam o espaço em camadas."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "O outono é o momento mais composicional dos jardins japoneses. Folhas vermelhas, douradas e alaranjadas são organizadas como gradientes naturais, transformando o jardim em uma pintura em transição."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "No inverno, a ausência de folhas revela a estrutura das árvores e caminhos. O branco da neve e o vazio visual criam uma estética minimalista próxima do sumi-e."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Os jardins japoneses são planejados como pinturas vivas em movimento. A paleta de cores é pensada ao longo do tempo, não apenas no espaço."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "O uso de contraste controlado evita excesso de informação visual, criando harmonia e sensação de ordem natural."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "No fim, a beleza não está na permanência das cores, mas na sua passagem. O jardim nunca está finalizado, porque está sempre sendo redesenhado pelo tempo."
+    }
+  ]
+},
   {
-    "id": "Manejo correto",
-    "titulo": "Manejo correto",
-    "imagem": "/navbarmobile/carousel5.jpg",
-    "arquivo": "article1.txt"
-  },
+  "id": "jardim-zen-e-mini-jardins",
+  "titulo": "Jardim zen e mini jardins",
+  "imagem": "/navbarmobile/carousel5.jpg",
+  "conteudo": [
+    {
+      "tipo": "paragrafo",
+      "texto": "O jardim japonês, ao longo dos séculos, deixou de ser apenas uma expressão cultural local para se tornar uma linguagem estética universal. Sua influência se espalhou pelo mundo principalmente através dos jardins zen e dos mini jardins, que reinterpretam seus princípios em escalas reduzidas e contextos diferentes. Mais do que uma forma de paisagismo, o jardim japonês se tornou uma maneira de pensar o espaço, o silêncio e a relação entre o ser humano e a natureza."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "O jardim zen, em sua forma mais conhecida — o karesansui — representa uma abstração extrema da paisagem. Em vez de água, montanhas e vegetação exuberante, ele utiliza pedras, areia e vazio para sugerir elementos naturais. Essa redução não é uma limitação, mas uma escolha filosófica: ao retirar o excesso, o jardim convida o observador a completar a paisagem mentalmente."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Essa estética influenciou profundamente o design de jardins minimalistas no Ocidente, especialmente em espaços de meditação, arquitetura contemporânea e paisagismo urbano."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Com o tempo, surgiram os mini jardins zen, versões reduzidas compostas por areia, pedras e pequenos elementos decorativos. Mesmo em escala pequena, eles preservam a ideia de contemplação e simplicidade."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "O ato de rastelar a areia nesses jardins deixa de ser apenas estético e se torna um gesto de foco e pausa mental, quase meditativo."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "A influência do jardim japonês aparece hoje em projetos ao redor do mundo, onde conceitos como espaço vazio, assimetria e naturalidade são amplamente utilizados no design contemporâneo."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Criar um mini jardim zen em casa exige mais intenção do que recursos. Um recipiente simples, areia e pedras já são suficientes para construir uma composição equilibrada."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "O mais importante não é a quantidade de elementos, mas o equilíbrio entre eles e o espaço vazio, que é parte fundamental da composição."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Em jardins maiores, elementos como musgo, bambu e pedras são usados para criar ambientes que seguem o mesmo princípio de simplicidade e harmonia."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "No fim, esses jardins não são apenas objetos decorativos, mas exercícios de percepção. Eles mostram que até pequenos espaços podem conter grandes paisagens mentais."
+    }
+  ]
+},
   {
-    "id": "ideias",
-    "titulo": "Ideias",
-    "imagem": "/navbarmobile/carousel3.jpg",
-    "arquivo": "article1.txt"
-  }
+  "id": "jardim-japones-espaço-para-contemplar",
+  "titulo": "Jardim japonês, espaço para contemplar",
+  "imagem": "/navbarmobile/carousel3.jpg",
+  "conteudo": [
+    {
+      "tipo": "paragrafo",
+      "texto": "Os jardins japoneses são projetados, acima de tudo, como espaços de contemplação. Diferente de jardins meramente decorativos ou funcionais, eles não buscam impressionar pelo excesso, mas conduzir a mente a um estado de calma, atenção e presença. Cada elemento — pedras, água, musgo, árvores e espaços vazios — é organizado para reduzir distrações e direcionar o olhar para uma experiência mais lenta e consciente do ambiente."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Do ponto de vista da saúde mental, esse tipo de ambiente tem um impacto significativo. A organização equilibrada dos jardins japoneses reduz estímulos visuais excessivos, ajudando o cérebro a diminuir a carga cognitiva e favorecendo o relaxamento."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "A presença do espaço vazio é essencial nesse processo. Ele não representa ausência, mas equilíbrio visual e mental, permitindo que o olhar e a mente encontrem repouso."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "O budismo zen influenciou fortemente essa estética, valorizando a meditação, a atenção plena e a percepção da impermanência da vida através da observação silenciosa da natureza."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "O xintoísmo também contribui, ao tratar elementos naturais como portadores de significado espiritual, reforçando a conexão entre natureza e consciência."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "Práticas culturais como o hanami reforçam essa relação entre contemplação e natureza, transformando a observação das flores em um momento coletivo de reflexão sobre a impermanência."
+    },
+    {
+      "tipo": "paragrafo",
+      "texto": "No fim, os jardins japoneses funcionam como ferramentas de equilíbrio emocional. Eles oferecem um espaço onde a mente pode desacelerar e simplesmente observar."
+    }
+  ]
+}
 ]
