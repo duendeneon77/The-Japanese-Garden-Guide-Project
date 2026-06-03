@@ -1,19 +1,49 @@
-import Header from "../../components/HeaderComponent/Header"
-import ContentComponent from "../../components/ContentComponent/Content"
-import Footer from "../../components/FooterComponent/Footer"
+import Header from "../../components/HeaderComponent/Header";
+import ContentComponent from "../../components/ContentComponent/Content";
+import Footer from "../../components/FooterComponent/Footer";
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-import '../form.css'
-import BackUserPageButton from "../../components/BackUserPageButton/BackUserPageButton"
+import "../form.css";
+import BackUserPageButton from "../../components/BackUserPageButton/BackUserPageButton";
 
 function AddSpecie() {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const [galleryImages, setGalleryImages] = useState([]);
 
   function handleCancel() {
+    navigate("/usersection");
+  }
 
-    navigate("/usersection")
+  function addImageInput() {
+    if (galleryImages.length >= 15) return;
+
+    setGalleryImages([
+      ...galleryImages,
+      {
+        id: Date.now() + Math.random(),
+        value: ""
+      }
+    ]);
+  }
+
+  function removeImageInput(id) {
+    setGalleryImages(
+      galleryImages.filter(item => item.id !== id)
+    );
+  }
+
+  function updateImageInput(id, value) {
+    setGalleryImages(
+      galleryImages.map(item =>
+        item.id === id
+          ? { ...item, value }
+          : item
+      )
+    );
   }
 
   return (
@@ -224,14 +254,39 @@ function AddSpecie() {
             Galeria de imagens
           </p>
 
-          <input
-            type="text"
-            placeholder="cole aqui o link da imagem"
-          />
+          {galleryImages.map((image) => (
+            <div
+              key={image.id}
+              className="galleryInputContainer"
+            >
+              <input
+                type="text"
+                placeholder="cole aqui o link da imagem"
+                value={image.value}
+                onChange={(e) =>
+                  updateImageInput(
+                    image.id,
+                    e.target.value
+                  )
+                }
+              />
+
+              <button
+                type="button"
+                className="deleteImageInput"
+                onClick={() =>
+                  removeImageInput(image.id)
+                }
+              >
+                X
+              </button>
+            </div>
+          ))}
 
           <button
             type="button"
             id="more"
+            onClick={addImageInput}
           >
             +
           </button>
@@ -259,14 +314,15 @@ function AddSpecie() {
           </div>
 
         </form>
-        <BackUserPageButton/>
+
+        <BackUserPageButton />
 
       </ContentComponent>
 
       <Footer />
 
     </div>
-  )
+  );
 }
 
-export default AddSpecie
+export default AddSpecie;

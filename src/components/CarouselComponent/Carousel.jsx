@@ -1,42 +1,85 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Carousel.css";
+
 const base = import.meta.env.BASE_URL;
 
 export default function Carousel() {
-  const items = [
-    {
-      image: `${base}navbarmobile/carousel2.jpg`,
-      title: "Espécies",
-      text: "Conheça as espécies mais utilizadas nos jardins japoneses"
-    },
-    {
-      image: `${base}navbarmobile/carousel1.jpg`,
-      title: "Tipos de Jardim Japonês",
-      text: "Conheça os tipos de jardim japonês, clique e saiba mais"
-    },
-    {
-      image: `${base}navbarmobile/carousel5.jpg`,
-      title: "Filosofia",
-      text: "Clique e saiba mais sobre a filosofia por trás do jardim japonês"
-    },
-    {
-      image: `${base}navbarmobile/carousel6.jpg`,
-      title: "Adaptações para climas quentes",
-      text: "Clique e saiba como substituir espécies para que mantenha o colorido e as formas do jardim japonês"
-    },
-    {
-      image: `${base}navbarmobile/carousel3.jpg`,
-      title: "Itens usados para compor o Jardim Japonês",
-      text: "No jardim japonês, as plantas são só parte da composição, clique e conheça a variedade de items que são usados nas composições."
-    },
-    {
-      image: `${base}navbarmobile/carousel4.jpg`,
-      title: "Composições",
-      text: "No jardim japonês, devemos saber compor, clique e saiba como compor."
-    },
-  ];
+  const navigate = useNavigate();
 
+  const [items, setItems] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    async function loadData() {
+      const speciesRes = await fetch(`${base}species/species.json`);
+      const articlesRes = await fetch(`${base}articles/artigos.json`);
+
+      const species = await speciesRes.json();
+      const articles = await articlesRes.json();
+
+      const firstSpecies = species.slice(0, 2);
+      const firstArticles = articles.slice(0, 3); // agora 3 artigos
+
+      const builtItems = [
+        {
+          image: `${base}${firstSpecies[0].imagem}`,
+          title: firstSpecies[0].titulo,
+          text: "Clique para conhecer mais sobre esta especie usada no jardim japonês",
+          link: `/specie/${firstSpecies[0].id}`
+        },
+        {
+          image: `${base}${firstArticles[0].imagem}`,
+          title: firstArticles[0].titulo,
+          text: "Clique para ler este artigo e se inteirar sobre o tema",
+          link: `/article/${firstArticles[0].id}`
+        },
+        {
+          image: `${base}${firstSpecies[1].imagem}`,
+          title: firstSpecies[1].titulo,
+          text: "Conheça essa magnífica especie, importante em qualquer jardim japonês",
+          link: `/specie/${firstSpecies[1].id}`
+        },
+        {
+          image: `${base}${firstArticles[1].imagem}`,
+          title: firstArticles[1].titulo,
+          text: "Clique para ler o artigo completo e saber mais",
+          link: `/article/${firstArticles[1].id}`
+        },
+
+        
+        {
+          image: `${base}${firstArticles[2].imagem}`,
+          title: firstArticles[2].titulo,
+          text: "Explore este projeto do jardim japonês",
+          link: `/article/${firstArticles[2].id}`
+        },
+
+        {
+          image: `${base}navbarmobile/carousel1.jpg`,
+          title: "A importância das pedras",
+          text: "Saiba mais sobre a importância das pedras no jardim japonês",
+          link: "/others/rocks"
+        },
+        {
+          image: `${base}navbarmobile/carousel5.jpg`,
+          title: "História Milenar",
+          text: "Conheça a história milenar dos Jardins Japoneses",
+          link: "/history"
+        },
+        {
+          image: `${base}toroImages/toro2.png`,
+          title: "Itens usados no jardim",
+          text: "Conheça os elementos usados nas composições",
+          link: "/more"
+        }
+      ];
+
+      setItems(builtItems);
+    }
+
+    loadData();
+  }, []);
 
   const prev = () => {
     setCurrentSlide((prev) =>
@@ -50,44 +93,52 @@ export default function Carousel() {
     );
   };
 
-  //aqui é o que faz ele ligar sozinho
   useEffect(() => {
+    if (items.length === 0) return;
+
     const interval = setInterval(() => {
       setCurrentSlide((prev) =>
         prev === items.length - 1 ? 0 : prev + 1
       );
-    }, 7000); 
+    }, 7000);
 
     return () => clearInterval(interval);
   }, [items.length]);
 
+  if (items.length === 0) return null;
+
   return (
     <div className="carouselMainDiv">
-    <div className="carousel">
+      <div className="carousel">
 
-      <div className="carousel-fade">
-        {items.map((item, index) => (
-          <div
-            key={index}
-            className={`carousel-slide ${
-              index === currentSlide ? "active" : ""
-            }`}
-          >
-            <img src={item.image} alt="" className="carousel-img" />
+        <div className="carousel-fade">
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className={`carousel-slide ${
+                index === currentSlide ? "active" : ""
+              }`}
+              onClick={() => navigate(item.link)}
+              style={{ cursor: "pointer" }}
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="carousel-img"
+              />
 
-            <h2 className="carousel-title">{item.title}</h2>
-            <p className="carousel-text">{item.text}</p>
+              <h2 className="carousel-title">{item.title}</h2>
+              <p className="carousel-text">{item.text}</p>
+            </div>
+          ))}
+        </div>
 
-          </div>
-        ))}
+        <div className="carousel-controls">
+          <button onClick={prev}>◀</button>
+          <button onClick={next}>▶</button>
+        </div>
+
       </div>
-
-      <div className="carousel-controls">
-        <button onClick={prev}>◀</button>
-        <button onClick={next}>▶</button>
-      </div>
-
-    </div>
     </div>
   );
 }

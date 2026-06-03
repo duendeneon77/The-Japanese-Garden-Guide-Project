@@ -176,6 +176,34 @@
     padding-top: 2rem;
 }
 
+.galleryInputContainer{
+    background-color: transparent;
+    display: flex;
+    gap: .5rem;
+    width: 60%;
+    margin-bottom:rem;
+    padding: 0;
+    margin: auto;
+    max-height: 3.5rem;
+    padding-bottom: 1rem;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
+.galleryInputContainer input{
+    flex: 1;
+    max-height: 2.5rem;
+    
+}
+
+.deleteImageInput{
+    
+    max-height: 1rem;
+    max-width: 1rem;
+}
+
 
 @media (min-width: 768px) {
     .userForms{

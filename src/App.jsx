@@ -6,12 +6,17 @@ import Home from './pages/home'
 import History from './pages/indice-historia'
 import Especies from './pages/indice-especies'
 import Projeto from './pages/indice-projeto'
-import Substitutas from './pages/indice-substitutas'
+import Mais from './pages/indice-mais'
 import MidiaArtigos from './pages/midia-artigos'
 import MidiaVideos from './pages/midia-videos'
 import Specie from './pages/specie'
 import Login from './pages/Login'
 import Article from './pages/article'
+
+import TorosPage from './pages/moreContentPages/TorosPage'
+import WaterPage from './pages/moreContentPages/WaterPage'
+import RocksPage from './pages/moreContentPages/RocksPage'
+import BridgesPage from './pages/moreContentPages/BridgesPage'
 
 import UserMenu from './pages/userPages/user-menu'
 import AddSpecie from './pages/userPages/add-specie'
@@ -32,12 +37,18 @@ function App() {
         <Route path="/history" element={<History />} />
         <Route path="/species" element={<Especies />} />
         <Route path="/project" element={<Projeto />} />
-        <Route path="/substitutes" element={<Substitutas />} />
+        <Route path="/more" element={<Mais />} />
         <Route path="/artigos" element={<MidiaArtigos />} />
         <Route path="/videos" element={<MidiaVideos />} />
 
         <Route path="/specie/:id" element={<Specie />} />
         <Route path="/article/:id" element={<Article />} />
+
+
+        <Route path="/others/toro" element={<TorosPage/>}/>
+        <Route path="/others/bridge" element={<BridgesPage/>}/>
+        <Route path="/others/rocks" element={<RocksPage/>}/>
+        <Route path="/others/water" element={<WaterPage/>}/>
 
         <Route path="/login" element={<Login />} />
 

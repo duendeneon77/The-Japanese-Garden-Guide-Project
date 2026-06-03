@@ -35,7 +35,7 @@ function Topbar(){
         >
             <a href="#/history"><button className='btndrop'>História</button></a>
             <a href="#/species"><button className='btndrop'>Espécies</button></a>
-            <a href="#/substitutes"><button className='btndrop'>Outros</button></a>
+            <a href="#/more"><button className='btndrop'>Mais</button></a>
         </div>
     ) : null}
 
