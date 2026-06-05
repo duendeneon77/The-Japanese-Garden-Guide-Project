@@ -1,11 +1,11 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "../components/HeaderComponent/Header";
 import Footer from "../components/FooterComponent/Footer";
 import ContentComponent from "../components/ContentComponent/Content";
 
-import articles from "../../public/articles/artigos.json";
+import { getArticles } from "../services/articlesService";
 
 import "./article.css";
 
@@ -14,18 +14,49 @@ const base = import.meta.env.BASE_URL;
 function Article() {
   const { id } = useParams();
 
+  const [artigo, setArtigo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: "instant",
     });
+
+    async function load() {
+      try {
+        const data = await getArticles();
+
+        const found = data.find(
+          (item) => item.id === decodeURIComponent(id)
+        );
+
+        setArtigo(found || null);
+      } catch (err) {
+        console.error("Erro ao carregar artigo:", err);
+        setArtigo(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    load();
   }, [id]);
 
-  const artigo = articles.find(
-    (item) =>
-      item.id === decodeURIComponent(id)
-  );
+  if (loading) {
+    return (
+      <div id="mainDiv">
+        <Header />
+
+        <ContentComponent>
+          <h1>Carregando...</h1>
+        </ContentComponent>
+
+        <Footer />
+      </div>
+    );
+  }
 
   if (!artigo) {
     return (
@@ -63,54 +94,52 @@ function Article() {
 
       <ContentComponent>
         <div className="articlePage">
+
           <h1 className="articleTitle">
             {artigo.titulo}
           </h1>
 
           <div className="articleText">
+
             <img
               className="articleImage"
-              src={`${base}${artigo.imagem}`}
+              src={`${base}${artigo.imagem.replace(/^\//, "")}`}
               alt={artigo.titulo}
             />
 
-            {artigo.conteudo.map(
-              (item, index) => {
-                if (
-                  item.tipo === "imagem"
-                ) {
-                  const isExternal =
-                    item.src.startsWith(
-                      "http"
-                    );
+            {artigo.conteudo.map((item, index) => {
 
-                  return (
-                    <img
-                      key={index}
-                      className="articleContentImage"
-                      src={
-                        isExternal
-                          ? item.src
-                          : `${base}${item.src.replace(
-                              /^\//,
-                              ""
-                            )}`
-                      }
-                      alt=""
-                    />
-                  );
-                }
+              if (item.tipo === "imagem") {
+
+                const isExternal =
+                  item.src.startsWith("http");
 
                 return (
-                  <p key={index}>
-                    {item.texto}
-                  </p>
+                  <img
+                    key={index}
+                    className="articleContentImage"
+                    src={
+                      isExternal
+                        ? item.src
+                        : `${base}${item.src.replace(/^\//, "")}`
+                    }
+                    alt=""
+                  />
                 );
               }
-            )}
+
+              return (
+                <p key={index}>
+                  {item.texto}
+                </p>
+              );
+
+            })}
+
           </div>
 
           <div className="articleNavigation">
+
             <Link
               to="/artigos"
               className="articleButton"
@@ -124,7 +153,9 @@ function Article() {
             >
               Home
             </Link>
+
           </div>
+
         </div>
       </ContentComponent>
 

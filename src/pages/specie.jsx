@@ -1,36 +1,23 @@
-import ContentComponent from "../components/ContentComponent/Content";
-import Footer from "../components/FooterComponent/Footer";
-import Header from "../components/HeaderComponent/Header";
+import Header from '../components/HeaderComponent/Header';
+import Footer from '../components/FooterComponent/Footer';
+import ContentComponent from '../components/ContentComponent/Content';
 
-import species from "../../public/species/species.json";
-
-import { useParams } from "react-router-dom";
-
-import SpeciesPage from "../components/ContentComponent/Especies/SpeciesPage/SpeciePage";
+import SpeciesPage from '../components/ContentComponent/Especies/SpeciesPage/SpeciePage';
+import BackToSpeciesButton from '../components/BackToSpeciesButton/BackToSpeciesButton';
 
 function Specie() {
+  return (
+    <div id="mainDiv">
+      <Header />
 
-    const { id } = useParams();
+      <ContentComponent>
+        <SpeciesPage />
+        <BackToSpeciesButton/>
+      </ContentComponent>
 
-    const specie = species.find(
-        item => item.id === id
-    );
-
-    if (!specie) {
-        return <h1>Espécie não encontrada</h1>;
-    }
-
-    return (
-        <div id="mainDiv">
-            <Header />
-
-            <ContentComponent>
-                <SpeciesPage specie={specie} />
-            </ContentComponent>
-
-            <Footer />
-        </div>
-    );
+      <Footer />
+    </div>
+  );
 }
 
 export default Specie;

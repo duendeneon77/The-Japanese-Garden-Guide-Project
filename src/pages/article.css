@@ -56,6 +56,11 @@
     color: inherit;
     transition: 0.2s;
 }
+.articleContentImage{
+    display: block;
+    max-width: 100%;
+    margin: 1rem auto;
+}
 
 .articleButton:hover{
     transform: translateY(-2px);

@@ -25,6 +25,12 @@ import AddVideo from './pages/userPages/add-video'
 import EditDeleteVideo from './pages/userPages/edit-delete-video'
 import EditOrDeleteSpecie from './pages/userPages/edit-or-delete-especie'
 import EditOrDeleteArticle from './pages/userPages/edit-or-delete-article'
+import EditHistoryPage from './pages/userPages/editHistoryPage'
+import EditProjectPage from './pages/userPages/editProjectPage'
+import EditOthersRocksPage from './pages/userPages/editOtherRocksPage'
+import EditOtherToroPage from './pages/userPages/editOtherToroPage'
+import EditOthersWaterPage from './pages/userPages/editOthersWaterPage'
+import EditOthersBridgesPage from './pages/userPages/editOthersBridgesPage'
 
 function App() {
   return (
@@ -60,6 +66,14 @@ function App() {
         <Route path="/editdeletevideo" element={<EditDeleteVideo />} />
         <Route path="/editdeletespecie" element={<EditOrDeleteSpecie />} />
         <Route path="/editdeletearticle" element={<EditOrDeleteArticle />} />
+        <Route path="/edithistorypage" element={<EditHistoryPage/>}/>
+        <Route path="/editprojectpage" element={<EditProjectPage/>}/>
+        <Route path="/editothersrocks" element={<EditOthersRocksPage />} />
+        <Route path="/editotherstoro" element={<EditOtherToroPage />} />
+        <Route path="/editotherswater" element={<EditOthersWaterPage />} />
+        <Route path="/editothersbridges" element={<EditOthersBridgesPage />} />
+
+
       </Routes>
     </HashRouter>
   )

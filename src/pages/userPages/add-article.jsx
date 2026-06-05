@@ -6,6 +6,8 @@ import BackUserButton from "../../components/BackUserPageButton/BackUserPageButt
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+import { createArticle } from "../../services/articlesService";
+
 import "../form.css";
 
 function AddArticle() {
@@ -19,7 +21,7 @@ function AddArticle() {
     navigate("/usersection");
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const conteudo = texto
@@ -44,22 +46,26 @@ function AddArticle() {
       });
 
     const novoArtigo = {
-      id: titulo
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/\s+/g, "-"),
       titulo,
       imagem,
       conteudo,
     };
 
-    console.log("ARTIGO CRIADO:");
-    console.log(
-      JSON.stringify(novoArtigo, null, 2)
-    );
+    try {
+      const created = await createArticle(
+        novoArtigo
+      );
 
-    alert("Artigo gerado! Verifique o console.");
+      console.log("Criado:", created);
+
+      alert("Artigo criado!");
+
+      navigate("/artigos");
+
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao criar artigo");
+    }
   }
 
   return (
@@ -67,15 +73,19 @@ function AddArticle() {
       <Header />
 
       <ContentComponent>
+
         <form
           className="userForms"
           onSubmit={handleSubmit}
         >
+
           <h3 id="addArticleTitle">
             Postagem de Novo Artigo
           </h3>
 
-          <p>Digite o nome do artigo</p>
+          <p>
+            Digite o nome do artigo
+          </p>
 
           <input
             type="text"
@@ -86,7 +96,9 @@ function AddArticle() {
             placeholder="nome do artigo"
           />
 
-          <p>Imagem principal do artigo</p>
+          <p>
+            Imagem principal do artigo
+          </p>
 
           <input
             type="text"
@@ -108,7 +120,8 @@ function AddArticle() {
 
           <pre
             style={{
-              background: "rgba(0,0,0,0.1)",
+              background:
+                "rgba(0,0,0,0.1)",
               padding: "1rem",
               maxWidth: "90%",
               overflowX: "auto",
@@ -127,11 +140,12 @@ function AddArticle() {
           />
 
           <div className="editArticleButtonDiv">
+
             <button
               type="submit"
               id="post"
             >
-              Gerar artigo
+              Criar artigo
             </button>
 
             <button
@@ -140,10 +154,13 @@ function AddArticle() {
             >
               Cancelar
             </button>
+
           </div>
+
         </form>
 
         <BackUserButton />
+
       </ContentComponent>
 
       <Footer />

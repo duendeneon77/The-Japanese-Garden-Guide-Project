@@ -5,17 +5,54 @@ import Footer from "../../components/FooterComponent/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+import { createSpecies } from "../../services/speciesService";
+
 import "../form.css";
 import BackUserPageButton from "../../components/BackUserPageButton/BackUserPageButton";
 
 function AddSpecie() {
-
   const navigate = useNavigate();
 
   const [galleryImages, setGalleryImages] = useState([]);
 
+  const [form, setForm] = useState({
+    titulo: "",
+    nomeCientifico: "",
+    imagem: "",
+    tamanho: "",
+    crescimento: "",
+    tipo: "",
+    cor: [],
+    texto: ""
+  });
+
   function handleCancel() {
     navigate("/usersection");
+  }
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
+  function handleColorChange(e) {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      setForm((prev) => ({
+        ...prev,
+        cor: [...prev.cor, value]
+      }));
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        cor: prev.cor.filter((c) => c !== value)
+      }));
+    }
   }
 
   function addImageInput() {
@@ -32,13 +69,13 @@ function AddSpecie() {
 
   function removeImageInput(id) {
     setGalleryImages(
-      galleryImages.filter(item => item.id !== id)
+      galleryImages.filter((item) => item.id !== id)
     );
   }
 
   function updateImageInput(id, value) {
     setGalleryImages(
-      galleryImages.map(item =>
+      galleryImages.map((item) =>
         item.id === id
           ? { ...item, value }
           : item
@@ -46,17 +83,65 @@ function AddSpecie() {
     );
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      const id = form.titulo
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "-");
+
+      const arquivo = form.texto
+        .split("\n")
+        .filter((p) => p.trim() !== "")
+        .map((p) => ({
+          tipo: "paragrafo",
+          texto: p
+        }));
+
+      const galeria = galleryImages
+        .filter((img) => img.value.trim() !== "")
+        .map((img, index) => ({
+          id: `im${index + 1}`,
+          url: img.value
+        }));
+
+      const newSpecie = {
+        id,
+        titulo: form.titulo,
+        tipo: form.tipo,
+        cor: form.cor.join(", "),
+        crescimento: form.crescimento,
+        tamanho: form.tamanho,
+        nomeCientifico: form.nomeCientifico,
+        imagem: form.imagem,
+        arquivo,
+        galeria
+      };
+
+      await createSpecies(newSpecie);
+
+      alert("Espécie criada com sucesso!");
+
+      navigate("/usersection");
+
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao criar espécie.");
+    }
+  }
+
   return (
-
-    <div id='mainDiv'>
-
+    <div id="mainDiv">
       <Header />
 
       <ContentComponent>
 
         <form
-          className='userForms'
-          onSubmit={(e) => e.preventDefault()}
+          className="userForms"
+          onSubmit={handleSubmit}
         >
 
           <h3 id="specieFormTitle">
@@ -69,8 +154,11 @@ function AddSpecie() {
 
           <input
             type="text"
-            id='inputSpecieName'
-            placeholder='digite o nome da especie aqui'
+            id="inputSpecieName"
+            name="titulo"
+            value={form.titulo}
+            onChange={handleChange}
+            placeholder="digite o nome da especie aqui"
           />
 
           <p>
@@ -79,8 +167,11 @@ function AddSpecie() {
 
           <input
             type="text"
-            id='inputCientificName'
-            placeholder='digite aqui o nome científico'
+            id="inputCientificName"
+            name="nomeCientifico"
+            value={form.nomeCientifico}
+            onChange={handleChange}
+            placeholder="digite aqui o nome científico"
           />
 
           <p>
@@ -89,8 +180,11 @@ function AddSpecie() {
 
           <input
             type="text"
-            id='inputMainImage'
-            placeholder='cole aqui o link da imagem'
+            id="inputMainImage"
+            name="imagem"
+            value={form.imagem}
+            onChange={handleChange}
+            placeholder="cole aqui o link da imagem"
           />
 
           <div className="toDivide">
@@ -102,27 +196,52 @@ function AddSpecie() {
             <div className="divRadio">
 
               <label>
-                <input type="radio" name="porte" value="grande" />
+                <input
+                  type="radio"
+                  name="tamanho"
+                  value="grande"
+                  onChange={handleChange}
+                />
                 Grande
               </label>
 
               <label>
-                <input type="radio" name="porte" value="medio" />
+                <input
+                  type="radio"
+                  name="tamanho"
+                  value="medio"
+                  onChange={handleChange}
+                />
                 Médio
               </label>
 
               <label>
-                <input type="radio" name="porte" value="pequeno" />
+                <input
+                  type="radio"
+                  name="tamanho"
+                  value="pequeno"
+                  onChange={handleChange}
+                />
                 Pequeno
               </label>
 
               <label>
-                <input type="radio" name="porte" value="medio/grande" />
+                <input
+                  type="radio"
+                  name="tamanho"
+                  value="medio/grande"
+                  onChange={handleChange}
+                />
                 Médio/Grande
               </label>
 
               <label>
-                <input type="radio" name="porte" value="medio/pequeno" />
+                <input
+                  type="radio"
+                  name="tamanho"
+                  value="medio/pequeno"
+                  onChange={handleChange}
+                />
                 Médio/Pequeno
               </label>
 
@@ -139,27 +258,52 @@ function AddSpecie() {
             <div className="divRadio">
 
               <label>
-                <input type="radio" name="crescimento" value="rapido" />
+                <input
+                  type="radio"
+                  name="crescimento"
+                  value="rapido"
+                  onChange={handleChange}
+                />
                 Rápido
               </label>
 
               <label>
-                <input type="radio" name="crescimento" value="lento" />
+                <input
+                  type="radio"
+                  name="crescimento"
+                  value="lento"
+                  onChange={handleChange}
+                />
                 Lento
               </label>
 
               <label>
-                <input type="radio" name="crescimento" value="medio" />
+                <input
+                  type="radio"
+                  name="crescimento"
+                  value="medio"
+                  onChange={handleChange}
+                />
                 Médio
               </label>
 
               <label>
-                <input type="radio" name="crescimento" value="medio/rapido" />
+                <input
+                  type="radio"
+                  name="crescimento"
+                  value="medio/rapido"
+                  onChange={handleChange}
+                />
                 Médio/Rápido
               </label>
 
               <label>
-                <input type="radio" name="crescimento" value="lento/medio" />
+                <input
+                  type="radio"
+                  name="crescimento"
+                  value="lento/medio"
+                  onChange={handleChange}
+                />
                 Lento/Médio
               </label>
 
@@ -176,17 +320,32 @@ function AddSpecie() {
             <div className="divRadio">
 
               <label>
-                <input type="radio" name="classificacao" value="caducifolia" />
+                <input
+                  type="radio"
+                  name="tipo"
+                  value="Caducifolia"
+                  onChange={handleChange}
+                />
                 Caducifólia
               </label>
 
               <label>
-                <input type="radio" name="classificacao" value="perenifolia" />
+                <input
+                  type="radio"
+                  name="tipo"
+                  value="Perenifolia"
+                  onChange={handleChange}
+                />
                 Perenifólia
               </label>
 
               <label>
-                <input type="radio" name="classificacao" value="conifera" />
+                <input
+                  type="radio"
+                  name="tipo"
+                  value="Conifera"
+                  onChange={handleChange}
+                />
                 Conífera
               </label>
 
@@ -202,40 +361,13 @@ function AddSpecie() {
 
             <div className="divRadio">
 
-              <label>
-                <input type="checkbox" value="branca" />
-                Branca
-              </label>
-
-              <label>
-                <input type="checkbox" value="cores quentes" />
-                Cores quentes
-              </label>
-
-              <label>
-                <input type="checkbox" value="cores frias" />
-                Cores frias
-              </label>
-
-              <label>
-                <input type="checkbox" value="verde claro" />
-                Verde claro
-              </label>
-
-              <label>
-                <input type="checkbox" value="verde escuro" />
-                Verde escuro
-              </label>
-
-              <label>
-                <input type="checkbox" value="verde" />
-                Verde
-              </label>
-
-              <label>
-                <input type="checkbox" value="varias cores" />
-                Várias cores
-              </label>
+              <label><input type="checkbox" value="branca" onChange={handleColorChange}/>Branca</label>
+              <label><input type="checkbox" value="cores quentes" onChange={handleColorChange}/>Cores quentes</label>
+              <label><input type="checkbox" value="cores frias" onChange={handleColorChange}/>Cores frias</label>
+              <label><input type="checkbox" value="verde claro" onChange={handleColorChange}/>Verde claro</label>
+              <label><input type="checkbox" value="verde escuro" onChange={handleColorChange}/>Verde escuro</label>
+              <label><input type="checkbox" value="verde" onChange={handleColorChange}/>Verde</label>
+              <label><input type="checkbox" value="varias cores" onChange={handleColorChange}/>Várias cores</label>
 
             </div>
 
@@ -247,8 +379,15 @@ function AddSpecie() {
 
           <textarea
             id="specieText"
+            value={form.texto}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                texto: e.target.value
+              })
+            }
             placeholder="Escreva aqui uma boa quantidade de informações sobre a espécie"
-          ></textarea>
+          />
 
           <p>
             Galeria de imagens
@@ -320,7 +459,6 @@ function AddSpecie() {
       </ContentComponent>
 
       <Footer />
-
     </div>
   );
 }

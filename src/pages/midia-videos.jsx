@@ -1,41 +1,48 @@
-import Header from '../components/HeaderComponent/Header'
-import Footer from '../components/FooterComponent/Footer'
-import ContentComponent from '../components/ContentComponent/Content'
-import videos from '../../public/videos/videos.json'
-import './pages.css'
-import VideoDiv from '../components/ContentComponent/Videos/VideoDiv/VideoDiv'
-import BackHomeButton from '../components/BackHomeButton/BackHomeButton'
+import { useEffect, useState } from "react";
+
+import Header from "../components/HeaderComponent/Header";
+import ContentComponent from "../components/ContentComponent/Content";
+import Footer from "../components/FooterComponent/Footer";
+
+import { getVideos } from "../services/videosService";
+
+import VideoDiv from "../components/ContentComponent/Videos/VideoDiv/VideoDiv";
+import BackHomeButton from "../components/BackHomeButton/BackHomeButton";
 
 function MidiaVideos() {
 
-  return (
-    <div id='mainDiv'>
+  const [videos, setVideos] = useState([]);
 
-      <Header/>
+  useEffect(() => {
+    getVideos().then(setVideos);
+  }, []);
+
+  return (
+    <div id="mainDiv">
+
+      <Header />
 
       <ContentComponent>
 
         <h1>Vídeos</h1>
 
-        {videos.map((video, index) => (
-
+        {videos.map((video) => (
           <VideoDiv
-            key={index}
+            key={video.id}
             titulo={video.titulo}
             video={video.embed}
             descricao={video.description}
           />
-
         ))}
 
-         <BackHomeButton/>
-      </ContentComponent>
-      
+        <BackHomeButton />
 
-      <Footer/>
+      </ContentComponent>
+
+      <Footer />
 
     </div>
-  )
+  );
 }
 
-export default MidiaVideos
+export default MidiaVideos;

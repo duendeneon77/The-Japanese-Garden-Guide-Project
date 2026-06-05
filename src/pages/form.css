@@ -158,6 +158,9 @@
     gap: 1rem;
 
 }
+#divForCancelorNoEditSpecie{
+    background-color: transparent;
+}
 .editArticleButtonDiv{
     display: flex;
     align-items: column;
@@ -208,7 +211,13 @@
     background-color: transparent;
     width: 90%;
 }
-
+#editDeleteVideoYesNo{
+    background-color: transparent;
+}
+#textHistory, #textProject{
+    width: 95%;
+    min-height: 20rem;
+}
 
 @media (min-width: 768px) {
     .userForms{

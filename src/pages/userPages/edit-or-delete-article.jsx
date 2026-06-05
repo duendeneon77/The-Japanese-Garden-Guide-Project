@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "../../components/HeaderComponent/Header";
 import ContentComponent from "../../components/ContentComponent/Content";
 import Footer from "../../components/FooterComponent/Footer";
 
-import articlesData from "../../../public/articles/artigos.json";
+import {
+  getArticles,
+  updateArticle,
+  deleteArticle
+} from "../../services/articlesService";
 
 import "../form.css";
 import BackUserPageButton from "../../components/BackUserPageButton/BackUserPageButton";
@@ -12,12 +16,9 @@ import BackUserPageButton from "../../components/BackUserPageButton/BackUserPage
 function EditOrDeleteArticle() {
   const base = import.meta.env.BASE_URL;
 
-  const [articles, setArticles] = useState(articlesData);
-
+  const [articles, setArticles] = useState([]);
   const [search, setSearch] = useState("");
-
   const [selectedArticle, setSelectedArticle] = useState(null);
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const [editForm, setEditForm] = useState({
@@ -27,13 +28,28 @@ function EditOrDeleteArticle() {
     texto: ""
   });
 
-  const filteredArticles = articles.filter(article =>
-    article.titulo.toLowerCase().includes(search.toLowerCase())
+  useEffect(() => {
+    async function load() {
+      try {
+        const data = await getArticles();
+        setArticles(data || []);
+      } catch (err) {
+        console.error("Erro ao carregar artigos:", err);
+      }
+    }
+
+    load();
+  }, []);
+
+  const filteredArticles = articles.filter((article) =>
+    (article.titulo || "")
+      .toLowerCase()
+      .includes(search.toLowerCase())
   );
 
-  function articleToText(conteudo) {
+  function articleToText(conteudo = []) {
     return conteudo
-      .map(item => {
+      .map((item) => {
         if (item.tipo === "paragrafo") {
           return item.texto;
         }
@@ -50,8 +66,8 @@ function EditOrDeleteArticle() {
   function textToContent(texto) {
     return texto
       .split(/\n\s*\n/)
-      .filter(item => item.trim() !== "")
-      .map(item => {
+      .filter((item) => item.trim() !== "")
+      .map((item) => {
         const imageMatch = item.match(
           /^\[img\](.*?)\[\/img\]$/s
         );
@@ -90,45 +106,58 @@ function EditOrDeleteArticle() {
     });
   }
 
-  function handleSave() {
-    const updatedArticle = {
-      id: editForm.id,
-      titulo: editForm.titulo,
-      imagem: editForm.imagem,
-      conteudo: textToContent(editForm.texto)
-    };
+  async function handleSave() {
+    try {
+      const updatedArticle = {
+        id: editForm.id,
+        titulo: editForm.titulo,
+        imagem: editForm.imagem,
+        conteudo: textToContent(editForm.texto)
+      };
 
-    const updatedArticles = articles.map(article =>
-      article.id === selectedArticle.id
-        ? updatedArticle
-        : article
-    );
+      const updated = await updateArticle(
+        selectedArticle.id,
+        updatedArticle
+      );
 
-    setArticles(updatedArticles);
+      setArticles((prev) =>
+        prev.map((article) =>
+          article.id === selectedArticle.id
+            ? updated
+            : article
+        )
+      );
 
-    console.log("JSON atualizado:");
-    console.log(updatedArticle);
-
-    handleCancel();
+      handleCancel();
+    } catch (err) {
+      console.error("Erro ao atualizar artigo:", err);
+      alert("Erro ao salvar artigo");
+    }
   }
 
-  function handleDeleteArticle() {
-    const updatedArticles = articles.filter(
-      article => article.id !== selectedArticle.id
-    );
+  async function handleDeleteArticle() {
+    try {
+      await deleteArticle(selectedArticle.id);
 
-    setArticles(updatedArticles);
+      setArticles((prev) =>
+        prev.filter(
+          (article) =>
+            article.id !== selectedArticle.id
+        )
+      );
 
-    setShowDeleteModal(false);
+      setShowDeleteModal(false);
 
-    handleCancel();
+      handleCancel();
+    } catch (err) {
+      console.error("Erro ao deletar artigo:", err);
+      alert("Erro ao deletar artigo");
+    }
   }
 
   function handleCancel() {
     setSelectedArticle(null);
-
     setSearch("");
-
     setShowDeleteModal(false);
 
     setEditForm({
@@ -145,6 +174,7 @@ function EditOrDeleteArticle() {
 
       <ContentComponent>
         <div className="userForms">
+
           {!selectedArticle && (
             <>
               <h3 id="addArticleTitle">
@@ -155,6 +185,7 @@ function EditOrDeleteArticle() {
 
               <input
                 type="text"
+                id="searchVideo"
                 placeholder="Digite aqui..."
                 value={search}
                 onChange={(e) =>
@@ -165,7 +196,7 @@ function EditOrDeleteArticle() {
               {search && (
                 <div className="searchResults">
                   {filteredArticles.length > 0 ? (
-                    filteredArticles.map(article => (
+                    filteredArticles.map((article) => (
                       <div
                         key={article.id}
                         className="searchItem"
@@ -201,16 +232,25 @@ function EditOrDeleteArticle() {
 
               <p>Imagem principal</p>
 
-              <img
-                src={`${base}${editForm.imagem.replace(/^\//, "")}`}
-                alt={editForm.titulo}
-                style={{
-                  width: "12rem",
-                  maxWidth: "100%",
-                  marginBottom: "1rem",
-                  borderRadius: "0.5rem"
-                }}
-              />
+              {editForm.imagem && (
+                <img
+                  src={
+                    editForm.imagem.startsWith("http")
+                      ? editForm.imagem
+                      : `${base}${editForm.imagem.replace(
+                          /^\//,
+                          ""
+                        )}`
+                  }
+                  alt={editForm.titulo}
+                  style={{
+                    width: "12rem",
+                    maxWidth: "100%",
+                    marginBottom: "1rem",
+                    borderRadius: "0.5rem"
+                  }}
+                />
+              )}
 
               <input
                 type="text"
@@ -219,9 +259,7 @@ function EditOrDeleteArticle() {
                 onChange={handleChange}
               />
 
-              <p>
-                Conteúdo do artigo
-              </p>
+              <p>Conteúdo do artigo</p>
 
               <p
                 style={{
@@ -246,7 +284,9 @@ function EditOrDeleteArticle() {
               />
 
               <div className="editArticleButtonDiv">
+
                 <div className="editArticleButtonSubdiv">
+
                   <button
                     type="button"
                     onClick={handleSave}
@@ -262,6 +302,7 @@ function EditOrDeleteArticle() {
                   >
                     Deletar
                   </button>
+
                 </div>
 
                 <button
@@ -270,10 +311,12 @@ function EditOrDeleteArticle() {
                 >
                   Cancelar
                 </button>
+
               </div>
 
               {showDeleteModal && (
                 <div
+                  id="divModal1"
                   style={{
                     position: "fixed",
                     top: 0,
@@ -334,11 +377,13 @@ function EditOrDeleteArticle() {
                         Cancelar
                       </button>
                     </div>
+
                   </div>
                 </div>
               )}
             </>
           )}
+
         </div>
 
         <BackUserPageButton />

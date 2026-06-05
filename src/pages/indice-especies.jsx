@@ -1,39 +1,66 @@
-
-import Header from '../components/HeaderComponent/Header'
-import Footer from '../components/FooterComponent/Footer'
-import ContentComponent from '../components/ContentComponent/Content'
-import SpeciesCard from  '../components/ContentComponent/Especies/SpeciesCard/SpeciesCard';
-import './pages.css'
-import species from "../../public/species/species.json"
+import Header from '../components/HeaderComponent/Header';
+import Footer from '../components/FooterComponent/Footer';
+import ContentComponent from '../components/ContentComponent/Content';
+import SpeciesCard from '../components/ContentComponent/Especies/SpeciesCard/SpeciesCard';
+import './pages.css';
 import BackHomeButton from '../components/BackHomeButton/BackHomeButton';
+
+import { useEffect, useState } from "react";
+import { getSpecies } from "../services/speciesService";
+
 function Especies() {
+
+  const [species, setSpecies] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const data = await getSpecies();
+        setSpecies(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    load();
+  }, []);
 
   return (
     <div id='mainDiv'>
-      <Header/>
+      <Header />
+
       <ContentComponent>
 
-        
-        <h1>Especies</h1>
+        <h1>Espécies</h1>
 
-        {species.map((species)=>{
-          return(
-          <SpeciesCard
-            key = {species.id}
-            species = {species}
-          />
-          )
-        })}
+        {loading && <p>Carregando...</p>}
 
-      <div style={{ marginTop: "3rem", marginBottom: "3rem", backgroundColor: "transparent"}}>
-  <BackHomeButton />
-</div>
+        {!loading &&
+          species.map((item) => (
+            <SpeciesCard
+              key={item.id}
+              species={item}
+            />
+          ))}
+
+        <div
+          style={{
+            marginTop: "3rem",
+            marginBottom: "3rem",
+            backgroundColor: "transparent"
+          }}
+        >
+          <BackHomeButton />
+        </div>
+
       </ContentComponent>
-      
-      
-      <Footer/>
+
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default Especies
+export default Especies;

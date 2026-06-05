@@ -1,88 +1,119 @@
-import species from "../../../../../public/species/species.json"
-import { useParams } from "react-router-dom"
-import "./SpeciesPage.css"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import "./SpeciesPage.css";
 
-const base = import.meta.env.BASE_URL
+import { getSpecieById } from "../../../../services/speciesService";
+
+const base = import.meta.env.BASE_URL;
 
 function SpeciesPage() {
 
-    const { id } = useParams()
+    const { id } = useParams();
 
-    const specie = species.find(
-        (item) => item.id === id
-    )
-
-    const [selectedIndex, setSelectedIndex] = useState(null)
-
-    if (!specie) {
-        return <h1>Specie not found</h1>
-    }
-
-    function closeModal() {
-        setSelectedIndex(null)
-    }
-
-    function nextImage(e) {
-        e.stopPropagation()
-
-        setSelectedIndex(prev =>
-            prev === specie.galeria.length - 1 ? 0 : prev + 1
-        )
-    }
-
-    function prevImage(e) {
-        e.stopPropagation()
-
-        setSelectedIndex(prev =>
-            prev === 0 ? specie.galeria.length - 1 : prev - 1
-        )
-    }
+    const [species, setSpecies] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
     useEffect(() => {
 
-        if (selectedIndex === null) return
+        async function load() {
+
+            try {
+
+                const data = await getSpecieById(id);
+                setSpecies(data);
+
+            } catch (error) {
+
+                console.error("Erro ao carregar espécie:", error);
+                setSpecies(null);
+
+            } finally {
+
+                setLoading(false);
+
+            }
+        }
+
+        load();
+
+    }, [id]);
+
+    useEffect(() => {
+
+        if (selectedIndex === null || !species) return;
 
         function handleKeyDown(e) {
 
             if (e.key === "Escape") {
-                setSelectedIndex(null)
+                setSelectedIndex(null);
             }
 
             if (e.key === "ArrowRight") {
                 setSelectedIndex(prev =>
-                    prev === specie.galeria.length - 1 ? 0 : prev + 1
-                )
+                    prev === species.galeria.length - 1 ? 0 : prev + 1
+                );
             }
 
             if (e.key === "ArrowLeft") {
                 setSelectedIndex(prev =>
-                    prev === 0 ? specie.galeria.length - 1 : prev - 1
-                )
+                    prev === 0 ? species.galeria.length - 1 : prev - 1
+                );
             }
         }
 
-        window.addEventListener("keydown", handleKeyDown)
+        window.addEventListener("keydown", handleKeyDown);
 
         return () => {
-            window.removeEventListener("keydown", handleKeyDown)
-        }
+            window.removeEventListener("keydown", handleKeyDown);
+        };
 
-    }, [selectedIndex, specie])
+    }, [selectedIndex, species]);
+
+    function closeModal() {
+        setSelectedIndex(null);
+    }
+
+    function nextImage(e) {
+
+        e.stopPropagation();
+
+        setSelectedIndex(prev =>
+            prev === species.galeria.length - 1 ? 0 : prev + 1
+        );
+    }
+
+    function prevImage(e) {
+
+        e.stopPropagation();
+
+        setSelectedIndex(prev =>
+            prev === 0 ? species.galeria.length - 1 : prev - 1
+        );
+    }
+
+    if (loading) {
+        return <h1>Carregando...</h1>;
+    }
+
+    if (!species) {
+        return <h1>Espécie não encontrada</h1>;
+    }
 
     return (
+
         <div className="speciesPageDiv">
 
-            <h1>{specie.titulo}</h1>
+            <h1>{species.titulo}</h1>
 
             <img
                 className="specieImg"
-                src={`${base}${specie.imagem}`}
-                alt={specie.titulo}
+                src={`${base}${species.imagem.replace(/^\//, "")}`}
+                alt={species.titulo}
             />
 
             <p className="cientName">
-                A espécie tem o nome vulgar de {specie.titulo}, mas seu nome científico é "{specie.nomeCientifico}".
+                A espécie tem o nome vulgar de {species.titulo}, mas seu nome científico é "{species.nomeCientifico}".
             </p>
 
             <table>
@@ -90,22 +121,22 @@ function SpeciesPage() {
 
                     <tr>
                         <td>Tipo:</td>
-                        <td>{specie.tipo}</td>
+                        <td>{species.tipo}</td>
                     </tr>
 
                     <tr>
                         <td>Cor:</td>
-                        <td>{specie.cor}</td>
+                        <td>{species.cor}</td>
                     </tr>
 
                     <tr>
                         <td>Crescimento:</td>
-                        <td>{specie.crescimento}</td>
+                        <td>{species.crescimento}</td>
                     </tr>
 
                     <tr>
                         <td>Tamanho:</td>
-                        <td>{specie.tamanho}</td>
+                        <td>{species.tamanho}</td>
                     </tr>
 
                 </tbody>
@@ -113,17 +144,22 @@ function SpeciesPage() {
 
             <div className="specieText">
 
-                {specie.arquivo?.map((item, index) => {
+                {species.arquivo?.map((item, index) => {
 
                     if (item.tipo === "paragrafo") {
+
                         return (
-                            <p key={index} className="specieParagraph">
+                            <p
+                                key={index}
+                                className="specieParagraph"
+                            >
                                 {item.texto}
                             </p>
-                        )
+                        );
                     }
 
                     if (item.tipo === "imagem") {
+
                         return (
                             <img
                                 key={index}
@@ -131,10 +167,10 @@ function SpeciesPage() {
                                 src={`${base}${item.src.replace(/^\//, "")}`}
                                 alt=""
                             />
-                        )
+                        );
                     }
 
-                    return null
+                    return null;
 
                 })}
 
@@ -148,14 +184,16 @@ function SpeciesPage() {
 
                 <div className="galery">
 
-                    {specie.galeria.map((img, index) => (
+                    {species.galeria?.map((img, index) => (
+
                         <img
                             key={img.id}
                             className="galeryImg"
-                            src={`${base}${img.url}`}
-                            alt={specie.titulo}
+                            src={`${base}${img.url.replace(/^\//, "")}`}
+                            alt={species.titulo}
                             onClick={() => setSelectedIndex(index)}
                         />
+
                     ))}
 
                 </div>
@@ -181,8 +219,8 @@ function SpeciesPage() {
 
                             <img
                                 className="modalImg"
-                                src={`${base}${specie.galeria[selectedIndex].url}`}
-                                alt={specie.titulo}
+                                src={`${base}${species.galeria[selectedIndex].url.replace(/^\//, "")}`}
+                                alt={species.titulo}
                             />
 
                             <div className="modalControls">
@@ -210,7 +248,8 @@ function SpeciesPage() {
             </div>
 
         </div>
-    )
+
+    );
 }
 
-export default SpeciesPage
+export default SpeciesPage;
