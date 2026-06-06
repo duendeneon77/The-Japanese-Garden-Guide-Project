@@ -16,6 +16,7 @@ function AddArticle() {
   const [titulo, setTitulo] = useState("");
   const [imagem, setImagem] = useState("");
   const [texto, setTexto] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   function handleCancel() {
     navigate("/usersection");
@@ -63,6 +64,15 @@ function AddArticle() {
       navigate("/artigos");
 
     } catch (err) {
+
+      if (
+        err.message &&
+        err.message.includes("local")
+      ) {
+        setShowModal(true);
+        return;
+      }
+
       console.error(err);
       alert("Erro ao criar artigo");
     }
@@ -160,6 +170,37 @@ function AddArticle() {
         </form>
 
         <BackUserButton />
+
+        {showModal && (
+          <div className="modalBackground">
+            <div className="userForms">
+
+              <h3>
+                Função indisponível
+              </h3>
+
+              <p>
+                A criação de artigos está
+                disponível apenas no ambiente
+                local de desenvolvimento.
+              </p>
+
+              <p>
+                No GitHub Pages os artigos são
+                exibidos em modo de leitura.
+              </p>
+
+              <button
+                onClick={() =>
+                  setShowModal(false)
+                }
+              >
+                Fechar
+              </button>
+
+            </div>
+          </div>
+        )}
 
       </ContentComponent>
 

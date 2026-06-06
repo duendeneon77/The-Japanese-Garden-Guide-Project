@@ -20,6 +20,10 @@ function EditOrDeleteArticle() {
   const [search, setSearch] = useState("");
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showLocalOnlyModal, setShowLocalOnlyModal] =
+  useState(false);
+
+  
 
   const [editForm, setEditForm] = useState({
     id: "",
@@ -129,8 +133,20 @@ function EditOrDeleteArticle() {
       );
 
       handleCancel();
-    } catch (err) {
-      console.error("Erro ao atualizar artigo:", err);
+        } catch (err) {
+            if (
+        err.message &&
+        err.message.includes("local")
+      ) {
+        setShowLocalOnlyModal(true);
+        return;
+      }
+
+      console.error(
+        "Erro ao atualizar artigo:",
+        err
+      );
+
       alert("Erro ao salvar artigo");
     }
   }
@@ -149,8 +165,21 @@ function EditOrDeleteArticle() {
       setShowDeleteModal(false);
 
       handleCancel();
-    } catch (err) {
-      console.error("Erro ao deletar artigo:", err);
+        } catch (err) {
+          if (
+        err.message &&
+        err.message.includes("local")
+      ) {
+        setShowDeleteModal(false);
+        setShowLocalOnlyModal(true);
+        return;
+      }
+
+      console.error(
+        "Erro ao deletar artigo:",
+        err
+      );
+
       alert("Erro ao deletar artigo");
     }
   }
@@ -381,6 +410,40 @@ function EditOrDeleteArticle() {
                   </div>
                 </div>
               )}
+
+              {showLocalOnlyModal && (
+  <div className="modalBackground">
+
+    <div className="userForms">
+
+      <h3>
+        Função indisponível
+      </h3>
+
+      <p>
+        A edição e exclusão de artigos
+        estão disponíveis apenas no
+        ambiente local de desenvolvimento.
+      </p>
+
+      <p>
+        No GitHub Pages os artigos são
+        exibidos somente para leitura.
+      </p>
+
+      <button
+        type="button"
+        onClick={() =>
+          setShowLocalOnlyModal(false)
+        }
+      >
+        Fechar
+      </button>
+
+    </div>
+
+  </div>
+)}
             </>
           )}
 
