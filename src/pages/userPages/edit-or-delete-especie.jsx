@@ -20,6 +20,8 @@ function EditSpecie() {
   const [selectedSpecie, setSelectedSpecie] = useState(null);
   const [newGalleryImage, setNewGalleryImage] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showLocalOnlyModal, setShowLocalOnlyModal] =
+  useState(false);
 
   const [editForm, setEditForm] = useState({
     id: "",
@@ -150,7 +152,15 @@ function EditSpecie() {
       handleCancel();
 
     } catch (error) {
-      console.error("Erro ao salvar:", error);
+      if (
+    error.message &&
+    error.message.includes("local")
+  ) {
+    setShowLocalOnlyModal(true);
+    return;
+  }
+
+  console.error("Erro ao salvar:", error);
     }
   }
 
@@ -168,7 +178,16 @@ function EditSpecie() {
       handleCancel();
 
     } catch (error) {
-      console.error("Erro ao deletar:", error);
+      if (
+    error.message &&
+    error.message.includes("local")
+  ) {
+    setShowDeleteModal(false);
+    setShowLocalOnlyModal(true);
+    return;
+  }
+
+  console.error("Erro ao deletar:", error);
     }
   }
 
@@ -469,6 +488,40 @@ function EditSpecie() {
                   </div>
                 </div>
               )}
+
+              {showLocalOnlyModal && (
+  <div className="modalBackground">
+
+    <div className="userForms">
+
+      <h3>
+        Função indisponível
+      </h3>
+
+      <p>
+        A edição e exclusão de espécies
+        estão disponíveis apenas no
+        ambiente local de desenvolvimento.
+      </p>
+
+      <p>
+        No GitHub Pages as espécies são
+        exibidas somente para leitura.
+      </p>
+
+      <button
+        type="button"
+        onClick={() =>
+          setShowLocalOnlyModal(false)
+        }
+      >
+        Fechar
+      </button>
+
+    </div>
+
+  </div>
+)}
             </>
           )}
 

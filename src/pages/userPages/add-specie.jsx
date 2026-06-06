@@ -14,6 +14,8 @@ function AddSpecie() {
   const navigate = useNavigate();
 
   const [galleryImages, setGalleryImages] = useState([]);
+  const [showLocalOnlyModal, setShowLocalOnlyModal] =
+  useState(false);
 
   const [form, setForm] = useState({
     titulo: "",
@@ -128,8 +130,16 @@ function AddSpecie() {
       navigate("/usersection");
 
     } catch (error) {
-      console.error(error);
-      alert("Erro ao criar espécie.");
+        if (
+    error.message &&
+    error.message.includes("local")
+  ) {
+    setShowLocalOnlyModal(true);
+    return;
+  }
+
+  console.error(error);
+  alert("Erro ao criar espécie.");
     }
   }
 
@@ -453,6 +463,39 @@ function AddSpecie() {
           </div>
 
         </form>
+        {showLocalOnlyModal && (
+  <div className="modalBackground">
+
+    <div className="userForms">
+
+      <h3>
+        Função indisponível
+      </h3>
+
+      <p>
+        A criação de espécies está
+        disponível apenas no ambiente
+        local de desenvolvimento.
+      </p>
+
+      <p>
+        No GitHub Pages as espécies são
+        exibidas somente para leitura.
+      </p>
+
+      <button
+        type="button"
+        onClick={() =>
+          setShowLocalOnlyModal(false)
+        }
+      >
+        Fechar
+      </button>
+
+    </div>
+
+  </div>
+)}
 
         <BackUserPageButton />
 
