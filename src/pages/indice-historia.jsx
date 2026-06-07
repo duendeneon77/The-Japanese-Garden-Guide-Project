@@ -7,6 +7,7 @@ import './pages.css';
 import BackHomeButton from "../components/BackHomeButton/BackHomeButton";
 
 import data from "../../db.json";
+import AdminParagraph from "../components/AdminParagraph/AdminParagraph";
 
 function History() {
   const [history, setHistory] = useState(null);
@@ -26,6 +27,7 @@ function History() {
   return (
     <div id='mainDiv'>
       <Header />
+      <AdminParagraph/>
 
       <ContentComponent>
         <h1>{history.titulo}</h1>

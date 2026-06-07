@@ -8,6 +8,7 @@ import { getArticles } from "../services/articlesService";
 
 import ArticleCard from '../components/ContentComponent/Artigos/ArticleCard/ArticleCard'
 import BackHomeButton from '../components/BackHomeButton/BackHomeButton'
+import AdminParagraph from '../components/AdminParagraph/AdminParagraph';
 
 function MidiaArtigos() {
   const [articles, setArticles] = useState([]);
@@ -31,18 +32,22 @@ function MidiaArtigos() {
   return (
     <div id='mainDiv'>
       <Header />
+      <AdminParagraph/>
 
       <ContentComponent>
         <h1>Artigos</h1>
 
         {loading && <p>Carregando...</p>}
 
-        {!loading && articles.map((item) => (
-          <ArticleCard
-            key={item.id}
-            artigo={item}
-          />
-        ))}
+        {!loading &&
+  [...articles]
+    .reverse()
+    .map((item) => (
+      <ArticleCard
+        key={item.id}
+        artigo={item}
+      />
+    ))}
 
         <div style={{
           marginTop: "3rem",

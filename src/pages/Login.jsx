@@ -6,6 +6,7 @@ import Footer from '../components/FooterComponent/Footer'
 import ContentComponent from '../components/ContentComponent/Content'
 
 import './form.css'
+import AdminParagraph from "../components/AdminParagraph/AdminParagraph";
 
 function Login() {
 
@@ -84,6 +85,7 @@ function Login() {
     <div id='mainDiv'>
 
       <Header />
+      <AdminParagraph/>
 
       <ContentComponent>
 

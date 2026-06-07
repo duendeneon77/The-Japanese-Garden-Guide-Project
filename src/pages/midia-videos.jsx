@@ -8,6 +8,7 @@ import { getVideos } from "../services/videosService";
 
 import VideoDiv from "../components/ContentComponent/Videos/VideoDiv/VideoDiv";
 import BackHomeButton from "../components/BackHomeButton/BackHomeButton";
+import AdminParagraph from "../components/AdminParagraph/AdminParagraph";
 
 function MidiaVideos() {
 
@@ -21,6 +22,7 @@ function MidiaVideos() {
     <div id="mainDiv">
 
       <Header />
+      <AdminParagraph/>
 
       <ContentComponent>
 

@@ -7,6 +7,7 @@ import './pages.css'
 import BackHomeButton from '../components/BackHomeButton/BackHomeButton'
 
 import db from "../../db.json"
+import AdminParagraph from "../components/AdminParagraph/AdminParagraph";
 
 function Projeto() {
   const [project, setProject] = useState(db.project);
@@ -22,6 +23,7 @@ function Projeto() {
   return (
     <div id='mainDiv'>
       <Header />
+      <AdminParagraph/>
 
       <ContentComponent>
 

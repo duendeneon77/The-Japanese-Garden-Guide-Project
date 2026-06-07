@@ -3,7 +3,7 @@
     {
       "id": "os-jardins-famosos",
       "titulo": "Os jardins famosos",
-      "imagem": "/navbarmobile/carousel1.jpg",
+      "imagem": "/speciesImages/kuromatsu/kuro4.png",
       "conteudo": [
         {
           "tipo": "paragrafo",
@@ -46,7 +46,7 @@
     {
       "id": "criando-um-jardim-japones-para-pequenos-espaços",
       "titulo": "Criando um jardim japonês para pequenos espaços",
-      "imagem": "/navbarmobile/carousel2.jpg",
+      "imagem": "/articleImages/pequenosespacos.png",
       "conteudo": [
         {
           "tipo": "paragrafo",
@@ -86,10 +86,71 @@
         }
       ]
     },
+{
+  "id": "outono-japones",
+  "titulo": "O Encanto do Outono Japonês",
+  "imagem": "/articleImages/outono.jpg",
+  "conteudo": [
+    {
+      "texto": "Quando o verão se despede e os primeiros ventos frios começam a percorrer as montanhas do Japão, uma transformação silenciosa toma conta do país. Florestas inteiras mudam de cor, templos históricos ganham novos contrastes e os jardins tornam-se verdadeiras obras de arte naturais. O outono japonês, conhecido como aki, é considerado por muitos uma das épocas mais belas do ano."
+    },
+    {
+      "texto": "Embora as cerejeiras da primavera recebam fama internacional, muitos japoneses aguardam com igual entusiasmo a chegada das folhas vermelhas, douradas e alaranjadas do outono. Esse fenômeno é chamado de kōyō ou momiji, palavras utilizadas para descrever a mudança de cor das folhas, especialmente dos bordos japoneses."
+    },
+    {
+      "texto": "Uma antiga lenda conta que os espíritos das montanhas descem aos vales durante o outono para anunciar a aproximação do inverno. Segundo a tradição, as folhas vermelhas seriam sinais deixados por essas entidades para lembrar os seres humanos de que a natureza está entrando em um novo ciclo."
+    },
+    {
+      "texto": "Dizia-se que aqueles que observassem as primeiras folhas vermelhas da estação com respeito e gratidão receberiam boa sorte durante os meses frios. Em algumas regiões rurais, esse costume inspirou celebrações e caminhadas em busca dos primeiros tons escarlates da temporada."
+    },
+    {
+      "texto": "Outra lenda envolve os tengu, criaturas do folclore japonês associadas às montanhas e às florestas antigas. Conhecidos por seus rostos avermelhados e habilidades sobrenaturais, os tengu seriam responsáveis por proteger árvores centenárias e caminhos escondidos entre as montanhas."
+    },
+    {
+      "texto": "Segundo histórias populares, certas folhas vermelhas que caem em redemoinhos inesperados seriam sinais da passagem dessas criaturas. Alguns viajantes afirmavam ouvir risadas distantes ou passos misteriosos enquanto caminhavam por bosques coloridos durante o auge do outono."
+    },
+    {
+      "texto": "Uma terceira história fala sobre uma princesa que teria se apaixonado por um espírito da floresta. Incapazes de permanecer juntos durante o inverno, eles se encontravam apenas no período em que as folhas mudavam de cor. Cada tom vermelho representaria uma lembrança de seus encontros."
+    },
+    {
+      "texto": "Com o passar dos séculos, a narrativa tornou-se um símbolo da beleza dos momentos passageiros. Assim como as folhas coloridas duram apenas algumas semanas, certos encontros e experiências preciosas não permanecem para sempre, mas deixam lembranças duradouras."
+    },
+    {
+      "texto": "O outono japonês também guarda alguns mistérios fascinantes. Um deles envolve a incrível variedade de cores observadas em uma mesma floresta. Em alguns locais, árvores lado a lado apresentam tonalidades completamente diferentes, criando paisagens que parecem pintadas à mão."
+    },
+    {
+      "texto": "Outro mistério está relacionado ao momento exato em que as folhas mudam de cor. Embora a ciência compreenda boa parte do processo biológico, pequenas variações de temperatura, altitude e umidade podem alterar significativamente o espetáculo natural, tornando cada ano único."
+    },
+    {
+      "texto": "Existem ainda relatos populares sobre árvores que apresentam colorações incomuns, combinando vermelho, dourado e verde ao mesmo tempo. Esses exemplares frequentemente tornam-se atrações locais e acabam cercados por histórias e crenças transmitidas entre gerações."
+    },
+    {
+      "texto": "Durante séculos, artistas japoneses registraram a beleza do outono em pinturas, gravuras, poemas e jardins. Muitos templos foram planejados para oferecer vistas privilegiadas da mudança das folhas, transformando a contemplação da paisagem em uma experiência espiritual."
+    },
+    {
+      "texto": "Entre os destinos mais famosos para observar o outono estão Kyoto, com seus templos cercados por bordos vermelhos; Nikko, famosa por suas montanhas e cachoeiras; Nara, onde cervos caminham entre árvores coloridas; e o Vale de Korankei, considerado um dos cenários mais espetaculares da estação."
+    },
+    {
+      "texto": "Nas regiões mais frias do norte, como Hokkaido, as primeiras cores costumam surgir já em setembro. Em cidades como Tóquio e Kyoto, o auge geralmente acontece entre novembro e o início de dezembro, quando parques, jardins e santuários atingem seu máximo esplendor."
+    },
+    {
+      "texto": "No Brasil, diversas espécies de origem japonesa também proporcionam belas paisagens outonais. Os bordos japoneses cultivados em regiões de clima mais ameno apresentam colorações impressionantes entre abril e junho, especialmente em áreas serranas."
+    },
+    {
+      "texto": "Locais como Campos do Jordão, Monte Verde, São Bento do Sapucaí e algumas regiões da Serra Gaúcha oferecem condições favoráveis para apreciar árvores ornamentais adquirindo tons avermelhados e dourados durante o outono brasileiro."
+    },
+    {
+      "texto": "Além da paisagem, o outono está profundamente ligado à culinária japonesa. É a época das castanhas, dos cogumelos silvestres, das batatas-doces assadas e de diversas festividades ligadas à colheita. Muitas receitas tradicionais surgem justamente nesse período do ano."
+    },
+    {
+      "texto": "Mais do que uma estação, o outono japonês representa uma celebração da mudança. Suas cores lembram que a natureza está em constante transformação e que existe beleza tanto nos começos quanto nos finais. Talvez seja por isso que milhões de pessoas considerem essa época uma das mais emocionantes e inesquecíveis do Japão."
+    }
+  ]
+},
     {
       "id": "bonsai-e-macrobonsai",
       "titulo": "Bonsai e macrobonsai",
-      "imagem": "/navbarmobile/carousel6.jpg",
+      "imagem": "/articleImages/bonsaiemacrobonsai.png",
       "conteudo": [
         {
           "tipo": "paragrafo",
@@ -167,7 +228,7 @@
     {
       "id": "jardim-zen-e-mini-jardins",
       "titulo": "Jardim zen e mini jardins",
-      "imagem": "/navbarmobile/carousel5.jpg",
+      "imagem": "/articleImages/minijardim.png",
       "conteudo": [
         {
           "tipo": "paragrafo",
@@ -211,6 +272,61 @@
         }
       ]
     },
+     {
+  "id": "magia-das-cerejeiras",
+  "titulo": "A Magia das Cerejeiras",
+  "imagem": "/articleImages/cerejeira.jpg",
+  "conteudo": [
+    {
+      "texto": "Poucas plantas despertam tanta admiração quanto as cerejeiras japonesas, conhecidas como sakura. Durante séculos, suas flores delicadas inspiraram poetas, artistas, monges e viajantes. A floração dura apenas algumas semanas, transformando paisagens inteiras em nuvens cor-de-rosa e brancas antes de desaparecer quase tão rapidamente quanto surgiu. Essa brevidade tornou as cerejeiras um dos maiores símbolos japoneses da beleza passageira da vida."
+    },
+    {
+      "texto": "No Japão, a chegada das flores marca o início da primavera e é celebrada através do hanami, tradição em que famílias e amigos se reúnem sob as árvores para contemplar sua beleza. Embora seja uma prática alegre, ela também carrega uma reflexão profunda sobre o tempo, a impermanência e a importância de valorizar cada momento."
+    },
+    {
+      "texto": "Entre as muitas lendas ligadas às cerejeiras, uma das mais conhecidas é a história da Princesa Konohanasakuya-hime, deusa das flores e dos vulcões. Segundo a tradição, ela desceu dos céus para se casar com um príncipe mortal. Seu pai desejava que o príncipe também se casasse com sua irmã mais velha, associada à durabilidade das rochas, mas ele escolheu apenas Konohanasakuya-hime."
+    },
+    {
+      "texto": "Ofendido, o pai declarou que os descendentes humanos teriam vidas tão breves quanto as flores da cerejeira. Desde então, a floração da sakura passou a simbolizar a beleza intensa, porém efêmera, da existência humana. A cada primavera, muitos japoneses recordam essa lenda ao observar as pétalas caindo ao vento."
+    },
+    {
+      "texto": "Outra lenda famosa fala sobre a cerejeira chamada Sakura, uma árvore que teria permanecido seca por centenas de anos em uma antiga aldeia. Os moradores acreditavam que um espírito bondoso habitava seus galhos e sofria por não conseguir florescer. Certo dia, uma fada ofereceu à árvore a oportunidade de sentir emoções humanas por um período de vinte anos."
+    },
+    {
+      "texto": "Após experimentar alegrias, tristezas e amizades, a árvore conheceu uma jovem chamada Sakura. O espírito apaixonou-se profundamente e, ao final do encantamento, uniu-se à jovem. No instante da união, a árvore floresceu pela primeira vez, cobrindo-se de flores magníficas. A lenda tornou-se símbolo da renovação, do amor e da esperança."
+    },
+    {
+      "texto": "Uma terceira história popular envolve os espíritos conhecidos como kodama. Segundo o folclore japonês, certas árvores muito antigas abrigam seres espirituais que protegem as florestas. Algumas cerejeiras centenárias seriam moradas desses guardiões invisíveis."
+    },
+    {
+      "texto": "Diz-se que cortar uma árvore habitada por um kodama pode trazer infortúnios à comunidade inteira. Por isso, diversas cerejeiras históricas são tratadas com enorme respeito. Muitas delas recebem suportes especiais para sustentar seus galhos e continuam atraindo visitantes que acreditam sentir uma atmosfera diferente ao se aproximarem dessas árvores antigas."
+    },
+    {
+      "texto": "As cerejeiras também estão cercadas por mistérios. Um deles envolve árvores com centenas ou até mais de mil anos de idade. A famosa Miharu Takizakura, por exemplo, continua florescendo após muitos séculos, intrigando especialistas e admiradores. Como algumas dessas árvores conseguem sobreviver tanto tempo apesar de tempestades, secas e mudanças ambientais ainda desperta curiosidade."
+    },
+    {
+      "texto": "Outro mistério está relacionado à previsão da floração. Embora cientistas utilizem modelos climáticos avançados, pequenas variações de temperatura podem alterar significativamente o momento exato em que as flores se abrem. Todos os anos, milhões de pessoas acompanham a chamada 'frente da sakura', que avança pelo arquipélago japonês como uma onda de flores."
+    },
+    {
+      "texto": "Também existem relatos curiosos de árvores que florescem parcialmente fora de época ou apresentam galhos com colorações diferentes. Embora muitos desses fenômenos possuam explicações botânicas, eles frequentemente alimentam histórias locais e lendas transmitidas entre gerações."
+    },
+    {
+      "texto": "A melhor época para admirar as cerejeiras no Japão varia conforme a região. Em cidades como Tóquio e Kyoto, a floração costuma atingir seu auge entre o final de março e o início de abril. Já em áreas mais ao norte, como Hokkaido, ela geralmente ocorre entre o final de abril e o início de maio."
+    },
+    {
+      "texto": "Entre os locais mais famosos para observação estão o Parque Ueno, em Tóquio; o Caminho do Filósofo, em Kyoto; o Castelo de Himeji; o Monte Yoshino, considerado um dos cenários mais espetaculares do país; e os parques de Hokkaido, onde a primavera chega mais tarde."
+    },
+    {
+      "texto": "No Brasil, as cerejeiras também encantam visitantes. A melhor época costuma ocorrer entre julho e agosto, durante o inverno. Nessa estação, diversas cidades realizam festivais dedicados à florada, atraindo fotógrafos, jardineiros e admiradores da cultura japonesa."
+    },
+    {
+      "texto": "Entre os destinos mais conhecidos estão o Parque do Carmo, em São Paulo, palco da tradicional Festa das Cerejeiras; o Jardim Japonês de Curitiba; a cidade de Campos do Jordão; e algumas colônias japonesas do interior paulista. Nesses locais, é possível vivenciar um pouco da atmosfera mágica que tornou as cerejeiras um dos maiores símbolos culturais do Japão."
+    },
+    {
+      "texto": "Mais do que simples árvores ornamentais, as cerejeiras representam uma ponte entre natureza, história, espiritualidade e imaginação. Elas lembram que a beleza não precisa ser eterna para ser inesquecível. Talvez seja justamente sua breve floração que faz com que milhões de pessoas aguardem, ano após ano, o momento em que os primeiros botões finalmente se abrem."
+    }
+  ]
+},
     {
       "id": "jardim-japones-espaço-para-contemplar",
       "titulo": "Jardim japonês, espaço para contemplar",

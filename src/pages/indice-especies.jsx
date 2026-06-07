@@ -7,6 +7,7 @@ import BackHomeButton from '../components/BackHomeButton/BackHomeButton';
 
 import { useEffect, useState } from "react";
 import { getSpecies } from "../services/speciesService";
+import AdminParagraph from '../components/AdminParagraph/AdminParagraph';
 
 function Especies() {
 
@@ -31,6 +32,7 @@ function Especies() {
   return (
     <div id='mainDiv'>
       <Header />
+      <AdminParagraph/>
 
       <ContentComponent>
 
@@ -39,12 +41,18 @@ function Especies() {
         {loading && <p>Carregando...</p>}
 
         {!loading &&
-          species.map((item) => (
-            <SpeciesCard
-              key={item.id}
-              species={item}
-            />
-          ))}
+  [...species]
+    .sort((a, b) =>
+      a.titulo.localeCompare(b.titulo, "pt-BR", {
+        sensitivity: "base"
+      })
+    )
+    .map((item) => (
+      <SpeciesCard
+        key={item.id}
+        species={item}
+      />
+    ))}
 
         <div
           style={{

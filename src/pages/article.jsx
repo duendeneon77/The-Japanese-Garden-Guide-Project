@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Header from "../components/HeaderComponent/Header";
+import AdminParagraph from "../components/AdminParagraph/AdminParagraph"
 import Footer from "../components/FooterComponent/Footer";
 import ContentComponent from "../components/ContentComponent/Content";
 
@@ -91,6 +92,7 @@ function Article() {
   return (
     <div id="mainDiv">
       <Header />
+      <AdminParagraph/>
 
       <ContentComponent>
         <div className="articlePage">

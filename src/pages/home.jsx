@@ -5,11 +5,13 @@ import Footer from '../components/FooterComponent/Footer'
 import ArticleCard from "../components/ContentComponent/Artigos/ArticleCard/ArticleCard"
 import artigos from '../../public/articles/artigos.json'
 import './pages.css'
+import AdminParagraph from '../components/AdminParagraph/AdminParagraph'
 function Home() {
 
   return (
     <div id='mainDiv'>
       <Header/>
+      <AdminParagraph/>
       <Carousel/>
       <ContentComponent>
         

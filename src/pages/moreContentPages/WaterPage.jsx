@@ -5,6 +5,7 @@ import Footer from "../../components/FooterComponent/Footer";
 import Header from "../../components/HeaderComponent/Header";
 import BackHomeButton from "../../components/BackHomeButton/BackHomeButton";
 import "./morePages.css";
+import AdminParagraph from "../../components/AdminParagraph/AdminParagraph";
 
 function WaterPage() {
   const base = import.meta.env.BASE_URL;
@@ -69,6 +70,7 @@ function WaterPage() {
   return (
     <div id="mainDiv">
       <Header />
+      <AdminParagraph/>
 
       <ContentComponent>
         <div id="contentMoreDiv">

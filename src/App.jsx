@@ -32,12 +32,16 @@ import EditOtherToroPage from './pages/userPages/editOtherToroPage'
 import EditOthersWaterPage from './pages/userPages/editOthersWaterPage'
 import EditOthersBridgesPage from './pages/userPages/editOthersBridgesPage'
 
+import ProtectedRoute from './routes/ProtectedRoute'
+
 function App() {
   return (
     <HashRouter>
 
       <ScrollToTop />
+
       <Routes>
+
         <Route path="/" element={<Home />} />
 
         <Route path="/history" element={<History />} />
@@ -50,31 +54,132 @@ function App() {
         <Route path="/specie/:id" element={<Specie />} />
         <Route path="/article/:id" element={<Article />} />
 
-
-        <Route path="/others/toro" element={<TorosPage/>}/>
-        <Route path="/others/bridge" element={<BridgesPage/>}/>
-        <Route path="/others/rocks" element={<RocksPage/>}/>
-        <Route path="/others/water" element={<WaterPage/>}/>
+        <Route path="/others/toro" element={<TorosPage />} />
+        <Route path="/others/bridge" element={<BridgesPage />} />
+        <Route path="/others/rocks" element={<RocksPage />} />
+        <Route path="/others/water" element={<WaterPage />} />
 
         <Route path="/login" element={<Login />} />
 
-        <Route path="/usersection" element={<UserMenu />} />
-        <Route path="/addspecie" element={<AddSpecie />} />
-        <Route path="/addarticle" element={<AddArticle />} />
-        <Route path="/addvideo" element={<AddVideo />} />
+        <Route
+          path="/usersection"
+          element={
+            <ProtectedRoute>
+              <UserMenu />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/editdeletevideo" element={<EditDeleteVideo />} />
-        <Route path="/editdeletespecie" element={<EditOrDeleteSpecie />} />
-        <Route path="/editdeletearticle" element={<EditOrDeleteArticle />} />
-        <Route path="/edithistorypage" element={<EditHistoryPage/>}/>
-        <Route path="/editprojectpage" element={<EditProjectPage/>}/>
-        <Route path="/editothersrocks" element={<EditOthersRocksPage />} />
-        <Route path="/editotherstoro" element={<EditOtherToroPage />} />
-        <Route path="/editotherswater" element={<EditOthersWaterPage />} />
-        <Route path="/editothersbridges" element={<EditOthersBridgesPage />} />
+        <Route
+          path="/addspecie"
+          element={
+            <ProtectedRoute>
+              <AddSpecie />
+            </ProtectedRoute>
+          }
+        />
 
+        <Route
+          path="/addarticle"
+          element={
+            <ProtectedRoute>
+              <AddArticle />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/addvideo"
+          element={
+            <ProtectedRoute>
+              <AddVideo />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/editdeletevideo"
+          element={
+            <ProtectedRoute>
+              <EditDeleteVideo />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/editdeletespecie"
+          element={
+            <ProtectedRoute>
+              <EditOrDeleteSpecie />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/editdeletearticle"
+          element={
+            <ProtectedRoute>
+              <EditOrDeleteArticle />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edithistorypage"
+          element={
+            <ProtectedRoute>
+              <EditHistoryPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/editprojectpage"
+          element={
+            <ProtectedRoute>
+              <EditProjectPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/editothersrocks"
+          element={
+            <ProtectedRoute>
+              <EditOthersRocksPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/editotherstoro"
+          element={
+            <ProtectedRoute>
+              <EditOtherToroPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/editotherswater"
+          element={
+            <ProtectedRoute>
+              <EditOthersWaterPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/editothersbridges"
+          element={
+            <ProtectedRoute>
+              <EditOthersBridgesPage />
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
+
     </HashRouter>
   )
 }
