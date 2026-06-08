@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Header from '../components/HeaderComponent/Header'
+import BackHomeButton from "../components/BackHomeButton/BackHomeButton"
 import Footer from '../components/FooterComponent/Footer'
 import ContentComponent from '../components/ContentComponent/Content'
 
@@ -126,6 +127,7 @@ function Login() {
           </button>
 
         </form>
+        <BackHomeButton/>
 
       </ContentComponent>
 
