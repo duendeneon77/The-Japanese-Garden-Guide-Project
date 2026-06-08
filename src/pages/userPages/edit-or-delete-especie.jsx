@@ -18,196 +18,218 @@ function EditSpecie() {
   const [species, setSpecies] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedSpecie, setSelectedSpecie] = useState(null);
-  const [newGalleryImage, setNewGalleryImage] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showLocalOnlyModal, setShowLocalOnlyModal] =
-  useState(false);
+  const [showLocalOnlyModal, setShowLocalOnlyModal] = useState(false);
+
+  const [modal, setModal] = useState({
+    open: false,
+    type: "",
+    message: ""
+  });
+
+  const [galleryImages, setGalleryImages] = useState([]);
 
   const [editForm, setEditForm] = useState({
     id: "",
     titulo: "",
-    tipo: "",
-    cor: "",
-    crescimento: "",
-    tamanho: "",
     nomeCientifico: "",
     imagem: "",
-    arquivo: [],
-    galeria: []
+    tamanho: "",
+    crescimento: "",
+    tipo: "",
+    cor: [],
+    texto: ""
   });
 
   useEffect(() => {
     async function load() {
-      try {
-        const data = await getSpecies();
-        setSpecies(data || []);
-      } catch (error) {
-        console.error(error);
-        setSpecies([]);
-      }
+      const data = await getSpecies();
+      setSpecies(data || []);
     }
-
     load();
   }, []);
 
-  const filteredSpecies = species.filter((specie) => {
-    const vulgar = (specie.titulo || "").toLowerCase();
-    const cientific = (specie.nomeCientifico || "").toLowerCase();
+  const filteredSpecies = species.filter((s) => {
+    const vulgar = (s.titulo || "").toLowerCase();
+    const cient = (s.nomeCientifico || "").toLowerCase();
 
     return (
       vulgar.includes(search.toLowerCase()) ||
-      cientific.includes(search.toLowerCase())
+      cient.includes(search.toLowerCase())
     );
   });
+
+  function openModal(type, message) {
+    setModal({
+      open: true,
+      type,
+      message
+    });
+  }
+
+  function closeModal() {
+    const success = modal.type === "success";
+
+    setModal({ open: false, type: "", message: "" });
+
+    if (success) {
+      handleCancel();
+    }
+  }
 
   function handleSelect(specie) {
     setSelectedSpecie(specie);
 
     setEditForm({
-      ...specie,
-      arquivo: specie.arquivo || [],
-      galeria: specie.galeria || []
+      id: specie.id,
+      titulo: specie.titulo || "",
+      nomeCientifico: specie.nomeCientifico || "",
+      imagem: specie.imagem || "",
+      tamanho: specie.tamanho || "",
+      crescimento: specie.crescimento || "",
+      tipo: specie.tipo || "",
+      cor: Array.isArray(specie.cor)
+        ? specie.cor
+        : (specie.cor || "").split(", ").filter(Boolean),
+      texto: (specie.arquivo || []).map((p) => p.texto).join("\n")
     });
+
+    setGalleryImages(
+      (specie.galeria || []).map((img) => ({
+        id: img.id,
+        value: img.url
+      }))
+    );
 
     setSearch("");
   }
 
   function handleChange(e) {
-    setEditForm({
-      ...editForm,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+
+    setEditForm((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   }
 
-  function handleArticleChange(e) {
-    const paragraphs = e.target.value
-      .split("\n")
-      .filter((paragraph) => paragraph.trim() !== "")
-      .map((paragraph) => ({
-        tipo: "paragrafo",
-        texto: paragraph
-      }));
+  function handleColorChange(e) {
+    const { value, checked } = e.target;
 
-    setEditForm({
-      ...editForm,
-      arquivo: paragraphs
-    });
+    setEditForm((prev) => ({
+      ...prev,
+      cor: checked
+        ? [...prev.cor, value]
+        : prev.cor.filter((c) => c !== value)
+    }));
   }
 
-  function handleGalleryChange(index, value) {
-    const updatedGallery = [...(editForm.galeria || [])];
+  function addImageInput() {
+    if (galleryImages.length >= 15) return;
 
-    updatedGallery[index] = {
-      ...updatedGallery[index],
-      url: value
-    };
-
-    setEditForm({
-      ...editForm,
-      galeria: updatedGallery
-    });
+    setGalleryImages((prev) => [
+      ...prev,
+      { id: Date.now(), value: "" }
+    ]);
   }
 
-  function handleAddGalleryImage() {
-    if (!newGalleryImage.trim()) return;
-
-    const newImage = {
-      id: `im${Date.now()}`,
-      url: newGalleryImage
-    };
-
-    setEditForm({
-      ...editForm,
-      galeria: [...(editForm.galeria || []), newImage]
-    });
-
-    setNewGalleryImage("");
-  }
-
-  function handleDeleteImage(index) {
-    const updatedGallery = (editForm.galeria || []).filter(
-      (_, i) => i !== index
+  function removeImageInput(id) {
+    setGalleryImages((prev) =>
+      prev.filter((img) => img.id !== id)
     );
+  }
 
-    setEditForm({
-      ...editForm,
-      galeria: updatedGallery
-    });
+  function updateImageInput(id, value) {
+    setGalleryImages((prev) =>
+      prev.map((img) =>
+        img.id === id ? { ...img, value } : img
+      )
+    );
   }
 
   async function handleSave() {
+    if (!editForm.titulo.trim() || !editForm.nomeCientifico.trim()) {
+      openModal("error", "Título e nome científico são obrigatórios");
+      return;
+    }
+
     try {
+      const arquivo = editForm.texto
+        .split("\n")
+        .filter((p) => p.trim() !== "")
+        .map((p) => ({
+          tipo: "paragrafo",
+          texto: p
+        }));
 
-      const updated = await updateSpecies(
-        editForm.id,
-        editForm
-      );
+      const galeria = galleryImages
+        .filter((img) => img.value.trim() !== "")
+        .map((img, index) => ({
+          id: `im${index + 1}`,
+          url: img.value
+        }));
 
-      setSpecies((prev) =>
-        prev.map((s) =>
-          s.id === editForm.id ? updated : s
-        )
-      );
+      const updated = {
+        ...editForm,
+        cor: editForm.cor.join(", "),
+        arquivo,
+        galeria
+      };
 
-      handleCancel();
+      await updateSpecies(editForm.id, updated);
+
+      const refreshed = await getSpecies();
+      setSpecies(refreshed || []);
+
+      openModal("success", "Espécie atualizada com sucesso!");
 
     } catch (error) {
-      if (
-    error.message &&
-    error.message.includes("local")
-  ) {
-    setShowLocalOnlyModal(true);
-    return;
-  }
+      if (error.message?.includes("local")) {
+        setShowLocalOnlyModal(true);
+        return;
+      }
 
-  console.error("Erro ao salvar:", error);
+      openModal("error", "Erro ao atualizar espécie");
     }
   }
 
   async function handleDeleteSpecie() {
     try {
-
       await deleteSpecies(editForm.id);
 
-      setSpecies((prev) =>
-        prev.filter((s) => s.id !== editForm.id)
-      );
+      const refreshed = await getSpecies();
+      setSpecies(refreshed || []);
 
       setShowDeleteModal(false);
-
-      handleCancel();
+      openModal("success", "Espécie removida com sucesso!");
 
     } catch (error) {
-      if (
-    error.message &&
-    error.message.includes("local")
-  ) {
-    setShowDeleteModal(false);
-    setShowLocalOnlyModal(true);
-    return;
-  }
+      if (error.message?.includes("local")) {
+        setShowDeleteModal(false);
+        setShowLocalOnlyModal(true);
+        return;
+      }
 
-  console.error("Erro ao deletar:", error);
+      openModal("error", "Erro ao deletar espécie");
     }
   }
 
   function handleCancel() {
     setSelectedSpecie(null);
     setSearch("");
-    setNewGalleryImage("");
     setShowDeleteModal(false);
+    setGalleryImages([]);
 
     setEditForm({
       id: "",
       titulo: "",
-      tipo: "",
-      cor: "",
-      crescimento: "",
-      tamanho: "",
       nomeCientifico: "",
       imagem: "",
-      arquivo: [],
-      galeria: []
+      tamanho: "",
+      crescimento: "",
+      tipo: "",
+      cor: [],
+      texto: ""
     });
   }
 
@@ -222,18 +244,13 @@ function EditSpecie() {
 
           {!selectedSpecie && (
             <>
-              <h3 id="specieFormTitle">
-                Buscar espécie
-              </h3>
+              <h3 id="specieFormTitle">Buscar espécie</h3>
 
-              <p>
-                Procure pelo nome vulgar ou nome científico
-              </p>
+              <p>Procure pelo nome vulgar ou nome científico</p>
 
               <input
                 type="text"
                 id="searchVideo"
-                placeholder="Digite aqui..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -241,13 +258,13 @@ function EditSpecie() {
               {search && (
                 <div className="searchResults">
                   {filteredSpecies.length > 0 ? (
-                    filteredSpecies.map((specie) => (
+                    filteredSpecies.map((s) => (
                       <div
-                        key={specie.id}
+                        key={s.id}
                         className="searchItem"
-                        onClick={() => handleSelect(specie)}
+                        onClick={() => handleSelect(s)}
                       >
-                        {specie.titulo}
+                        {s.titulo}
                       </div>
                     ))
                   ) : (
@@ -260,268 +277,118 @@ function EditSpecie() {
 
           {selectedSpecie && (
             <>
-              <h3 id="specieFormTitle">
-                Editar espécie
-              </h3>
+              <h3 id="specieFormTitle">Editar espécie</h3>
 
               <p>Nome vulgar</p>
-
-              <input
-                type="text"
-                name="titulo"
-                value={editForm.titulo}
-                onChange={handleChange}
-              />
+              <input className="inputEditSpecie" name="titulo" value={editForm.titulo} onChange={handleChange} />
 
               <p>Nome científico</p>
+              <input className="inputEditSpecie" name="nomeCientifico" value={editForm.nomeCientifico} onChange={handleChange} />
 
-              <input
-                type="text"
-                name="nomeCientifico"
-                value={editForm.nomeCientifico}
-                onChange={handleChange}
-              />
-
-              <p>Tipo</p>
-
-              <input
-                type="text"
-                name="tipo"
-                value={editForm.tipo}
-                onChange={handleChange}
-              />
-
-              <p>Cor</p>
-
-              <input
-                type="text"
-                name="cor"
-                value={editForm.cor}
-                onChange={handleChange}
-              />
-
-              <p>Crescimento</p>
-
-              <input
-                type="text"
-                name="crescimento"
-                value={editForm.crescimento}
-                onChange={handleChange}
-              />
-
-              <p>Tamanho</p>
-
-              <input
-                type="text"
-                name="tamanho"
-                value={editForm.tamanho}
-                onChange={handleChange}
-              />
-
-              <p>Imagem principal</p>
-
-              <input
-                type="text"
-                name="imagem"
-                value={editForm.imagem}
-                onChange={handleChange}
-              />
-
-              <p>Texto da espécie</p>
-
-              <textarea
-                rows={20}
-                id="editSpecieTextArea"
-                value={(editForm.arquivo || [])
-                  .filter((item) => item.tipo === "paragrafo")
-                  .map((item) => item.texto)
-                  .join("\n")}
-                onChange={handleArticleChange}
-                placeholder="Cada Enter cria um novo parágrafo"
-              />
+              <p>Imagem</p>
+              <input className="inputEditSpecie" name="imagem" value={editForm.imagem} onChange={handleChange} />
 
               <div className="toDivide">
-
-                <p>Galeria de imagens</p>
-
-                {(editForm.galeria || []).map((image, index) => (
-                  <div
-                    key={image.id}
-                    className="galleryInputContainer"
-                  >
-                    <input
-                      type="text"
-                      value={image.url}
-                      onChange={(e) =>
-                        handleGalleryChange(
-                          index,
-                          e.target.value
-                        )
-                      }
-                    />
-
-                    <button
-                      type="button"
-                      className="deleteImageInput"
-                      onClick={() => handleDeleteImage(index)}
-                    >
-                      X
-                    </button>
-                  </div>
-                ))}
-
-                <div
-                  style={{
-                    backgroundColor: "transparent",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "1rem"
-                  }}
-                >
-                  <input
-                    type="text"
-                    placeholder="Cole aqui o link da imagem"
-                    value={newGalleryImage}
-                    onChange={(e) =>
-                      setNewGalleryImage(e.target.value)
-                    }
-                  />
-
-                  <button
-                    type="button"
-                    id="more"
-                    onClick={handleAddGalleryImage}
-                  >
-                    +
-                  </button>
+                <p>Porte</p>
+                <div className="divRadio">
+                  <label><input type="radio" name="tamanho" value="grande" onChange={handleChange} checked={editForm.tamanho==="grande"} />Grande</label>
+                  <label><input type="radio" name="tamanho" value="medio" onChange={handleChange} checked={editForm.tamanho==="medio"} />Médio</label>
+                  <label><input type="radio" name="tamanho" value="pequeno" onChange={handleChange} checked={editForm.tamanho==="pequeno"} />Pequeno</label>
                 </div>
-
               </div>
+
+              <div className="toDivide">
+                <p>Crescimento</p>
+                <div className="divRadio">
+                  <label><input type="radio" name="crescimento" value="rapido" onChange={handleChange} checked={editForm.crescimento==="rapido"} />Rápido</label>
+                  <label><input type="radio" name="crescimento" value="medio" onChange={handleChange} checked={editForm.crescimento==="medio"} />Médio</label>
+                  <label><input type="radio" name="crescimento" value="lento" onChange={handleChange} checked={editForm.crescimento==="lento"} />Lento</label>
+                </div>
+              </div>
+
+              <div className="toDivide">
+                <p>Tipo</p>
+                <div className="divRadio">
+                  <label><input type="radio" name="tipo" value="Caducifolia" onChange={handleChange} checked={editForm.tipo==="Caducifolia"} />Caducifólia</label>
+                  <label><input type="radio" name="tipo" value="Perenifolia" onChange={handleChange} checked={editForm.tipo==="Perenifolia"} />Perenífolia</label>
+                  <label><input type="radio" name="tipo" value="Conifera" onChange={handleChange} checked={editForm.tipo==="Conifera"} />Conífera</label>
+                </div>
+              </div>
+
+              <div className="toDivide">
+                <p>Cores</p>
+                <div className="divRadio">
+                  <label><input type="checkbox" value="branca" checked={editForm.cor.includes("branca")} onChange={handleColorChange}/>Branca</label>
+                  <label><input type="checkbox" value="cores quentes" checked={editForm.cor.includes("cores quentes")} onChange={handleColorChange}/>Cores quentes</label>
+                  <label><input type="checkbox" value="cores frias" checked={editForm.cor.includes("cores frias")} onChange={handleColorChange}/>Cores frias</label>
+                </div>
+              </div>
+
+              <p>Informações</p>
+              <textarea className="textAreaEditSpecie" value={editForm.texto} onChange={(e)=>setEditForm({...editForm,texto:e.target.value})} />
+
+              <p>Galeria de imagens</p>
+
+              {galleryImages.map((img) => (
+                <div key={img.id} className="galleryInputContainer galeryInputContainerEditSpecie">
+                  <input className="inputEditSpecie" value={img.value} onChange={(e)=>updateImageInput(img.id,e.target.value)} />
+                  <button className="buttonXeditSpecieGalery" type="button" onClick={()=>removeImageInput(img.id)}>X</button>
+                </div>
+              ))}
+
+              <button type="button" id="more" onClick={addImageInput}>+</button>
 
               <div className="editSpecieButtonDiv">
 
                 <div className="editSpecieButtonSubdiv">
-
-                  <button
-                    type="button"
-                    onClick={handleSave}
-                  >
-                    Salvar
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setShowDeleteModal(true)}
-                  >
-                    Deletar
-                  </button>
-
+                  <button type="button" onClick={handleSave}>Salvar</button>
+                  <button type="button" onClick={()=>setShowDeleteModal(true)}>Deletar</button>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                >
-                  Cancelar
-                </button>
+                <button type="button" onClick={handleCancel}>Cancelar</button>
 
               </div>
 
               {showDeleteModal && (
-                <div
-                  id="divModal1"
-                  style={{
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0,0,0,0.5)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    zIndex: 999
-                  }}
-                >
-                  <div
-                    style={{
-                      backgroundColor: "rgb(223, 223, 223)",
-                      padding: "2rem",
-                      borderRadius: "1rem",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: "1rem",
-                      maxWidth: "90%",
-                      color: "black"
-                    }}
-                  >
-                    <p>
-                      Tem certeza que deseja deletar a espécie?
-                    </p>
-
-                    <div
-                      id="divForCancelorNoEditSpecie"
-                      style={{
-                        display: "flex",
-                        gap: "1rem"
-                      }}
-                    >
-                      <button
-                        type="button"
-                        onClick={handleDeleteSpecie}
-                      >
-                        Sim
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setShowDeleteModal(false)
-                        }
-                      >
-                        Cancelar
-                      </button>
+                <div id="divModal1" style={{
+                  position:"fixed",
+                  inset:0,
+                  background:"rgba(0,0,0,0.5)",
+                  backgroundColor:"#ddd",
+                  display:"flex",
+                  justifyContent:"center",
+                  alignItems:"center",
+                  zIndex:999
+                }}>
+                  <div id="modalDeleteSpecie" style={{backgroundColor:"#ddd",padding:"2rem"}}>
+                    <p>Tem certeza?</p>
+                    <div>
+                    <button onClick={handleDeleteSpecie}>Sim</button>
+                    <button onClick={()=>setShowDeleteModal(false)}>Cancelar</button>
                     </div>
-
                   </div>
                 </div>
               )}
 
               {showLocalOnlyModal && (
-  <div className="modalBackground">
+                <div className="modalBackground">
+                  <div className="userForms">
+                    <h3>Função indisponível</h3>
+                    <button onClick={()=>setShowLocalOnlyModal(false)}>Fechar</button>
+                  </div>
+                </div>
+              )}
 
-    <div className="userForms">
+              {modal.open && (
+                <div id="articleModal" className="modalBackground">
+                  <div id="articleModalBox">
+                    <h3>{modal.type==="success"?"Sucesso":"Erro"}</h3>
+                    <p>{modal.message}</p>
+                    <button onClick={closeModal}>Fechar</button>
+                  </div>
+                </div>
+              )}
 
-      <h3>
-        Função indisponível
-      </h3>
-
-      <p>
-        A edição e exclusão de espécies
-        estão disponíveis apenas no
-        ambiente local de desenvolvimento.
-      </p>
-
-      <p>
-        No GitHub Pages as espécies são
-        exibidas somente para leitura.
-      </p>
-
-      <button
-        type="button"
-        onClick={() =>
-          setShowLocalOnlyModal(false)
-        }
-      >
-        Fechar
-      </button>
-
-    </div>
-
-  </div>
-)}
             </>
           )}
 

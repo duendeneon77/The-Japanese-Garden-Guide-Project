@@ -14,8 +14,13 @@ function AddSpecie() {
   const navigate = useNavigate();
 
   const [galleryImages, setGalleryImages] = useState([]);
-  const [showLocalOnlyModal, setShowLocalOnlyModal] =
-  useState(false);
+  const [showLocalOnlyModal, setShowLocalOnlyModal] = useState(false);
+
+  const [modal, setModal] = useState({
+    open: false,
+    type: "",
+    message: "",
+  });
 
   const [form, setForm] = useState({
     titulo: "",
@@ -25,8 +30,32 @@ function AddSpecie() {
     crescimento: "",
     tipo: "",
     cor: [],
-    texto: ""
+    texto: "",
   });
+
+  const [errors, setErrors] = useState({});
+
+  function openModal(type, message) {
+    setModal({
+      open: true,
+      type,
+      message,
+    });
+  }
+
+  function closeModal() {
+    const isSuccess = modal.type === "success";
+
+    setModal({
+      open: false,
+      type: "",
+      message: "",
+    });
+
+    if (isSuccess) {
+      navigate("/usersection");
+    }
+  }
 
   function handleCancel() {
     navigate("/usersection");
@@ -37,24 +66,52 @@ function AddSpecie() {
 
     setForm((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: false,
     }));
   }
 
   function handleColorChange(e) {
     const { value, checked } = e.target;
 
-    if (checked) {
-      setForm((prev) => ({
-        ...prev,
-        cor: [...prev.cor, value]
-      }));
-    } else {
-      setForm((prev) => ({
-        ...prev,
-        cor: prev.cor.filter((c) => c !== value)
-      }));
-    }
+    setForm((prev) => ({
+      ...prev,
+      cor: checked
+        ? [...prev.cor, value]
+        : prev.cor.filter((c) => c !== value),
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      cor: false,
+    }));
+  }
+
+  function validateForm() {
+    const newErrors = {
+      titulo: !form.titulo.trim(),
+      nomeCientifico: !form.nomeCientifico.trim(),
+      imagem: !form.imagem.trim(),
+      tamanho: !form.tamanho.trim(),
+      crescimento: !form.crescimento.trim(),
+      tipo: !form.tipo.trim(),
+      cor: form.cor.length === 0,
+      texto: !form.texto.trim(),
+    };
+
+    setErrors(newErrors);
+
+    return !Object.values(newErrors).includes(true);
+  }
+
+  function errorStyle(field) {
+    return errors[field]
+      ? { border: "2px solid red" }
+      : undefined;
   }
 
   function addImageInput() {
@@ -64,8 +121,8 @@ function AddSpecie() {
       ...galleryImages,
       {
         id: Date.now() + Math.random(),
-        value: ""
-      }
+        value: "",
+      },
     ]);
   }
 
@@ -78,15 +135,21 @@ function AddSpecie() {
   function updateImageInput(id, value) {
     setGalleryImages(
       galleryImages.map((item) =>
-        item.id === id
-          ? { ...item, value }
-          : item
+        item.id === id ? { ...item, value } : item
       )
     );
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    if (!validateForm()) {
+      openModal(
+        "error",
+        "Preencha todos os campos obrigatórios antes de continuar"
+      );
+      return;
+    }
 
     try {
       const id = form.titulo
@@ -100,14 +163,14 @@ function AddSpecie() {
         .filter((p) => p.trim() !== "")
         .map((p) => ({
           tipo: "paragrafo",
-          texto: p
+          texto: p,
         }));
 
       const galeria = galleryImages
         .filter((img) => img.value.trim() !== "")
         .map((img, index) => ({
           id: `im${index + 1}`,
-          url: img.value
+          url: img.value,
         }));
 
       const newSpecie = {
@@ -120,26 +183,20 @@ function AddSpecie() {
         nomeCientifico: form.nomeCientifico,
         imagem: form.imagem,
         arquivo,
-        galeria
+        galeria,
       };
 
       await createSpecies(newSpecie);
 
-      alert("Espécie criada com sucesso!");
-
-      navigate("/usersection");
-
+      openModal("success", "Espécie criada com sucesso!");
     } catch (error) {
-        if (
-    error.message &&
-    error.message.includes("local")
-  ) {
-    setShowLocalOnlyModal(true);
-    return;
-  }
+      if (error.message && error.message.includes("local")) {
+        setShowLocalOnlyModal(true);
+        return;
+      }
 
-  console.error(error);
-  alert("Erro ao criar espécie.");
+      console.error(error);
+      openModal("error", "Erro ao criar espécie.");
     }
   }
 
@@ -148,285 +205,101 @@ function AddSpecie() {
       <Header />
 
       <ContentComponent>
-
-        <form
-          className="userForms"
-          onSubmit={handleSubmit}
-        >
-
+        <form className="userForms" onSubmit={handleSubmit}>
           <h3 id="specieFormTitle">
             Cadastro de nova espécie
           </h3>
 
-          <p>
-            Digite abaixo o nome vulgar da espécie.
-          </p>
-
+          <p>Nome vulgar</p>
           <input
-            type="text"
             id="inputSpecieName"
+            className="addSpecieInputs"
             name="titulo"
             value={form.titulo}
             onChange={handleChange}
             placeholder="digite o nome da especie aqui"
+            style={errorStyle("titulo")}
           />
 
-          <p>
-            Digite abaixo o nome científico da espécie
-          </p>
-
+          <p>Nome científico</p>
           <input
-            type="text"
             id="inputCientificName"
+            className="addSpecieInputs"
             name="nomeCientifico"
             value={form.nomeCientifico}
             onChange={handleChange}
-            placeholder="digite aqui o nome científico"
+            style={errorStyle("nomeCientifico")}
           />
 
-          <p>
-            Abaixo, coloque o link da imagem ilustrativa da espécie
-          </p>
-
+          <p>Imagem</p>
           <input
-            type="text"
             id="inputMainImage"
+            className="addSpecieInputs"
             name="imagem"
             value={form.imagem}
             onChange={handleChange}
-            placeholder="cole aqui o link da imagem"
+            style={errorStyle("imagem")}
           />
 
           <div className="toDivide">
-
-            <p>
-              Selecione o porte da espécie
-            </p>
-
-            <div className="divRadio">
-
-              <label>
-                <input
-                  type="radio"
-                  name="tamanho"
-                  value="grande"
-                  onChange={handleChange}
-                />
-                Grande
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="tamanho"
-                  value="medio"
-                  onChange={handleChange}
-                />
-                Médio
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="tamanho"
-                  value="pequeno"
-                  onChange={handleChange}
-                />
-                Pequeno
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="tamanho"
-                  value="medio/grande"
-                  onChange={handleChange}
-                />
-                Médio/Grande
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="tamanho"
-                  value="medio/pequeno"
-                  onChange={handleChange}
-                />
-                Médio/Pequeno
-              </label>
-
+            <p>Porte</p>
+            <div className="divRadio" style={errorStyle("tamanho")}>
+              <label><input type="radio" name="tamanho" value="grande" onChange={handleChange}/>Grande</label>
+              <label><input type="radio" name="tamanho" value="medio" onChange={handleChange}/>Médio</label>
+              <label><input type="radio" name="tamanho" value="pequeno" onChange={handleChange}/>Pequeno</label>
             </div>
-
           </div>
 
           <div className="toDivide">
-
-            <p>
-              Selecione a velocidade de crescimento
-            </p>
-
-            <div className="divRadio">
-
-              <label>
-                <input
-                  type="radio"
-                  name="crescimento"
-                  value="rapido"
-                  onChange={handleChange}
-                />
-                Rápido
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="crescimento"
-                  value="lento"
-                  onChange={handleChange}
-                />
-                Lento
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="crescimento"
-                  value="medio"
-                  onChange={handleChange}
-                />
-                Médio
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="crescimento"
-                  value="medio/rapido"
-                  onChange={handleChange}
-                />
-                Médio/Rápido
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="crescimento"
-                  value="lento/medio"
-                  onChange={handleChange}
-                />
-                Lento/Médio
-              </label>
-
+            <p>Crescimento</p>
+            <div className="divRadio" style={errorStyle("crescimento")}>
+              <label><input type="radio" name="crescimento" value="rapido" onChange={handleChange}/>Rápido</label>
+              <label><input type="radio" name="crescimento" value="lento" onChange={handleChange}/>Lento</label>
+              <label><input type="radio" name="crescimento" value="medio" onChange={handleChange}/>Médio</label>
             </div>
-
           </div>
 
           <div className="toDivide">
-
-            <p>
-              Selecione a classificação da espécie
-            </p>
-
-            <div className="divRadio">
-
-              <label>
-                <input
-                  type="radio"
-                  name="tipo"
-                  value="Caducifolia"
-                  onChange={handleChange}
-                />
-                Caducifólia
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="tipo"
-                  value="Perenifolia"
-                  onChange={handleChange}
-                />
-                Perenifólia
-              </label>
-
-              <label>
-                <input
-                  type="radio"
-                  name="tipo"
-                  value="Conifera"
-                  onChange={handleChange}
-                />
-                Conífera
-              </label>
-
+            <p>Tipo</p>
+            <div className="divRadio" style={errorStyle("tipo")}>
+              <label><input type="radio" name="tipo" value="Caducifolia" onChange={handleChange}/>Caducifólia</label>
+              <label><input type="radio" name="tipo" value="Perenifolia" onChange={handleChange}/>Perenífolia</label>
+              <label><input type="radio" name="tipo" value="Conifera" onChange={handleChange}/>Conífera</label>
             </div>
-
           </div>
 
           <div className="toDivide">
-
-            <p>
-              Selecione as possíveis cores
-            </p>
-
-            <div className="divRadio">
-
+            <p>Cores</p>
+            <div className="divRadio" style={errorStyle("cor")}>
               <label><input type="checkbox" value="branca" onChange={handleColorChange}/>Branca</label>
               <label><input type="checkbox" value="cores quentes" onChange={handleColorChange}/>Cores quentes</label>
               <label><input type="checkbox" value="cores frias" onChange={handleColorChange}/>Cores frias</label>
-              <label><input type="checkbox" value="verde claro" onChange={handleColorChange}/>Verde claro</label>
-              <label><input type="checkbox" value="verde escuro" onChange={handleColorChange}/>Verde escuro</label>
-              <label><input type="checkbox" value="verde" onChange={handleColorChange}/>Verde</label>
-              <label><input type="checkbox" value="varias cores" onChange={handleColorChange}/>Várias cores</label>
-
             </div>
-
           </div>
 
-          <p>
-            Informações sobre a espécie
-          </p>
-
+          <p>Informações</p>
           <textarea
             id="specieText"
+            className="addSpecieInputs"
             value={form.texto}
             onChange={(e) =>
-              setForm({
-                ...form,
-                texto: e.target.value
-              })
+              setForm({ ...form, texto: e.target.value })
             }
-            placeholder="Escreva aqui uma boa quantidade de informações sobre a espécie"
+            style={errorStyle("texto")}
           />
 
-          <p>
-            Galeria de imagens
-          </p>
+          <p>Galeria de imagens</p>
 
           {galleryImages.map((image) => (
-            <div
-              key={image.id}
-              className="galleryInputContainer"
-            >
+            <div key={image.id} className="galleryInputContainer">
               <input
-                type="text"
-                placeholder="cole aqui o link da imagem"
+                className="addSpecieInputs"
                 value={image.value}
                 onChange={(e) =>
-                  updateImageInput(
-                    image.id,
-                    e.target.value
-                  )
+                  updateImageInput(image.id, e.target.value)
                 }
               />
-
-              <button
-                type="button"
-                className="deleteImageInput"
-                onClick={() =>
-                  removeImageInput(image.id)
-                }
-              >
+              <button className="deleteSpecieGaleryPhoto" type="button" onClick={() => removeImageInput(image.id)}>
                 X
               </button>
             </div>
@@ -436,69 +309,51 @@ function AddSpecie() {
             type="button"
             id="more"
             onClick={addImageInput}
+            disabled={galleryImages.length >= 15}
           >
             +
           </button>
 
           <div className="editSpecieButtonDiv">
-
             <div className="editSpecieButtonSubdiv">
-
-              <button
-                type="submit"
-                id="post"
-              >
+              <button type="submit" id="post">
                 Postar
               </button>
 
-              <button
-                type="button"
-                onClick={handleCancel}
-              >
+              <button type="button" onClick={handleCancel}>
                 Cancelar
               </button>
-
             </div>
-
           </div>
-
         </form>
+
+        {modal.open && (
+          <div id="articleModal" className="modalBackground">
+            <div id="articleModalBox">
+              <h3>
+                {modal.type === "success" ? "Sucesso" : "Atenção"}
+              </h3>
+              <p>{modal.message}</p>
+              <button onClick={closeModal}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        )}
+
         {showLocalOnlyModal && (
-  <div className="modalBackground">
-
-    <div className="userForms">
-
-      <h3>
-        Função indisponível
-      </h3>
-
-      <p>
-        A criação de espécies está
-        disponível apenas no ambiente
-        local de desenvolvimento.
-      </p>
-
-      <p>
-        No GitHub Pages as espécies são
-        exibidas somente para leitura.
-      </p>
-
-      <button
-        type="button"
-        onClick={() =>
-          setShowLocalOnlyModal(false)
-        }
-      >
-        Fechar
-      </button>
-
-    </div>
-
-  </div>
-)}
+          <div className="modalBackground">
+            <div className="userForms">
+              <h3>Função indisponível</h3>
+              <p>Criação disponível apenas localmente.</p>
+              <button onClick={() => setShowLocalOnlyModal(false)}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        )}
 
         <BackUserPageButton />
-
       </ContentComponent>
 
       <Footer />

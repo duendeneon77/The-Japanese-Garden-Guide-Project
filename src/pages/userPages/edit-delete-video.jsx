@@ -23,25 +23,47 @@ function EditDeleteVideo() {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const [modal, setModal] = useState({
+    open: false,
+    type: "",
+    message: ""
+  });
+
   const [editForm, setEditForm] = useState({
     titulo: "",
     description: "",
     embed: "",
   });
 
-  // GET ALL (API)
   useEffect(() => {
     getVideos().then(setVideos);
   }, []);
 
-  // FILTER
   const filteredVideos = videos.filter((video) =>
     video.titulo.toLowerCase().includes(search.toLowerCase())
   );
 
-  // SELECT
-  function handleSelect(video) {
+  function openModal(type, message) {
+    setModal({
+      open: true,
+      type,
+      message
+    });
+  }
 
+  function closeModal() {
+    setModal({
+      open: false,
+      type: "",
+      message: ""
+    });
+  }
+
+  function isValidEmbed(url) {
+    return /^https:\/\/(www\.)?(youtube\.com\/embed\/|youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)/.test(url);
+  }
+
+  function handleSelect(video) {
     setSelectedVideo(video);
 
     setEditForm({
@@ -53,7 +75,6 @@ function EditDeleteVideo() {
     setSearch("");
   }
 
-  // FORM CHANGE
   function handleChange(e) {
     setEditForm({
       ...editForm,
@@ -61,11 +82,23 @@ function EditDeleteVideo() {
     });
   }
 
-  // SAVE (UPDATE API)
   async function handleSave() {
-  console.log("🔥 BOTÃO SALVAR FOI CLICADO");
-  console.log("VIDEO SELECIONADO:", selectedVideo);
-  console.log("FORM:", editForm);
+
+    if (!editForm.titulo.trim() || !editForm.embed.trim()) {
+      openModal(
+        "error",
+        "É necessário preencher o título e o código do vídeo antes de salvar"
+      );
+      return;
+    }
+
+    if (!isValidEmbed(editForm.embed)) {
+      openModal(
+        "error",
+        "O link do vídeo não é válido. Use um embed do YouTube"
+      );
+      return;
+    }
 
     const updated = await updateVideo(selectedVideo.id, editForm);
 
@@ -75,10 +108,12 @@ function EditDeleteVideo() {
       )
     );
 
-    handleCancel();
+    setSelectedVideo(null);
+    setSearch("");
+
+    openModal("success", "Vídeo atualizado com sucesso!");
   }
 
-  // DELETE (API)
   async function handleDeleteVideo() {
 
     await deleteVideo(selectedVideo.id);
@@ -88,11 +123,11 @@ function EditDeleteVideo() {
     );
 
     setShowDeleteModal(false);
+    setSelectedVideo(null);
 
-    handleCancel();
+    openModal("success", "Vídeo deletado com sucesso!");
   }
 
-  // RESET
   function handleCancel() {
 
     setSelectedVideo(null);
@@ -109,183 +144,155 @@ function EditDeleteVideo() {
   }
 
   return (
-
-    <div id='mainDiv'>
+    <div id="mainDiv">
 
       <Header />
 
       <ContentComponent>
 
-        <div className='userForms' id="searchVideoDiv">
+        <div className="userForms" id="searchVideoDiv">
 
-          {/* BUSCA */}
-          {
-            !selectedVideo && (
-              <>
-                <h3 id="addArticleTitle">
-                  Buscar vídeo
-                </h3>
+          {!selectedVideo && (
+            <>
+              <h3 id="addArticleTitle">
+                Buscar vídeo
+              </h3>
 
-                <p>
-                  Digite abaixo o nome do vídeo que deseja editar
-                </p>
+              <p>
+                Digite abaixo o nome do vídeo que deseja editar
+              </p>
 
-                <input
-                  type="text"
-                  id="searchVideo"
-                  placeholder="Digite o nome do video aqui"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
+              <input
+                type="text"
+                id="searchVideo"
+                placeholder="Digite o nome do video aqui"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
 
-                {/* RESULTADOS */}
-                {
-                  search && (
-                    <div className="searchResults">
+              {search && (
+                <div className="searchResults">
 
-                      {
-                        filteredVideos.length > 0 ? (
-                          filteredVideos.map((video) => (
+                  {filteredVideos.length > 0 ? (
+                    filteredVideos.map((video) => (
+                      <div
+                        key={video.id}
+                        className="searchItem"
+                        onClick={() => handleSelect(video)}
+                      >
+                        {video.titulo}
+                      </div>
+                    ))
+                  ) : (
+                    <p>Nenhum vídeo encontrado</p>
+                  )}
 
-                            <div
-                              key={video.id}
-                              className="searchItem"
-                              onClick={() => handleSelect(video)}
-                            >
-                              {video.titulo}
-                            </div>
+                </div>
+              )}
+            </>
+          )}
 
-                          ))
-                        ) : (
-                          <p>Nenhum vídeo encontrado</p>
-                        )
-                      }
+          {selectedVideo && (
+            <>
+              <h3 id="addArticleTitle">
+                Editar vídeo
+              </h3>
 
-                    </div>
-                  )
-                }
+              <p>Título</p>
 
-              </>
-            )
-          }
+              <input
+                className="inputEditVideo"
+                type="text"
+                name="titulo"
+                value={editForm.titulo}
+                onChange={handleChange}
+                placeholder="Título do vídeo"
+              />
 
-          {/* EDIÇÃO */}
-          {
-            selectedVideo && (
-              <>
-                <h3 id="addArticleTitle">
-                  Editar vídeo
-                </h3>
+              <p>Descrição</p>
 
-                <p>Edite abaixo as informações do vídeo</p>
+              <textarea
+                className="inputEditVideo"
+                id="videoText"
+                name="description"
+                value={editForm.description}
+                onChange={handleChange}
+                placeholder="Descrição"
+              />
 
-                <input
-                  type="text"
-                  name="titulo"
-                  value={editForm.titulo}
-                  onChange={handleChange}
-                  placeholder="Título do vídeo"
-                />
+              <p>Código embed</p>
 
-                <p>Descrição do vídeo</p>
+              <input
+                className="inputEditVideo"
+                type="text"
+                name="embed"
+                value={editForm.embed}
+                onChange={handleChange}
+                placeholder="Código do vídeo"
+              />
 
-                <textarea
-                  id="videoText"
-                  name="description"
-                  value={editForm.description}
-                  onChange={handleChange}
-                  placeholder="Descrição"
-                />
+              <div className="editSpecieButtonDiv">
 
-                <p>Código embed do vídeo</p>
+                <div className="editSpecieButtonSubdiv">
 
-                <input
-                  type="text"
-                  name="embed"
-                  value={editForm.embed}
-                  onChange={handleChange}
-                  placeholder="Código do vídeo"
-                />
+                  <button type="button" onClick={handleSave}>
+                    Salvar
+                  </button>
 
-                {/* BOTÕES */}
-                <div className="editSpecieButtonDiv">
-
-                  <div className="editSpecieButtonSubdiv">
-
-                    <button type="button" onClick={handleSave}>
-                      Salvar
-                    </button>
-
-                    <button type="button" onClick={() => setShowDeleteModal(true)}>
-                      Deletar
-                    </button>
-
-                  </div>
-
-                  <button type="button" onClick={handleCancel}>
-                    Cancelar
+                  <button type="button" onClick={() => setShowDeleteModal(true)}>
+                    Deletar
                   </button>
 
                 </div>
 
-                {/* MODAL */}
-                {
-                  showDeleteModal && (
-                    <div
-                      id="divModal1"
-                      style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        backgroundColor: "rgba(0,0,0,0.5)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        zIndex: 999,
-                      }}
-                    >
+                <button type="button" onClick={handleCancel}>
+                  Cancelar
+                </button>
 
-                      <div
-                        style={{
-                          backgroundColor: "rgb(223, 223, 223)",
-                          padding: "2rem",
-                          borderRadius: "1rem",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          gap: "1rem",
-                          maxWidth: "90%",
-                          color: "black",
-                        }}
-                      >
+              </div>
 
-                        <p>Tem certeza que deseja deletar o vídeo?</p>
+               {showDeleteModal && (
+                <div id="modalDeleteVideo">
+                  <div className="modalDeleteVideoBox">
+                    <p>Tem certeza que deseja deletar o vídeo?</p>
 
-                        <div id="editDeleteVideoYesNo" style={{ display: "flex", gap: "1rem" }}>
+                    <div className="modalDeleteVideoActions">
 
-                          <button type="button" onClick={handleDeleteVideo}>
-                            Sim
-                          </button>
+                      <button type="button" onClick={handleDeleteVideo}>
+                        Sim
+                      </button>
 
-                          <button type="button" onClick={() => setShowDeleteModal(false)}>
-                            Cancelar
-                          </button>
-
-                        </div>
-
-                      </div>
+                      <button type="button" onClick={() => setShowDeleteModal(false)}>
+                        Cancelar
+                      </button>
 
                     </div>
-                  )
-                }
 
-              </>
-            )
-          }
+                  </div>
+                </div>
+              )}
+
+            </>
+          )}
+
 
         </div>
+
+        {modal.open && (
+          <div id="articleModal" className="modalBackground">
+            <div id="articleModalBox">
+              <h3>
+                {modal.type === "success" ? "Sucesso" : "Atenção"}
+              </h3>
+
+              <p>{modal.message}</p>
+
+              <button onClick={closeModal}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        )}
 
         <BackUserPageButton />
 

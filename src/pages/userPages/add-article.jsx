@@ -16,7 +16,34 @@ function AddArticle() {
   const [titulo, setTitulo] = useState("");
   const [imagem, setImagem] = useState("");
   const [texto, setTexto] = useState("");
-  const [showModal, setShowModal] = useState(false);
+
+  const [modal, setModal] = useState({
+    open: false,
+    type: "",
+    message: "",
+  });
+
+  function openModal(type, message) {
+    setModal({
+      open: true,
+      type,
+      message,
+    });
+  }
+
+  function closeModal() {
+    const isSuccess = modal.type === "success";
+
+    setModal({
+      open: false,
+      type: "",
+      message: "",
+    });
+
+    if (isSuccess) {
+      navigate("/artigos");
+    }
+  }
 
   function handleCancel() {
     navigate("/usersection");
@@ -25,13 +52,20 @@ function AddArticle() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    // 🔥 REGRA DE NEGÓCIO
+    if (!titulo.trim() || !texto.trim()) {
+      openModal(
+        "error",
+        "É necessário adicionar um título e ao menos um pouco de texto para publicar um artigo"
+      );
+      return;
+    }
+
     const conteudo = texto
       .split(/\n\s*\n/)
       .filter((bloco) => bloco.trim() !== "")
       .map((bloco) => {
-        const imagemMatch = bloco.match(
-          /^<img>(.*?)<\/img>$/
-        );
+        const imagemMatch = bloco.match(/^<img>(.*?)<\/img>$/);
 
         if (imagemMatch) {
           return {
@@ -53,28 +87,20 @@ function AddArticle() {
     };
 
     try {
-      const created = await createArticle(
-        novoArtigo
-      );
+      await createArticle(novoArtigo);
 
-      console.log("Criado:", created);
-
-      alert("Artigo criado!");
-
-      navigate("/artigos");
-
+      openModal("success", "Artigo criado com sucesso!");
     } catch (err) {
-
-      if (
-        err.message &&
-        err.message.includes("local")
-      ) {
-        setShowModal(true);
+      if (err.message && err.message.includes("local")) {
+        openModal(
+          "error",
+          "Função indisponível no GitHub Pages. Artigos só podem ser criados em ambiente local."
+        );
         return;
       }
 
       console.error(err);
-      alert("Erro ao criar artigo");
+      openModal("error", "Erro ao criar artigo");
     }
   }
 
@@ -83,125 +109,71 @@ function AddArticle() {
       <Header />
 
       <ContentComponent>
-
-        <form
-          className="userForms"
-          onSubmit={handleSubmit}
-        >
-
+        <form className="userForms" onSubmit={handleSubmit}>
           <h3 id="addArticleTitle">
             Postagem de Novo Artigo
           </h3>
 
-          <p>
-            Digite o nome do artigo
-          </p>
-
+          <p>Digite o nome do artigo</p>
           <input
             type="text"
             value={titulo}
-            onChange={(e) =>
-              setTitulo(e.target.value)
-            }
+            onChange={(e) => setTitulo(e.target.value)}
             placeholder="nome do artigo"
           />
 
-          <p>
-            Imagem principal do artigo
-          </p>
-
+          <p>Imagem principal do artigo</p>
           <input
             type="text"
             value={imagem}
-            onChange={(e) =>
-              setImagem(e.target.value)
-            }
+            onChange={(e) => setImagem(e.target.value)}
             placeholder="/navbarmobile/imagem.jpg"
           />
 
           <p>
             Escreva o artigo abaixo.
             <br />
-            Use ENTER duas vezes para criar
-            um novo parágrafo.
-            <br />
-            Para inserir imagens no texto:
+            Use ENTER duas vezes para criar um novo parágrafo.
           </p>
-
-          <pre
-            style={{
-              background:
-                "rgba(0,0,0,0.1)",
-              padding: "1rem",
-              maxWidth: "90%",
-              overflowX: "auto",
-            }}
-          >
-{`<img>/caminho/imagem.jpg</img>`}
-          </pre>
 
           <textarea
             id="specieText"
             value={texto}
-            onChange={(e) =>
-              setTexto(e.target.value)
-            }
+            onChange={(e) => setTexto(e.target.value)}
             placeholder="Escreva o artigo aqui"
           />
 
           <div className="editArticleButtonDiv">
-
-            <button
-              type="submit"
-              id="post"
-            >
+            <button type="submit" id="post">
               Criar artigo
             </button>
 
-            <button
-              type="button"
-              onClick={handleCancel}
-            >
+            <button type="button" onClick={handleCancel}>
               Cancelar
             </button>
-
           </div>
-
         </form>
 
         <BackUserButton />
 
-        {showModal && (
-          <div className="modalBackground">
-            <div className="userForms">
-
+        {/* MODAL */}
+        {modal.open && (
+          <div id="articleModal" className="modalBackground">
+            <div id="articleModalBox" className="modalBox">
               <h3>
-                Função indisponível
+                {modal.type === "success"
+                  ? "Sucesso"
+                  : "Atenção"}
               </h3>
 
-              <p>
-                A criação de artigos está
-                disponível apenas no ambiente
-                local de desenvolvimento.
-              </p>
+              <p>{modal.message}</p>
 
-              <p>
-                No GitHub Pages os artigos são
-                exibidos em modo de leitura.
-              </p>
-
-              <button
-                onClick={() =>
-                  setShowModal(false)
-                }
-              >
+              <button onClick={closeModal}>
                 Fechar
               </button>
-
             </div>
           </div>
         )}
-
       </ContentComponent>
 
       <Footer />

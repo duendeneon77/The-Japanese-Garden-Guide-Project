@@ -20,10 +20,13 @@ function EditOrDeleteArticle() {
   const [search, setSearch] = useState("");
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showLocalOnlyModal, setShowLocalOnlyModal] =
-  useState(false);
+  const [showLocalOnlyModal, setShowLocalOnlyModal] = useState(false);
 
-  
+  const [modal, setModal] = useState({
+    open: false,
+    type: "",
+    message: ""
+  });
 
   const [editForm, setEditForm] = useState({
     id: "",
@@ -45,6 +48,22 @@ function EditOrDeleteArticle() {
     load();
   }, []);
 
+  function openModal(type, message) {
+    setModal({
+      open: true,
+      type,
+      message
+    });
+  }
+
+  function closeModal() {
+    setModal({
+      open: false,
+      type: "",
+      message: ""
+    });
+  }
+
   const filteredArticles = articles.filter((article) =>
     (article.titulo || "")
       .toLowerCase()
@@ -54,14 +73,8 @@ function EditOrDeleteArticle() {
   function articleToText(conteudo = []) {
     return conteudo
       .map((item) => {
-        if (item.tipo === "paragrafo") {
-          return item.texto;
-        }
-
-        if (item.tipo === "imagem") {
-          return `[img]${item.src}[/img]`;
-        }
-
+        if (item.tipo === "paragrafo") return item.texto;
+        if (item.tipo === "imagem") return `[img]${item.src}[/img]`;
         return "";
       })
       .join("\n\n");
@@ -72,9 +85,7 @@ function EditOrDeleteArticle() {
       .split(/\n\s*\n/)
       .filter((item) => item.trim() !== "")
       .map((item) => {
-        const imageMatch = item.match(
-          /^\[img\](.*?)\[\/img\]$/s
-        );
+        const imageMatch = item.match(/^\[img\](.*?)\[\/img\]$/s);
 
         if (imageMatch) {
           return {
@@ -111,6 +122,15 @@ function EditOrDeleteArticle() {
   }
 
   async function handleSave() {
+
+    if (!editForm.titulo.trim() || !editForm.texto.trim()) {
+      openModal(
+        "error",
+        "É necessário preencher o título e o texto do artigo para salvar"
+      );
+      return;
+    }
+
     try {
       const updatedArticle = {
         id: editForm.id,
@@ -133,21 +153,16 @@ function EditOrDeleteArticle() {
       );
 
       handleCancel();
-        } catch (err) {
-            if (
-        err.message &&
-        err.message.includes("local")
-      ) {
+
+      openModal("success", "Artigo atualizado com sucesso!");
+    } catch (err) {
+      if (err.message && err.message.includes("local")) {
         setShowLocalOnlyModal(true);
         return;
       }
 
-      console.error(
-        "Erro ao atualizar artigo:",
-        err
-      );
-
-      alert("Erro ao salvar artigo");
+      console.error("Erro ao atualizar artigo:", err);
+      openModal("error", "Erro ao salvar artigo");
     }
   }
 
@@ -157,30 +172,24 @@ function EditOrDeleteArticle() {
 
       setArticles((prev) =>
         prev.filter(
-          (article) =>
-            article.id !== selectedArticle.id
+          (article) => article.id !== selectedArticle.id
         )
       );
 
       setShowDeleteModal(false);
 
       handleCancel();
-        } catch (err) {
-          if (
-        err.message &&
-        err.message.includes("local")
-      ) {
+
+      openModal("success", "Artigo deletado com sucesso!");
+    } catch (err) {
+      if (err.message && err.message.includes("local")) {
         setShowDeleteModal(false);
         setShowLocalOnlyModal(true);
         return;
       }
 
-      console.error(
-        "Erro ao deletar artigo:",
-        err
-      );
-
-      alert("Erro ao deletar artigo");
+      console.error("Erro ao deletar artigo:", err);
+      openModal("error", "Erro ao deletar artigo");
     }
   }
 
@@ -206,20 +215,15 @@ function EditOrDeleteArticle() {
 
           {!selectedArticle && (
             <>
-              <h3 id="addArticleTitle">
-                Buscar artigo
-              </h3>
+              <h3 id="addArticleTitle">Buscar artigo</h3>
 
               <p>Procure pelo nome do artigo</p>
 
               <input
                 type="text"
                 id="searchVideo"
-                placeholder="Digite aqui..."
                 value={search}
-                onChange={(e) =>
-                  setSearch(e.target.value)
-                }
+                onChange={(e) => setSearch(e.target.value)}
               />
 
               {search && (
@@ -229,9 +233,7 @@ function EditOrDeleteArticle() {
                       <div
                         key={article.id}
                         className="searchItem"
-                        onClick={() =>
-                          handleSelect(article)
-                        }
+                        onClick={() => handleSelect(article)}
                       >
                         {article.titulo}
                       </div>
@@ -246,9 +248,7 @@ function EditOrDeleteArticle() {
 
           {selectedArticle && (
             <>
-              <h3 id="addArticleTitle">
-                Editar artigo
-              </h3>
+              <h3 id="addArticleTitle">Editar artigo</h3>
 
               <p>Título do artigo</p>
 
@@ -261,26 +261,6 @@ function EditOrDeleteArticle() {
 
               <p>Imagem principal</p>
 
-              {editForm.imagem && (
-                <img
-                  src={
-                    editForm.imagem.startsWith("http")
-                      ? editForm.imagem
-                      : `${base}${editForm.imagem.replace(
-                          /^\//,
-                          ""
-                        )}`
-                  }
-                  alt={editForm.titulo}
-                  style={{
-                    width: "12rem",
-                    maxWidth: "100%",
-                    marginBottom: "1rem",
-                    borderRadius: "0.5rem"
-                  }}
-                />
-              )}
-
               <input
                 type="text"
                 name="imagem"
@@ -289,21 +269,6 @@ function EditOrDeleteArticle() {
               />
 
               <p>Conteúdo do artigo</p>
-
-              <p
-                style={{
-                  fontSize: "0.9rem",
-                  opacity: "0.8",
-                  marginBottom: "1rem"
-                }}
-              >
-                Use dois ENTERs para criar um novo
-                parágrafo.
-                <br />
-                Para inserir imagens:
-                <br />
-                [img]URL_DA_IMAGEM[/img]
-              </p>
 
               <textarea
                 id="specieText"
@@ -316,138 +281,66 @@ function EditOrDeleteArticle() {
 
                 <div className="editArticleButtonSubdiv">
 
-                  <button
-                    type="button"
-                    onClick={handleSave}
-                  >
+                  <button type="button" onClick={handleSave}>
                     Salvar
                   </button>
 
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setShowDeleteModal(true)
-                    }
-                  >
+                  <button type="button" onClick={() => setShowDeleteModal(true)}>
                     Deletar
                   </button>
 
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                >
+                <button type="button" onClick={handleCancel}>
                   Cancelar
                 </button>
 
               </div>
 
               {showDeleteModal && (
-                <div
-                  id="divModal1"
-                  style={{
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor:
-                      "rgba(0,0,0,0.5)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    zIndex: 999
-                  }}
-                >
-                  <div
-                    style={{
-                      backgroundColor:
-                        "rgb(223,223,223)",
-                      padding: "2rem",
-                      borderRadius: "1rem",
-                      color: "black",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "1rem",
-                      alignItems: "center"
-                    }}
-                  >
-                    <p>
-                      Tem certeza que deseja
-                      deletar o artigo?
-                    </p>
+  <div id="modalDeleteArticle">
+    <div className="modalDeleteArticleBox">
+      <p>Tem certeza que deseja deletar o artigo?</p>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "1rem",
-                        backgroundColor:
-                          "transparent"
-                      }}
-                    >
-                      <button
-                        type="button"
-                        onClick={
-                          handleDeleteArticle
-                        }
-                      >
-                        Sim
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setShowDeleteModal(
-                            false
-                          )
-                        }
-                      >
-                        Cancelar
-                      </button>
-                    </div>
-
-                  </div>
-                </div>
-              )}
-
-              {showLocalOnlyModal && (
-  <div className="modalBackground">
-
-    <div className="userForms">
-
-      <h3>
-        Função indisponível
-      </h3>
-
-      <p>
-        A edição e exclusão de artigos
-        estão disponíveis apenas no
-        ambiente local de desenvolvimento.
-      </p>
-
-      <p>
-        No GitHub Pages os artigos são
-        exibidos somente para leitura.
-      </p>
-
-      <button
-        type="button"
-        onClick={() =>
-          setShowLocalOnlyModal(false)
-        }
-      >
-        Fechar
-      </button>
+      <div className="modalDeleteArticleActions">
+        <button type="button" onClick={handleDeleteArticle}>Sim</button>
+        <button type="button" onClick={() => setShowDeleteModal(false)}>Cancelar</button>
+      </div>
 
     </div>
-
   </div>
 )}
+
             </>
           )}
 
         </div>
+
+        {modal.open && (
+          <div id="articleModal" className="modalBackground">
+            <div id="articleModalBox">
+              <h3>
+                {modal.type === "success" ? "Sucesso" : "Atenção"}
+              </h3>
+              <p>{modal.message}</p>
+              <button onClick={closeModal}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        )}
+
+        {showLocalOnlyModal && (
+          <div className="modalBackground">
+            <div className="userForms">
+              <h3>Função indisponível</h3>
+              <p>Disponível apenas em ambiente local</p>
+              <button onClick={() => setShowLocalOnlyModal(false)}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        )}
 
         <BackUserPageButton />
       </ContentComponent>

@@ -1,20 +1,26 @@
-import "./AdminParagraph.css"
+import "./AdminParagraph.css";
+import { Link } from "react-router-dom";
 
 function AdminParagraph() {
+  const isLogged = !!localStorage.getItem("loggedUser");
 
-    const isLogged = !!localStorage.getItem("loggedUser");
+  if (!isLogged) {
+    return null;
+  }
 
-    if (!isLogged) {
-        return null;
-    }
+  return (
+    <div id="adminDiv">
+      <p id="adminParagraph">
+        VERSÃO DO ADMINISTRADOR
+      </p>
 
-    return (
-        <div id="adminDiv">
-        <p id="adminParagraph">
-            VERSÃO DO ADMINISTRADOR
-        </p>
-        </div>
-    );
+      <div id="buttonDiv">
+        <Link to="/usersection" id="adminLink">
+          Menu de Administrador
+        </Link>
+      </div>
+    </div>
+  );
 }
 
 export default AdminParagraph;

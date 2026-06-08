@@ -17,11 +17,36 @@ function AddVideo() {
   const [embed, setEmbed] = useState("");
   const [description, setDescription] = useState("");
 
+  const [modal, setModal] = useState({
+    open: false,
+    message: "",
+    type: "",
+  });
+
+  function openModal(type, message) {
+    setModal({
+      open: true,
+      type,
+      message,
+    });
+  }
+
+  function closeModal() {
+    setModal({
+      open: false,
+      message: "",
+      type: "",
+    });
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!titulo || !embed || !description) {
-      alert("Preencha todos os campos");
+    if (!titulo.trim() || !embed.trim()) {
+      openModal(
+        "error",
+        "É necessário preencher o título e o código do vídeo para publicar"
+      );
       return;
     }
 
@@ -38,10 +63,10 @@ function AddVideo() {
       setEmbed("");
       setDescription("");
 
-      navigate("/usersection");
+      openModal("success", "Vídeo criado com sucesso!");
     } catch (error) {
       console.error("Erro ao criar vídeo:", error);
-      alert("Erro ao salvar vídeo");
+      openModal("error", "Erro ao salvar vídeo");
     }
   }
 
@@ -55,36 +80,35 @@ function AddVideo() {
 
       <ContentComponent>
         <form className="userForms" onSubmit={handleSubmit}>
-          <h3 id="addArticleTitle">Postagem de Novo Video</h3>
+          <h3 id="addArticleTitle">
+            Postagem de Novo Video
+          </h3>
 
-          <p>Digite abaixo um título para ilustrar o vídeo abaixo</p>
-
+          <p>Título do vídeo</p>
           <input
             type="text"
             id="inputVideoName"
-            placeholder="digite o titulo aqui"
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
+            placeholder="digite o titulo aqui"
           />
 
-          <p>Abaixo, coloque o embed/código do video</p>
-
+          <p>Código do vídeo (embed)</p>
           <input
             type="text"
             id="inputVideoCode"
-            placeholder="cole aqui o código do vídeo"
             value={embed}
             onChange={(e) => setEmbed(e.target.value)}
+            placeholder="cole aqui o código do vídeo"
           />
 
-          <p>Escreva aqui uma breve descrição para o conteúdo do vídeo:</p>
-
+          <p>Descrição</p>
           <textarea
             id="videoText"
-            placeholder="Escreva a descrição aqui"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
+            placeholder="Escreva a descrição aqui"
+          />
 
           <div className="editVideoButtonDiv">
             <button type="submit" id="post">
@@ -96,6 +120,22 @@ function AddVideo() {
             </button>
           </div>
         </form>
+
+        {modal.open && (
+          <div id="articleModal" className="modalBackground">
+            <div id="articleModalBox">
+              <h3>
+                {modal.type === "success" ? "Sucesso" : "Atenção"}
+              </h3>
+
+              <p>{modal.message}</p>
+
+              <button onClick={closeModal}>
+                Fechar
+              </button>
+            </div>
+          </div>
+        )}
 
         <BackUserPageButton />
       </ContentComponent>
